@@ -14,11 +14,11 @@ export class RyuutamaActorSheet extends ActorSheet {
             classes: ["ryuutama", "sheet", "actor", "character"],
             template: "systems/ryuutama/templates/actor-sheet.html",
             width: 600,
-            height: 600,
+            height: 800,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
-                initial: "description"
+                initial: "abilities"
             }]
         });
     }
@@ -78,43 +78,43 @@ export class RyuutamaActorSheet extends ActorSheet {
             if (actor.data.data.attributes.spi.bonus) {
                 int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1]
             }
-            if (ev.target.value === "Travel") {
+            if (ev.target.title === "Travel") {
                 const formula = `1d${str} + 1d${dex}`;
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.travel")}`
+                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`
                 });
-            } else if (ev.target.value === "Direction") {
+            } else if (ev.target.title === "Direction") {
                 const formula = `1d${int} + 1d${int}`;
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.direction")}`
+                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`
                 });
-            } else if (ev.target.value === "Camp") {
+            } else if (ev.target.title === "Camp") {
                 const formula = `1d${dex} + 1d${int}`;
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.camp")}`
+                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`
                 });
             } else if (ev.target.title === "Condition") {
                 const formula = `1d${str} + 1d${spi}`;
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.condition")}`
+                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`
                 });
                 actor.update({
                     "data.attributes.condition.value": roll._total
                 })
-            } else if (ev.target.title === "Inititative") {
+            } else if (ev.target.title === "Initiative") {
                 const formula = `1d${dex} + 1d${int}`;
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.initiative")}`
+                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`
                 });
                 actor.update({
                     "data.attributes.initiative.value": roll._total

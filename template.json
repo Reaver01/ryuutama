@@ -63,12 +63,39 @@
         }
     },
     "Item": {
-        "types": ["item"],
+        "types": ["item", "weapon", "class", "feature"],
+        "templates": {
+            "itemDescription": {
+                "name": "",
+                "effect": ""
+            },
+            "action": {
+                "ability": null,
+                "actionType": null,
+                "attackBonus": 0,
+                "chatFlavor": "",
+                "critical": null,
+                "damage": {
+                    "parts": [],
+                    "versatile": ""
+                },
+                "formula": "",
+                "save": {
+                    "ability": "",
+                    "dc": null,
+                    "scaling": "spell"
+                }
+            }
+        },
         "item": {
             "description": "",
             "quantity": 1,
             "weight": 0,
             "attributes": {}
+        },
+        "weapon": {
+            "templates": ["itemDescription", "action"],
+            "durability": 0
         }
     }
 }

@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.9195959"
-     inkscape:cx="32.381266"
-     inkscape:cy="36.453551"
+     inkscape:zoom="11.2"
+     inkscape:cx="30.414489"
+     inkscape:cy="34.233516"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -55,11 +55,12 @@
      transform="translate(-69.374985,-100.27992)">
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,89.375015,117.15434)"
-       id="g2576">
+       id="g2576"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2578"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 c 0,-4.894 -3.967,-8.859 -8.857,-8.859 h -38.979 c -4.891,0 -8.857,3.965 -8.857,8.859 v 38.975 c 0,4.891 3.966,8.858 8.857,8.858 H -8.857 C -3.967,47.833 0,43.866 0,38.975 Z" />
     </g>
     <g
@@ -91,38 +92,42 @@
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,77.595519,114.92295)"
-       id="g2592">
+       id="g2592"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2594"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 c 0,-0.622 -0.502,-1.125 -1.125,-1.125 -0.621,0 -1.123,0.503 -1.123,1.125 0,0.62 0.502,1.124 1.123,1.124 C -0.502,1.124 0,0.62 0,0" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,81.947386,114.92295)"
-       id="g2596">
+       id="g2596"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2598"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 c 0,-0.622 -0.504,-1.125 -1.125,-1.125 -0.621,0 -1.123,0.503 -1.123,1.125 0,0.62 0.502,1.124 1.123,1.124 C -0.504,1.124 0,0.62 0,0" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,82.77973,112.40423)"
-       id="g2600">
+       id="g2600"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2602"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 -2.479,2.218 c 0,0 1.5,1.695 3.653,2.184 L -0.686,2.152 1.107,2.086 -0.326,1.174 Z" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,75.970131,112.40423)"
-       id="g2604">
+       id="g2604"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2606"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 2.479,2.218 c 0,0 -1.5,1.695 -3.653,2.184 L 0.686,2.152 -1.109,2.086 0.326,1.174 Z" />
     </g>
     <g
@@ -136,11 +141,12 @@
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,74.422601,104.25813)"
-       id="g2612">
+       id="g2612"
+       style="stroke:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2614"
-         style="fill:none;stroke:#7b7979;stroke-width:0.61699998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;stroke:#000000;stroke-width:0.61699998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 0,0 h 16.336 c 0.58,0 0.965,-0.028 1.35,-0.954 1.406,-3.375 6.064,-14.328 6.478,-15.294 0.385,-0.899 0.205,-1.233 -0.309,-1.233 H 6.58 Z" />
     </g>
     <g
@@ -154,11 +160,12 @@
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,75.129534,103.00686)"
-       id="g2620">
+       id="g2620"
+       style="stroke:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2622"
-         style="fill:none;stroke:#7b7979;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 0,0 h 16.336 c 0.58,0 0.967,-0.024 1.352,-0.951 1.406,-3.377 6.062,-14.329 6.476,-15.297 0.387,-0.897 0.207,-1.233 -0.309,-1.233 H 6.582 Z" />
     </g>
     <g
@@ -172,11 +179,12 @@
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,75.129534,103.07957)"
-       id="g2628">
+       id="g2628"
+       style="stroke:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2630"
-         style="fill:none;stroke:#7b7979;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 0,0 6.529,-17.378 c 0,0 -1.849,-1.182 -1.849,-3.341 l -6.428,16.965 c 0,0 -0.719,2.367 1.748,3.754 z" />
     </g>
     <g
@@ -190,83 +198,92 @@
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,77.487357,109.21046)"
-       id="g2636">
+       id="g2636"
+       style="stroke:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2638"
-         style="fill:none;stroke:#7b7979;stroke-width:0.745;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;stroke:#000000;stroke-width:0.745;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 0,0 c 0,0 16.145,0.045 15.99,0 -0.109,-0.033 -0.258,-0.527 -0.258,-0.527 l -0.152,-0.4 -0.31,-0.301 V -1.56 l -0.206,-0.269 0.104,-0.432 H -1.594 c 0,0 0.155,1.387 1.594,2.261 z" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,79.047306,109.50104)"
-       id="g2640">
+       id="g2640"
+       style="stroke:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2642"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#7b7979;stroke-width:0.308;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.308;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="M 0,0 H 11.26" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,79.047306,109.73687)"
-       id="g2644">
+       id="g2644"
+       style="stroke:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2646"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#7b7979;stroke-width:0.308;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.308;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="M 0,0 H 11.26" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,77.516287,105.14109)"
-       id="g2648">
+       id="g2648"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2650"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 1.086,-2.154 1.006,0.033 -0.838,2.22 z" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,78.443032,105.35488)"
-       id="g2652">
+       id="g2652"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2654"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="M 0,0 0.316,-0.928 0.861,-0.784 0.496,0.138 Z" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,78.755841,104.99297)"
-       id="g2656">
+       id="g2656"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2658"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 0.699,-2.099 0.635,0.018 -0.68,2.039 z" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,79.333937,105.17263)"
-       id="g2660">
+       id="g2660"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2662"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 0.438,-1.361 0.9,0.027 -0.701,1.35 z" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,79.876862,104.89133)"
-       id="g2664">
+       id="g2664"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2666"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 0.893,-2.221 0.83,0.276 -0.452,1.797 z" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,80.685784,105.08652)"
-       id="g2668">
+       id="g2668"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2670"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="M 0,0 0.262,-1.119 1.303,-1.209 0.672,0.082 Z" />
     </g>
     <g
@@ -289,128 +306,142 @@
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,80.6982,108.50095)"
-       id="g2680">
+       id="g2680"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2682"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="M 0,0 C 0,0 -0.371,1.294 1.195,1.279 1.195,1.279 1.648,-0.399 0,0" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,81.305226,108.10905)"
-       id="g2684">
+       id="g2684"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2686"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="M 0,0 C 0,0 -0.275,0.973 0.861,0.961 0.861,0.961 1.203,-0.301 0,0" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,81.601488,108.20017)"
-       id="g2688">
+       id="g2688"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2690"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="M 0,0 C 0,0 0.352,0.789 1.4,0.009 1.4,0.009 0.928,-1.006 0,0" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,81.852313,107.94681)"
-       id="g2692">
+       id="g2692"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2694"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="M 0,0 C 0,0 -0.273,0.972 0.861,0.96 0.861,0.96 1.201,-0.302 0,0" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,79.607482,108.1747)"
-       id="g2696">
+       id="g2696"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2698"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 c 0,0 -0.158,0.977 -1.293,0.978 0,0 0.219,-1.261 1.293,-0.978" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,79.350484,108.26082)"
-       id="g2700">
+       id="g2700"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2702"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 c 0,0 -0.703,0.795 -1.406,0.026 0,0 0.922,-1.022 1.406,-0.026" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,78.986664,108.00364)"
-       id="g2704">
+       id="g2704"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2706"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="M 0,0 C 0,0 -0.156,0.974 -1.291,0.974 -1.291,0.974 -1.07,-0.285 0,0" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,80.508018,108.51834)"
-       id="g2708">
+       id="g2708"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2710"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 c 0,0 -0.26,1.3 -1.803,1.234 0,0 0.365,-1.686 1.803,-1.234" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,78.351381,104.15977)"
-       id="g2712">
+       id="g2712"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2714"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 c 0,0 0.111,-1.006 -1.217,-0.789 0,0 -0.129,1.301 1.217,0.789" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,78.023403,104.01648)"
-       id="g2716">
+       id="g2716"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2718"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 c 0,0 -0.582,-0.714 -1.639,0.244 0,0 0.77,0.911 1.639,-0.244" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,77.676836,104.22042)"
-       id="g2720">
+       id="g2720"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2722"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="m 0,0 c 0,0 0.107,-1.006 -1.219,-0.789 0,0 -0.125,1.303 1.219,0.789" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,79.402131,104.05849)"
-       id="g2724">
+       id="g2724"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2726"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="M 0,0 C 0,0 0.285,-1.035 1.533,-0.91 1.533,-0.91 1.148,0.426 0,0" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,79.675004,103.93636)"
-       id="g2728">
+       id="g2728"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2730"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="M 0,0 C 0,0 0.861,-0.781 1.549,0.127 1.549,0.127 0.42,1.13 0,0" />
     </g>
     <g
        transform="matrix(0.35277777,0,0,-0.35277777,80.104264,104.17357)"
-       id="g2732">
+       id="g2732"
+       style="fill:#000000">
       <path
          inkscape:connector-curvature="0"
          id="path2734"
-         style="fill:#7b7979;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          d="M 0,0 C 0,0 0.281,-1.033 1.527,-0.906 1.527,-0.906 1.143,0.426 0,0" />
     </g>
   </g>

@@ -43,6 +43,22 @@
     vertical-align: middle;
 }
 
+.ryuutama .sheet-header .check-container {
+    text-align: center;
+}
+
+.ryuutama .sheet-header .check-img {
+    max-height: 50px;
+    margin-right: 0px;
+    margin-left: 20px;
+    border: none;
+    vertical-align: middle;
+}
+
+.ryuutama .check-button {
+    cursor: pointer;
+}
+
 .ryuutama .sheet-header .attribute-bonus {
     vertical-align: middle;
 }

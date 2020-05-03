@@ -2,6 +2,9 @@
     "RYUU.title": "Ryuutama",
 
     "RYUU.name": "Name",
+    "RYUU.desc": "Description",
+    "RYUU.items": "Inventory",
+    "RYUU.abilities": "Abilities",
 
     "RYUU.travel": "Travel",
     "RYUU.direction": "Direction",

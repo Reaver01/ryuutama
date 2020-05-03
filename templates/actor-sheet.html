@@ -108,20 +108,18 @@
                         <tr>
                             <td colspan="4" class="check-container">
                                 <table class="check-table">
-                                    <thead>
-                                        <tr>
-                                            <td colspan="3">Check Rolls</td>
-                                        </tr>
-                                    </thead>
                                     <tr>
-                                        <td>
-                                            <input class="check-button" type="button" value="Travel" />
+                                        <td class="check-container">
+                                            <strong>{{ localize "RYUU.travel" }}</strong>
+                                            <img class="check-img check-button" src="/systems/ryuutama/img/map.svg" title="Travel" />
                                         </td>
-                                        <td>
-                                            <input class="check-button" type="button" value="Direction" />
+                                        <td class="check-container">
+                                            <strong>{{ localize "RYUU.direction" }}</strong>
+                                            <img class="check-img check-button" src="/systems/ryuutama/img/compass.svg" title="Direction" />
                                         </td>
-                                        <td>
-                                            <input class="check-button" type="button" value="Camp" />
+                                        <td class="check-container">
+                                            <strong>{{ localize "RYUU.camp" }}</strong>
+                                            <img class="check-img check-button" src="/systems/ryuutama/img/camp.svg" title="Camp" />
                                         </td>
                                     </tr>
                                 </table>
@@ -156,7 +154,7 @@
                     <div class="sub-resource">
                         <strong>{{ localize "RYUU.initiative" }}</strong>
                         <br />
-                        <img class="resource-img check-button" src="/systems/ryuutama/img/fumble.svg" title="Initiative" value="Initiative" />
+                        <img class="resource-img check-button" src="/systems/ryuutama/img/dice.svg" title="Initiative" />
                         <input class="resource-val" type="text" name="data.attributes.initiative.value" value="{{data.attributes.initiative.value}}" data-dtype="Number" />
                     </div>
                 </td>
@@ -166,12 +164,18 @@
 
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="items">Items</a>
+        <a class="item" data-tab="abilities">{{ localize "RYUU.abilities" }}</a>
+        <a class="item" data-tab="description">{{ localize "RYUU.desc" }}</a>
+        <a class="item" data-tab="items">{{ localize "RYUU.items" }}</a>
     </nav>
 
     {{!-- Sheet Body --}}
     <section class="sheet-body">
+
+        {{!-- Abilities Tab --}}
+        <div class="tab abilities" data-group="primary" data-tab="abilities">
+            <h1>Abilities</h1>
+        </div>
 
         {{!-- Biography Tab --}}
         <div class="tab biography" data-group="primary" data-tab="description">
