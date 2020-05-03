@@ -8,12 +8,58 @@
                 "min": 0,
                 "max": 10
             },
-            "power": {
+            "mental": {
                 "value": 5,
                 "min": 0,
                 "max": 5
             },
-            "attributes": {}
+            "attributes": {
+                "str": {
+                    "value": 0,
+                    "min": 0,
+                    "max": 0,
+                    "bonus": false
+                },
+                "dex": {
+                    "value": 0,
+                    "min": 0,
+                    "max": 0,
+                    "bonus": false
+                },
+                "int": {
+                    "value": 0,
+                    "min": 0,
+                    "max": 0,
+                    "bonus": false
+                },
+                "spi": {
+                    "value": 0,
+                    "min": 0,
+                    "max": 0,
+                    "bonus": false
+                },
+                "condition": {
+                    "value": 2,
+                    "min": 2,
+                    "max": 20
+                },
+                "fumble": {
+                    "value": 0
+                },
+                "initiative": {
+                    "value": 0
+                },
+                "level": {
+                    "value": 1,
+                    "min": 1,
+                    "max": 10
+                },
+                "exp": {
+                    "value": 0,
+                    "min": 0,
+                    "max": 10000
+                }
+            }
         }
     },
     "Item": {
