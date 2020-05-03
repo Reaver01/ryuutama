@@ -3,15 +3,15 @@
         "types": ["character"],
         "character": {
             "biography": "",
-            "health": {
-                "value": 10,
+            "hp": {
+                "value": 8,
                 "min": 0,
-                "max": 10
+                "max": 8
             },
-            "mental": {
-                "value": 5,
+            "mp": {
+                "value": 8,
                 "min": 0,
-                "max": 5
+                "max": 8
             },
             "attributes": {
                 "str": {

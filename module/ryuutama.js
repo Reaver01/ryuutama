@@ -7,13 +7,13 @@
 // Import Modules
 import {
     RyuutamaActor
-} from "./actor.js";
+} from "./actor/actor.js";
 import {
     RyuutamaItemSheet
-} from "./item-sheet.js";
+} from "./item/item-sheet.js";
 import {
     RyuutamaActorSheet
-} from "./actor-sheet.js";
+} from "./actor/actor-sheet.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */

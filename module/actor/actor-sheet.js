@@ -1,3 +1,7 @@
+import {
+    RYUU
+} from '../config.js';
+
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -7,7 +11,7 @@ export class RyuutamaActorSheet extends ActorSheet {
     /** @override */
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            classes: ["ryuutama", "sheet", "actor"],
+            classes: ["ryuutama", "sheet", "actor", "character"],
             template: "systems/ryuutama/templates/actor-sheet.html",
             width: 600,
             height: 600,
@@ -56,48 +60,61 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Check Buttons
         html.find('.check-button').click(ev => {
+            const actor = this.actor;
+            let str = Number(actor.data.data.attributes.str.value);
+            let dex = Number(actor.data.data.attributes.dex.value);
+            let int = Number(actor.data.data.attributes.int.value);
+            let spi = Number(actor.data.data.attributes.spi.value);
+            if (actor.data.data.attributes.str.bonus) {
+                str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) + 1]
+            }
+            if (actor.data.data.attributes.dex.bonus) {
+                dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) + 1]
+            }
+            if (actor.data.data.attributes.int.bonus) {
+                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) + 1]
+                console.log(RYUU.DICE.findIndex(i => i === int));
+            }
+            if (actor.data.data.attributes.spi.bonus) {
+                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1]
+            }
             if (ev.target.value === "Travel") {
-                const actor = this.actor;
-                const formula = `1d${actor.data.data.attributes.str.value} + 1d${actor.data.data.attributes.dex.value}`;
+                const formula = `1d${str} + 1d${dex}`;
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} rolled a Travel Check`
+                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.travel")}`
                 });
             } else if (ev.target.value === "Direction") {
-                const actor = this.actor;
-                const formula = `1d${actor.data.data.attributes.int.value} + 1d${actor.data.data.attributes.int.value}`;
+                const formula = `1d${int} + 1d${int}`;
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} rolled a Direction Check`
+                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.direction")}`
                 });
             } else if (ev.target.value === "Camp") {
-                const actor = this.actor;
-                const formula = `1d${actor.data.data.attributes.dex.value} + 1d${actor.data.data.attributes.int.value}`;
+                const formula = `1d${dex} + 1d${int}`;
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} rolled a Camp Check`
+                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.camp")}`
                 });
             } else if (ev.target.title === "Condition") {
-                const actor = this.actor;
-                const formula = `1d${actor.data.data.attributes.str.value} + 1d${actor.data.data.attributes.spi.value}`;
+                const formula = `1d${str} + 1d${spi}`;
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} rolled a Condition Check`
+                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.condition")}`
                 });
                 actor.update({
                     "data.attributes.condition.value": roll._total
                 })
-            } else if (ev.target.title === "Initiative") {
-                const actor = this.actor;
-                const formula = `1d${actor.data.data.attributes.dex.value} + 1d${actor.data.data.attributes.int.value}`;
+            } else if (ev.target.title === "Inititative") {
+                const formula = `1d${dex} + 1d${int}`;
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} rolled for Initiative`
+                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.initiative")}`
                 });
                 actor.update({
                     "data.attributes.initiative.value": roll._total
@@ -122,10 +139,42 @@ export class RyuutamaActorSheet extends ActorSheet {
     /** @override */
     _updateObject(event, formData) {
         // Update the Actor
-        formData["data.health.max"] = formData["data.attributes.str.value"] * 2;
-        formData["data.mental.max"] = formData["data.attributes.spi.value"] * 2;
-        const levels = [0, 100, 600, 1200, 2000, 3000, 4200, 5800, 7500, 10000, 100000000];
-        formData["data.attributes.level.value"] = levels.findIndex(i => i > Number(formData["data.attributes.exp.value"]));
+        formData["data.hp.max"] = formData["data.attributes.str.value"] * 2;
+        formData["data.mp.max"] = formData["data.attributes.spi.value"] * 2;
+        if (!formData["data.hp.value"]) {
+            formData["data.hp.value"] = formData["data.hp.max"]
+        }
+        if (!formData["data.mp.value"]) {
+            formData["data.mp.value"] = formData["data.mp.max"]
+        }
+        formData["data.attributes.level.value"] = RYUU.CHARACTER_EXP_LEVELS.findIndex(i => i > Number(formData["data.attributes.exp.value"]));
         return this.object.update(formData);
+    }
+
+    /** @override */
+    async modifyTokenAttribute(attribute, value, isDelta, isBar) {
+        if (attribute === "hp") {
+            // Get current and delta HP
+            const hp = getProperty(this.data.data, attribute);
+            const current = hp.value;
+            const max = hp.max;
+            const delta = isDelta ? value : value - current;
+
+            return this.update({
+                "data.hp.value": Math.clamped(hp.value + delta, 0, max)
+            });
+        } else if (attribute === "mp") {
+            // Get current and delta MP
+            const mp = getProperty(this.data.data, attribute);
+            const current = mp.value;
+            const max = mp.max;
+            const delta = isDelta ? value : value - current;
+
+            return this.update({
+                "data.mp.value": Math.clamped(mp.value + delta, 0, max)
+            });
+        } else {
+            return super.modifyTokenAttribute(attribute, value, isDelta, isBar);
+        }
     }
 }

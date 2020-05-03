@@ -30,9 +30,10 @@
 
 .ryuutama .sheet-header .attribute-img {
     max-height: 50px;
-    margin-right: 20px;
+    margin-right: 0px;
     border: none;
     vertical-align: middle;
+    display: inline;
 }
 
 .ryuutama .sheet-header .resource-img {
@@ -50,7 +51,7 @@
     float: left;
     border: none;
     width: 25%;
-    min-width: 125px;
+    min-width: 120px;
     text-align: center;
 }
 

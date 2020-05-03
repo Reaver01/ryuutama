@@ -11,13 +11,13 @@
                     <table class="right-header-table">
                         <tr>
                             <td colspan="3">
-                                <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
+                                <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'RYUU.name' }}" /></h1>
                             </td>
                             <td class="level">
-                                <strong>Level</strong>
+                                <strong>{{ localize "RYUU.level" }}</strong>
                                 <input readonly class="resource-val" type="text" name="data.attributes.level.value" value="{{data.attributes.level.value}}" data-dtype="Number" />
                                 <br />
-                                <strong>Exp</strong>
+                                <strong>{{ localize "RYUU.experience.short" }}</strong>
                                 <input class="resource-val" type="text" name="data.attributes.exp.value" value="{{data.attributes.exp.value}}" data-dtype="Number" />
                             </td>
                         </tr>
@@ -25,7 +25,7 @@
                         <tr>
                             <td>
                                 <div class="attribute">
-                                    <strong>STR</strong>
+                                    <strong>{{ localize "RYUU.str.short" }}</strong>
                                     <input class="attribute-bonus" type="checkbox" name="data.attributes.str.bonus" {{checked data.attributes.str.bonus}} />
                                     <br />
                                     <select name="data.attributes.str.value">
@@ -35,12 +35,12 @@
                                         <option value="8">d8</option>
                                         {{/select}}
                                     </select>
-                                    <img class="attribute-img" src="/systems/ryuutama/img/str.svg" title="STR" />
+                                    <img class="attribute-img" src="/systems/ryuutama/img/str.svg" title="{{ localize 'RYUU.str.long' }}" />
                                 </div>
                             </td>
                             <td>
                                 <div class="attribute">
-                                    <strong>DEX</strong>
+                                    <strong>{{ localize "RYUU.dex.short" }}</strong>
                                     <input class="attribute-bonus" type="checkbox" name="data.attributes.dex.bonus" {{checked data.attributes.dex.bonus}} />
                                     <br />
                                     <select name="data.attributes.dex.value">
@@ -50,12 +50,12 @@
                                         <option value="8">d8</option>
                                         {{/select}}
                                     </select>
-                                    <img class="attribute-img" src="/systems/ryuutama/img/dex.svg" title="DEX" />
+                                    <img class="attribute-img" src="/systems/ryuutama/img/dex.svg" title="{{ localize 'RYUU.dex.long' }}" />
                                 </div>
                             </td>
                             <td>
                                 <div class="attribute">
-                                    <strong>INT</strong>
+                                    <strong>{{ localize "RYUU.int.short" }}</strong>
                                     <input class="attribute-bonus" type="checkbox" name="data.attributes.int.bonus" {{checked data.attributes.int.bonus}} />
                                     <br />
                                     <select name="data.attributes.int.value">
@@ -65,12 +65,12 @@
                                         <option value="8">d8</option>
                                         {{/select}}
                                     </select>
-                                    <img class="attribute-img" src="/systems/ryuutama/img/int.svg" title="INT" />
+                                    <img class="attribute-img" src="/systems/ryuutama/img/int.svg" title="{{ localize 'RYUU.int.long' }}" />
                                 </div>
                             </td>
                             <td>
                                 <div class="attribute">
-                                    <strong>SPI</strong>
+                                    <strong>{{ localize "RYUU.spi.short" }}</strong>
                                     <input class="attribute-bonus" type="checkbox" name="data.attributes.spi.bonus" {{checked data.attributes.spi.bonus}} />
                                     <br />
                                     <select name="data.attributes.spi.value">
@@ -80,7 +80,7 @@
                                         <option value="8">d8</option>
                                         {{/select}}
                                     </select>
-                                    <img class="attribute-img" src="/systems/ryuutama/img/spi.svg" title="SPI" />
+                                    <img class="attribute-img" src="/systems/ryuutama/img/spi.svg" title="{{ localize 'RYUU.spi.long' }}" />
                                 </div>
                             </td>
                         </tr>
@@ -90,18 +90,18 @@
                                 <div class="resource">
                                     <strong>HP</strong>
                                     <img class="resource-img" src="/systems/ryuutama/img/hp.svg" title="Health Points" />
-                                    <input class="resource-val" type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number" />
+                                    <input class="resource-val" type="text" name="data.hp.value" value="{{data.hp.value}}" data-dtype="Number" />
                                     <span class="sep"> / </span>
-                                    <input class="resource-val" readonly type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number" />
+                                    <input class="resource-val" readonly type="text" name="data.hp.max" value="{{data.hp.max}}" data-dtype="Number" />
                                 </div>
                             </td>
                             <td colspan="2">
                                 <div class="resource">
                                     <strong>MP</strong>
                                     <img class="resource-img" src="/systems/ryuutama/img/mp.svg" title="Mental Points" />
-                                    <input class="resource-val" type="text" name="data.mental.value" value="{{data.mental.value}}" data-dtype="Number" />
+                                    <input class="resource-val" type="text" name="data.mp.value" value="{{data.mp.value}}" data-dtype="Number" />
                                     <span class="sep"> / </span>
-                                    <input class="resource-val" readonly type="text" name="data.mental.max" value="{{data.mental.max}}" data-dtype="Number" />
+                                    <input class="resource-val" readonly type="text" name="data.mp.max" value="{{data.mp.max}}" data-dtype="Number" />
                                 </div>
                             </td>
                         </tr>
@@ -134,7 +134,7 @@
             <tr>
                 <td>
                     <div class="sub-resource">
-                        <strong>Condition</strong>
+                        <strong>{{ localize "RYUU.condition" }}</strong>
                         <br />
                         <img class="resource-img check-button" src="/systems/ryuutama/img/condition.svg" title="Condition" value="Condition" />
                         <input class="resource-val" readonly type="text" name="data.attributes.condition.value" value="{{data.attributes.condition.value}}" data-dtype="Number" />
@@ -144,7 +144,7 @@
             <tr>
                 <td>
                     <div class="sub-resource">
-                        <strong>Fumble Points</strong>
+                        <strong>{{ localize "RYUU.fumble" }}</strong>
                         <br />
                         <img class="resource-img" src="/systems/ryuutama/img/fumble.svg" title="Fumble" />
                         <input class="resource-val" type="text" name="data.attributes.fumble.value" value="{{data.attributes.fumble.value}}" data-dtype="Number" />
@@ -154,7 +154,7 @@
             <tr>
                 <td>
                     <div class="sub-resource">
-                        <strong>Initiative</strong>
+                        <strong>{{ localize "RYUU.initiative" }}</strong>
                         <br />
                         <img class="resource-img check-button" src="/systems/ryuutama/img/fumble.svg" title="Initiative" value="Initiative" />
                         <input class="resource-val" type="text" name="data.attributes.initiative.value" value="{{data.attributes.initiative.value}}" data-dtype="Number" />

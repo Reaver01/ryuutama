@@ -1,0 +1,30 @@
+{
+    "RYUU.title": "Ryuutama",
+
+    "RYUU.name": "Name",
+
+    "RYUU.travel": "Travel",
+    "RYUU.direction": "Direction",
+    "RYUU.camp": "Camp",
+    "RYUU.condition": "Condition",
+    "RYUU.initiative": "Initiative",
+    "RYUU.fumble": "Fumble Points",
+    "RYUU.level": "Level",
+    "RYUU.experience.short": "Exp",
+    "RYUU.experience.long": "Experience",
+
+    "RYUU.str.short": "STR",
+    "RYUU.str.long": "Strength",
+    "RYUU.dex.short": "DEX",
+    "RYUU.dex.long": "Dexterity",
+    "RYUU.int.short": "INT",
+    "RYUU.int.long": "Intelligence",
+    "RYUU.spi.short": "SPI",
+    "RYUU.spi.long": "Spirit",
+
+    "RYUU.check.travel": "rolled a Travel Check",
+    "RYUU.check.direction": "rolled a Direction Check",
+    "RYUU.check.camp": "rolled a Camp Check",
+    "RYUU.check.condition": "rolled a Condition Check",
+    "RYUU.check.initiative": "rolled for Initiative"
+}

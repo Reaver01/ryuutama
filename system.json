@@ -10,11 +10,15 @@
     "esmodules": ["module/ryuutama.js"],
     "styles": ["styles/ryuutama.css"],
     "packs": [],
-    "languages": [],
+    "languages": [{
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json"
+    }],
     "gridDistance": 5,
     "gridUnits": "ft",
-    "primaryTokenAttribute": "health",
-    "secondaryTokenAttribute": "power",
+    "primaryTokenAttribute": "hp",
+    "secondaryTokenAttribute": "mp",
     "url": "https://github.com/Reaver01/ryuutama/",
     "manifest": "https://raw.githubusercontent.com/reaver01/ryuutama/master/system.json",
     "download": "https://github.com/reaver01/ryuutama/archive/master.zip",
