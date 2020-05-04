@@ -16,6 +16,10 @@
     "RYUU.experience.short": "Exp",
     "RYUU.experience.long": "Experience",
 
+    "RYUU.hp.short": "HP",
+    "RYUU.hp.long": "Health Points",
+    "RYUU.mp.short": "MP",
+    "RYUU.mp.long": "Mental Points",
     "RYUU.str.short": "STR",
     "RYUU.str.long": "Strength",
     "RYUU.dex.short": "DEX",
@@ -29,5 +33,9 @@
     "RYUU.check.direction": "rolled a Direction Check",
     "RYUU.check.camp": "rolled a Camp Check",
     "RYUU.check.condition": "rolled a Condition Check",
-    "RYUU.check.initiative": "rolled for Initiative"
+    "RYUU.check.initiative": "rolled for Initiative",
+    "RYUU.check.str": "rolled a strength check",
+    "RYUU.check.dex": "rolled a dexterity check",
+    "RYUU.check.int": "rolled a intelligence check",
+    "RYUU.check.spi": "rolled a spirit check"
 }

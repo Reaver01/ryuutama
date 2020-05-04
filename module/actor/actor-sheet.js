@@ -59,66 +59,70 @@ export class RyuutamaActorSheet extends ActorSheet {
         });
 
         // Check Buttons
-        html.find('.check-button').click(ev => {
+        html.find('.roll-button').click(ev => {
             const actor = this.actor;
             let str = Number(actor.data.data.attributes.str.value);
             let dex = Number(actor.data.data.attributes.dex.value);
             let int = Number(actor.data.data.attributes.int.value);
             let spi = Number(actor.data.data.attributes.spi.value);
             if (actor.data.data.attributes.str.bonus) {
-                str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) + 1]
+                str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) + 1];
             }
             if (actor.data.data.attributes.dex.bonus) {
-                dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) + 1]
+                dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) + 1];
             }
             if (actor.data.data.attributes.int.bonus) {
-                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) + 1]
+                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) + 1];
                 console.log(RYUU.DICE.findIndex(i => i === int));
             }
             if (actor.data.data.attributes.spi.bonus) {
-                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1]
+                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1];
             }
-            if (ev.target.title === "Travel") {
-                const formula = `1d${str} + 1d${dex}`;
+            switch (ev.target.id) {
+                case "roll-travel":
+                    rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`);
+                    break;
+                case "roll-direction":
+                    rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`);
+                    break;
+                case "roll-camp":
+                    rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`);
+                    break;
+                case "roll-condition":
+                    const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`);
+                    actor.update({
+                        "data.attributes.condition.value": condition
+                    })
+                    break;
+                case "roll-initiative":
+                    const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`);
+                    actor.update({
+                        "data.attributes.initiative.value": initiative
+                    })
+                    break;
+                case "roll-strength":
+                    rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.check.str")} [STR]`);
+                    break;
+                case "roll-dexterity":
+                    rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.dex")} [DEX]`);
+                    break;
+                case "roll-intelligence":
+                    rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.int")} [INT]`);
+                    break;
+                case "roll-spirit":
+                    rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.spi")} [SPI]`);
+                    break;
+                default:
+                    break;
+            }
+
+            function rollCheck(formula, flavor) {
                 const r = new Roll(formula);
                 const roll = r.roll();
                 roll.toMessage({
-                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`
+                    flavor: flavor
                 });
-            } else if (ev.target.title === "Direction") {
-                const formula = `1d${int} + 1d${int}`;
-                const r = new Roll(formula);
-                const roll = r.roll();
-                roll.toMessage({
-                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`
-                });
-            } else if (ev.target.title === "Camp") {
-                const formula = `1d${dex} + 1d${int}`;
-                const r = new Roll(formula);
-                const roll = r.roll();
-                roll.toMessage({
-                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`
-                });
-            } else if (ev.target.title === "Condition") {
-                const formula = `1d${str} + 1d${spi}`;
-                const r = new Roll(formula);
-                const roll = r.roll();
-                roll.toMessage({
-                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`
-                });
-                actor.update({
-                    "data.attributes.condition.value": roll._total
-                })
-            } else if (ev.target.title === "Initiative") {
-                const formula = `1d${dex} + 1d${int}`;
-                const r = new Roll(formula);
-                const roll = r.roll();
-                roll.toMessage({
-                    flavor: `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`
-                });
-                actor.update({
-                    "data.attributes.initiative.value": roll._total
-                })
+                return roll._total;
             }
         });
     }

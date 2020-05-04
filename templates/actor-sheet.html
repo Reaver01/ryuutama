@@ -35,7 +35,7 @@
                                         <option value="8">d8</option>
                                         {{/select}}
                                     </select>
-                                    <img class="attribute-img" src="/systems/ryuutama/img/str.svg" title="{{ localize 'RYUU.str.long' }}" />
+                                    <img class="attribute-img roll-button" src="/systems/ryuutama/img/str.svg" id="roll-strength" title="{{ localize 'RYUU.str.short' }}" />
                                 </div>
                             </td>
                             <td>
@@ -50,7 +50,7 @@
                                         <option value="8">d8</option>
                                         {{/select}}
                                     </select>
-                                    <img class="attribute-img" src="/systems/ryuutama/img/dex.svg" title="{{ localize 'RYUU.dex.long' }}" />
+                                    <img class="attribute-img roll-button" src="/systems/ryuutama/img/dex.svg" id="roll-dexterity" title="{{ localize 'RYUU.dex.long' }}" />
                                 </div>
                             </td>
                             <td>
@@ -65,7 +65,7 @@
                                         <option value="8">d8</option>
                                         {{/select}}
                                     </select>
-                                    <img class="attribute-img" src="/systems/ryuutama/img/int.svg" title="{{ localize 'RYUU.int.long' }}" />
+                                    <img class="attribute-img roll-button" src="/systems/ryuutama/img/int.svg" id="roll-intelligence" title="{{ localize 'RYUU.int.long' }}" />
                                 </div>
                             </td>
                             <td>
@@ -80,7 +80,7 @@
                                         <option value="8">d8</option>
                                         {{/select}}
                                     </select>
-                                    <img class="attribute-img" src="/systems/ryuutama/img/spi.svg" title="{{ localize 'RYUU.spi.long' }}" />
+                                    <img class="attribute-img roll-button" src="/systems/ryuutama/img/spi.svg" id="roll-spirit" title="{{ localize 'RYUU.spi.long' }}" />
                                 </div>
                             </td>
                         </tr>
@@ -89,7 +89,7 @@
                             <td colspan="2">
                                 <div class="resource">
                                     <strong>HP</strong>
-                                    <img class="resource-img" src="/systems/ryuutama/img/hp.svg" title="Health Points" />
+                                    <img class="resource-img" src="/systems/ryuutama/img/hp.svg" title="{{ localize 'RYUU.hp.long' }}" />
                                     <input class="resource-val" type="text" name="data.hp.value" value="{{data.hp.value}}" data-dtype="Number" />
                                     <span class="sep"> / </span>
                                     <input class="resource-val" readonly type="text" name="data.hp.max" value="{{data.hp.max}}" data-dtype="Number" />
@@ -98,7 +98,7 @@
                             <td colspan="2">
                                 <div class="resource">
                                     <strong>MP</strong>
-                                    <img class="resource-img" src="/systems/ryuutama/img/mp.svg" title="Mental Points" />
+                                    <img class="resource-img" src="/systems/ryuutama/img/mp.svg" title="{{ localize 'RYUU.mp.long' }}" />
                                     <input class="resource-val" type="text" name="data.mp.value" value="{{data.mp.value}}" data-dtype="Number" />
                                     <span class="sep"> / </span>
                                     <input class="resource-val" readonly type="text" name="data.mp.max" value="{{data.mp.max}}" data-dtype="Number" />
@@ -111,15 +111,15 @@
                                     <tr>
                                         <td class="check-container">
                                             <strong>{{ localize "RYUU.travel" }}</strong>
-                                            <img class="check-img check-button" src="/systems/ryuutama/img/map.svg" title="Travel" />
+                                            <img class="check-img roll-button" src="/systems/ryuutama/img/map.svg" id="roll-travel" title="{{ localize 'RYUU.travel' }}" />
                                         </td>
                                         <td class="check-container">
                                             <strong>{{ localize "RYUU.direction" }}</strong>
-                                            <img class="check-img check-button" src="/systems/ryuutama/img/compass.svg" title="Direction" />
+                                            <img class="check-img roll-button" src="/systems/ryuutama/img/compass.svg" id="roll-direction" title="{{ localize 'RYUU.direction' }}" />
                                         </td>
                                         <td class="check-container">
                                             <strong>{{ localize "RYUU.camp" }}</strong>
-                                            <img class="check-img check-button" src="/systems/ryuutama/img/camp.svg" title="Camp" />
+                                            <img class="check-img roll-button" src="/systems/ryuutama/img/camp.svg" id="roll-camp" title="{{ localize 'RYUU.camp' }}" />
                                         </td>
                                     </tr>
                                 </table>
@@ -134,7 +134,7 @@
                     <div class="sub-resource">
                         <strong>{{ localize "RYUU.condition" }}</strong>
                         <br />
-                        <img class="resource-img check-button" src="/systems/ryuutama/img/condition.svg" title="Condition" value="Condition" />
+                        <img class="resource-img roll-button" src="/systems/ryuutama/img/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
                         <input class="resource-val" readonly type="text" name="data.attributes.condition.value" value="{{data.attributes.condition.value}}" data-dtype="Number" />
                     </div>
                 </td>
@@ -144,7 +144,7 @@
                     <div class="sub-resource">
                         <strong>{{ localize "RYUU.fumble" }}</strong>
                         <br />
-                        <img class="resource-img" src="/systems/ryuutama/img/fumble.svg" title="Fumble" />
+                        <img class="resource-img" src="/systems/ryuutama/img/fumble.svg" id="roll-fumble" title="{{ localize 'RYUU.fumble' }}" />
                         <input class="resource-val" type="text" name="data.attributes.fumble.value" value="{{data.attributes.fumble.value}}" data-dtype="Number" />
                     </div>
                 </td>
@@ -154,7 +154,7 @@
                     <div class="sub-resource">
                         <strong>{{ localize "RYUU.initiative" }}</strong>
                         <br />
-                        <img class="resource-img check-button" src="/systems/ryuutama/img/dice.svg" title="Initiative" />
+                        <img class="resource-img roll-button" src="/systems/ryuutama/img/dice.svg" id="roll-initiative" title="{{ localize 'RYUU.initiative' }}" />
                         <input class="resource-val" type="text" name="data.attributes.initiative.value" value="{{data.attributes.initiative.value}}" data-dtype="Number" />
                     </div>
                 </td>
