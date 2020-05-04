@@ -3,8 +3,24 @@
 
     "RYUU.name": "Name",
     "RYUU.desc": "Description",
+    "RYUU.attributes": "Attributes",
     "RYUU.items": "Inventory",
     "RYUU.abilities": "Abilities",
+    "RYUU.dodge": "Shield Dodge Value",
+
+    "RYUU.roll.crit": "<br /><strong class='crit-roll'>CRITICAL SUCCESS!</strong>",
+    "RYUU.roll.fumble": "<br /><strong class='fumble-roll'>FUMBLE!</strong>",
+
+    "RYUU.price": "Price",
+    "RYUU.size": "Size",
+    "RYUU.durability": "Durability",
+    "RYUU.equip": "Equip",
+    "RYUU.dp": "Defense Points",
+    "RYUU.penalty": "Penalty",
+    "RYUU.accuracy": "Accuracy",
+    "RYUU.accuracybonus": "Bonus",
+    "RYUU.damage": "Damage",
+    "RYUU.damagebonus": "Bonus",
 
     "RYUU.travel": "Travel",
     "RYUU.direction": "Direction",

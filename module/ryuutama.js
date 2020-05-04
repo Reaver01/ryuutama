@@ -10,10 +10,10 @@ import {
 } from "./actor/actor.js";
 import {
     RyuutamaItemSheet
-} from "./item/item-sheet.js";
+} from "./item/sheet.js";
 import {
     RyuutamaActorSheet
-} from "./actor/actor-sheet.js";
+} from "./actor/sheet.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -27,8 +27,8 @@ Hooks.once("init", async function () {
      * @type {String}
      */
     CONFIG.Combat.initiative = {
-        formula: "1d20",
-        decimals: 2
+        formula: "1d@dex + 1d@int",
+        decimals: 0
     };
 
     // Define custom Entity classes
@@ -53,4 +53,22 @@ Hooks.once("init", async function () {
         default: true,
         config: true
     });
+});
+
+Hooks.on("renderChatMessage", (message, html, data) => {
+    if (!message.isRoll || !message.isRollVisible || !message.roll.parts.length) return;
+
+    const roll = message.roll;
+    const dice = roll.dice;
+    const smallDice = dice.filter(r => r.faces < 6);
+    const maxRolls = dice.filter(r => r.rolls[0].roll === r.faces);
+    const largeCrits = dice.filter(r => r.rolls[0].roll === r.faces || r.rolls[0].roll === 6);
+    const fumbleRolls = dice.filter(r => r.rolls[0].roll === 1);
+    if (dice.length > 1 && ((smallDice !== undefined && maxRolls.length === dice.length) || (largeCrits.length === dice.length))) {
+        html.find(".dice-total").addClass("critical");
+    }
+    if (dice.length > 1 && fumbleRolls.length === dice.length) {
+        html.find(".dice-total").addClass("fumble");
+    }
+
 });
