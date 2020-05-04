@@ -13,7 +13,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["ryuutama", "sheet", "actor", "character"],
             width: 600,
-            height: 800,
+            height: 620,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
