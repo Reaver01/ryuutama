@@ -9,7 +9,28 @@
     "author": "Reaver01",
     "esmodules": ["module/ryuutama.js"],
     "styles": ["styles/ryuutama.css"],
-    "packs": [],
+    "packs": [{
+            "name": "monsters",
+            "label": "Monsters (Ryuutama)",
+            "system": "ryuutama",
+            "path": "./packs/monsters.db",
+            "entity": "Actor"
+        },
+        {
+            "name": "classes",
+            "label": "Classes (Ryuutama)",
+            "system": "ryuutama",
+            "path": "./packs/classes.db",
+            "entity": "Item"
+        },
+        {
+            "name": "class-features",
+            "label": "Class Features (Ryuutama)",
+            "system": "ryuutama",
+            "path": "./packs/class-features.db",
+            "entity": "Item"
+        }
+    ],
     "languages": [{
         "lang": "en",
         "name": "English",

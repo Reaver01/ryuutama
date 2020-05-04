@@ -12,7 +12,6 @@ export class RyuutamaActorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["ryuutama", "sheet", "actor", "character"],
-            template: "systems/ryuutama/templates/actor-sheet.html",
             width: 600,
             height: 800,
             tabs: [{
@@ -21,6 +20,14 @@ export class RyuutamaActorSheet extends ActorSheet {
                 initial: "abilities"
             }]
         });
+    }
+
+    /* -------------------------------------------- */
+
+    /** @override */
+    get template() {
+        const path = "systems/ryuutama/templates/actor/";
+        return `${path}/${this.actor.data.type}.html`;
     }
 
     /* -------------------------------------------- */
@@ -60,6 +67,7 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Check Buttons
         html.find('.roll-button').click(ev => {
+            console.log(ev);
             const actor = this.actor;
             let str = Number(actor.data.data.attributes.str.value);
             let dex = Number(actor.data.data.attributes.dex.value);
@@ -78,6 +86,31 @@ export class RyuutamaActorSheet extends ActorSheet {
             if (actor.data.data.attributes.spi.bonus) {
                 int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1];
             }
+            const li = $(ev.currentTarget).parents(".item");
+            const item = this.actor.items.find(i => i.id === li.data("itemId"));
+            if (item !== undefined) {
+                switch (item.data.type) {
+                    case "weapon":
+                        let accuracy = item.data.data.accuracy.replace("[STR]", "1d@str").replace("[DEX]", "1d@dex").replace("[INT]", "1d@int").replace("[SPI]", "1d@spi");
+                        let damage = item.data.data.damage.replace("[STR]", "1d@str").replace("[DEX]", "1d@dex").replace("[INT]", "1d@int").replace("[SPI]", "1d@spi");
+                        let accuracyRoll;
+                        if (ev.currentTarget.classList.contains("accuracy")) {
+                            accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.accuracyBonus}`, `${actor.name} attacks with their ${item.name}`)
+                        }
+                        if (ev.currentTarget.classList.contains("damage")) {
+                            if (ev.altKey || accuracyRoll.crit) {
+                                damage = damage += ` + ${damage}`;
+                                rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} CRITICAL damage:`);
+                            } else if (!accuracyRoll.fumble) {
+                                rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} damage:`);
+                            }
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
             switch (ev.target.id) {
                 case "roll-travel":
                     rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`);
@@ -91,13 +124,13 @@ export class RyuutamaActorSheet extends ActorSheet {
                 case "roll-condition":
                     const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`);
                     actor.update({
-                        "data.attributes.condition.value": condition
+                        "data.attributes.condition.value": condition.roll
                     })
                     break;
                 case "roll-initiative":
                     const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`);
                     actor.update({
-                        "data.attributes.initiative.value": initiative
+                        "data.attributes.initiative.value": initiative.roll
                     })
                     break;
                 case "roll-strength":
@@ -117,12 +150,36 @@ export class RyuutamaActorSheet extends ActorSheet {
             }
 
             function rollCheck(formula, flavor) {
-                const r = new Roll(formula);
+                const r = new Roll(formula, {
+                    str: str,
+                    dex: dex,
+                    int: int,
+                    spi: spi
+                });
                 const roll = r.roll();
+                const dice = roll.dice;
+                const smallDice = dice.filter(r => r.faces < 6);
+                const maxRolls = dice.filter(r => r.rolls[0].roll === r.faces);
+                const largeCrits = dice.filter(r => r.rolls[0].roll === r.faces || r.rolls[0].roll === 6);
+                const fumbleRolls = dice.filter(r => r.rolls[0].roll === 1);
+                let crit = false;
+                let fumble = false;
+                if (dice.length > 1 && ((smallDice !== undefined && maxRolls.length === dice.length) || (largeCrits.length === dice.length))) {
+                    crit = true;
+                    flavor += game.i18n.localize("RYUU.roll.crit");
+                }
+                if (dice.length > 1 && fumbleRolls.length === dice.length) {
+                    fumble = true;
+                    flavor += game.i18n.localize("RYUU.roll.fumble");
+                }
                 roll.toMessage({
                     flavor: flavor
                 });
-                return roll._total;
+                return {
+                    roll: roll._total,
+                    crit: crit,
+                    fumble: fumble,
+                };
             }
         });
     }
@@ -146,10 +203,10 @@ export class RyuutamaActorSheet extends ActorSheet {
         formData["data.hp.max"] = formData["data.attributes.str.value"] * 2;
         formData["data.mp.max"] = formData["data.attributes.spi.value"] * 2;
         if (!formData["data.hp.value"]) {
-            formData["data.hp.value"] = formData["data.hp.max"]
+            formData["data.hp.value"] = formData["data.hp.max"];
         }
         if (!formData["data.mp.value"]) {
-            formData["data.mp.value"] = formData["data.mp.max"]
+            formData["data.mp.value"] = formData["data.mp.max"];
         }
         formData["data.attributes.level.value"] = RYUU.CHARACTER_EXP_LEVELS.findIndex(i => i > Number(formData["data.attributes.exp.value"]));
         return this.object.update(formData);

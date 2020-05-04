@@ -63,39 +63,46 @@
         }
     },
     "Item": {
-        "types": ["item", "weapon", "class", "feature"],
+        "types": ["item", "weapon", "armor", "shield", "class", "feature"],
         "templates": {
-            "itemDescription": {
+            "item": {
                 "name": "",
-                "effect": ""
+                "description": "",
+                "price": 0,
+                "size": 1,
+                "durability": 1,
+                "plusOne": false
             },
-            "action": {
-                "ability": null,
-                "actionType": null,
-                "attackBonus": 0,
-                "chatFlavor": "",
-                "critical": null,
-                "damage": {
-                    "parts": [],
-                    "versatile": ""
-                },
-                "formula": "",
-                "save": {
-                    "ability": "",
-                    "dc": null,
-                    "scaling": "spell"
-                }
+            "weapon": {
+                "isWeapon": true,
+                "accuracy": "",
+                "accuracyBonus": 0,
+                "damage": "",
+                "damageBonus": 0,
+                "equip": ""
+            },
+            "armor": {
+                "isArmor": true,
+                "defense": 0,
+                "penalty": 0,
+                "equip": ""
+            },
+            "shield": {
+                "isShield": true,
+                "dodge": 7
             }
         },
         "item": {
-            "description": "",
-            "quantity": 1,
-            "weight": 0,
-            "attributes": {}
+            "templates": ["item"]
         },
         "weapon": {
-            "templates": ["itemDescription", "action"],
-            "durability": 0
+            "templates": ["item", "weapon"]
+        },
+        "armor": {
+            "templates": ["item", "armor"]
+        },
+        "shield": {
+            "templates": ["item", "armor", "shield"]
         }
     }
 }
