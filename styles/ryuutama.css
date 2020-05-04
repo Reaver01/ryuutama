@@ -185,8 +185,8 @@
 }
 
 .ryuutama .sheet-body .tab {
-    height: 100%;
-    overflow-y: auto;
+    height: 55%;
+    overflow-y: scroll;
 }
 
 .ryuutama .editor,
@@ -198,7 +198,6 @@
     list-style: none;
     margin: 7px 0;
     padding: 0;
-    overflow-y: auto;
 }
 
 .ryuutama .items-list .item {
