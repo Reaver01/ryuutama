@@ -29,6 +29,13 @@
             "system": "ryuutama",
             "path": "./packs/class-features.db",
             "entity": "Item"
+        },
+        {
+            "name": "items",
+            "label": "Items (Ryuutama)",
+            "system": "ryuutama",
+            "path": "./packs/items.db",
+            "entity": "Item"
         }
     ],
     "languages": [{

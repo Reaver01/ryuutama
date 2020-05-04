@@ -4,6 +4,7 @@
     "RYUU.name": "Name",
     "RYUU.desc": "Description",
     "RYUU.attributes": "Attributes",
+    "RYUU.features": "Features",
     "RYUU.items": "Inventory",
     "RYUU.abilities": "Abilities",
     "RYUU.dodge": "Shield Dodge Value",
