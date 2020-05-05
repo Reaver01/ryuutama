@@ -63,7 +63,7 @@
         }
     },
     "Item": {
-        "types": ["item", "weapon", "armor", "shield", "class", "feature", "enchantment"],
+        "types": ["item", "weapon", "armor", "shield", "class", "feature", "enchantment", "container", "traveling"],
         "templates": {
             "item": {
                 "givenName": "",
@@ -89,6 +89,11 @@
             "shield": {
                 "isShield": true,
                 "dodge": 7
+            },
+            "traveling": {
+                "isTraveling": true,
+                "itemBonus": 1,
+                "itemBonusType": ""
             }
         },
         "item": {
