@@ -21,11 +21,11 @@
             </div>
             <div class="resource">
                 <label>{{ localize "RYUU.dp" }}</label>
-                <input type="text" name="data.defense" value="{{data.defense}}" data-dtype="String" />
+                <input type="text" name="data.defense" value="{{data.defense}}" data-dtype="Number" />
             </div>
             <div class="resource">
                 <label>{{ localize "RYUU.penalty" }}</label>
-                <input type="text" name="data.penalty" value="{{data.penalty}}" data-dtype="String" />
+                <input type="text" name="data.penalty" value="{{data.penalty}}" data-dtype="Number" />
             </div>
         </div>
     </header>
@@ -33,7 +33,7 @@
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">{{ localize "RYUU.description" }}</a>
-        <a class="item" data-tab="attributes">{{ localize "RYUU.attributes" }}</a>
+        <a class="item" data-tab="enchantments">{{ localize "RYUU.enchantments" }}</a>
     </nav>
 
     {{!-- Sheet Body --}}
@@ -44,8 +44,18 @@
             {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
         </div>
 
-        {{!-- Attributes Tab --}}
-        <div class="tab attributes" data-group="primary" data-tab="attributes">
+        {{!-- Enchantments Tab --}}
+        <div class="tab enchantments" data-group="primary" data-tab="enchantments">
+            <ol class="items-list">
+                {{#each item.data.enchantments as |item id|}}
+                <li class="item flexrow" data-item-id="{{item.name}}">
+                    <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-controls">
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
+                </li>
+                {{/each}}
+            </ol>
         </div>
     </section>
 </form>

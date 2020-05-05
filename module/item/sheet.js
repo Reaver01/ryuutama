@@ -131,43 +131,83 @@ export class RyuutamaItemSheet extends ItemSheet {
 
     /** @override */
     addRemoveEnchantment(remove, enchantmentName, enchantmentData) {
+        // Initialize all variables
         const item = this.object;
-        let multiplicative;
+        let accuracyBonus = parseInt(item.data.data.accuracyBonus);
         let additive;
+        let broken;
+        let defense = parseInt(item.data.data.defense);
         let durability;
+        let enchantments = item.data.data.enchantments || [];
+        let itemBonus = parseInt(item.data.data.itemBonus);
+        let multiplicative;
         let newDurability;
-        let price = 0 + item.data.data.price;
+        let penalty = parseInt(item.data.data.penalty);
+        let price = parseInt(item.data.data.price);
         let priceFormulaA = `${price}`;
         let priceFormulaM;
-        let size = 0 + item.data.data.size;
-        let enchantments = item.data.data.enchantments || [];
+        let size = parseInt(item.data.data.size);
+        let unbreakable;
+
         enchantments = enchantments.slice();
 
-        // Reverse price calculation
+        /* ------------------------------ */
+        /* Reverse Calculations for Items */
+        /* ------------------------------ */
+
+        // Item price
         multiplicative = enchantments.filter(e => e.data.modType === "0");
         additive = enchantments.filter(e => e.data.modType === "1");
         additive.forEach(enchantment => {
-            priceFormulaA += `-${enchantment.data.costMod}`
+            priceFormulaA += `-${enchantment.data.costMod}`;
         });
         price = eval(priceFormulaA);
         priceFormulaM = `${price}`;
         multiplicative.forEach(enchantment => {
-            priceFormulaM += `/${enchantment.data.costMod}`
+            priceFormulaM += `/${enchantment.data.costMod}`;
         });
         price = eval(priceFormulaM);
 
         // Loop through enchantments
         enchantments.forEach(enchantment => {
-            // Reverse size modifier
+            // Item size
             size -= enchantment.data.sizeMod;
+
+            // Item specific modifications
+            if (item.data.data.isArmor) {
+                // Armor
+
+                // Armor penalty
+                penalty -= enchantment.data.armorPenaltyMod;
+
+                // Plus One
+                if (enchantment.data.plusOne) {
+                    defense -= 1;
+                }
+            } else if (item.data.data.isWeapon) {
+                // Weapons
+
+                // Plus One
+                if (enchantment.data.plusOne) {
+                    accuracyBonus -= 1;
+                }
+            } else if (item.data.data.isTraveling) {
+                // Traveling Gear
+
+                // Plus One
+                if (enchantment.data.plusOne) {
+                    itemBonus -= 1;
+                }
+            }
         });
 
-        durability = enchantments.filter(e => e.data.setDurability === true);
-        if (durability.length > 0) {
-            newDurability = size;
-        }
+        // Item durability
+        newDurability = size;
 
-        // Build array based on adding or removing enchantments
+        /* -------------------------------- */
+        /* Resolve Current Enchantment List */
+        /* -------------------------------- */
+
         if (remove) {
             // Filter enchantments
             enchantments = enchantments.filter(e => e.name !== enchantmentName);
@@ -175,34 +215,39 @@ export class RyuutamaItemSheet extends ItemSheet {
             // Disalow duplicate enchantments
             let existing = enchantments.find(e => e.name === enchantmentName);
             if (existing !== undefined) return;
+            // Push new enchantments to the array
             enchantments.push({
                 name: enchantmentName,
                 data: enchantmentData
             });
         }
 
-        // Change name
+        /* ---------------------------------- */
+        /* Enchantment Calculations for Items */
+        /* ---------------------------------- */
+
+        // Item name
         let name = "";
         enchantments.forEach(enchantment => {
-            name += `${enchantment.name} `
+            name += `${enchantment.name} `;
         });
         name += item.data.data.givenName;
 
-        // Calculate price
+        // Item Price
         multiplicative = enchantments.filter(e => e.data.modType === "0");
         additive = enchantments.filter(e => e.data.modType === "1");
         priceFormulaM = `${price}`;
         multiplicative.forEach(enchantment => {
-            priceFormulaM += `*${enchantment.data.costMod}`
+            priceFormulaM += `*${enchantment.data.costMod}`;
         });
         price = eval(priceFormulaM);
         priceFormulaA = `${price}`;
         additive.forEach(enchantment => {
-            priceFormulaA += `+${enchantment.data.costMod}`
+            priceFormulaA += `+${enchantment.data.costMod}`;
         });
         price = eval(priceFormulaA);
 
-        // Set enchantment durability
+        // Item durability
         durability = enchantments.filter(e => e.data.setDurability === true);
         if (durability.length > 0) {
             newDurability = Math.max.apply(Math, durability.map(function (e) {
@@ -212,18 +257,77 @@ export class RyuutamaItemSheet extends ItemSheet {
 
         // Loop through enchantments
         enchantments.forEach(enchantment => {
-            // Add size modifier
+            // Item size
             size += enchantment.data.sizeMod;
+
+            // Item durability
+            if (enchantment.data.durabilityMultiplier !== 0) {
+                newDurability *= enchantment.data.durabilityMultiplier;
+            }
+
+            // Item type specific modifications
+            if (item.data.data.isArmor) {
+                // Armor
+
+                // Armor penalty
+                penalty += enchantment.data.armorPenaltyMod;
+
+                // Plus One
+                if (enchantment.data.plusOne) {
+                    defense += 1;
+                }
+
+            } else if (item.data.data.isWeapon) {
+                // Weapons
+
+                // Plus One
+                if (enchantment.data.plusOne) {
+                    accuracyBonus += 1;
+                }
+            } else if (item.data.data.isTraveling) {
+                // Traveling Gear
+
+                // Plus One
+                if (enchantment.data.plusOne) {
+                    itemBonus += 1;
+                }
+            }
         });
 
-        // Render and update sheet
-        item.render(true);
-        item.update({
+        // Unbreakable
+        unbreakable = enchantments.find(e => e.data.unbreakable === true);
+        if (unbreakable !== undefined) {
+            newDurability = 9999;
+        }
+
+        // Broken
+        broken = enchantments.find(e => e.data.unusable === true);
+        if (broken !== undefined) {
+            newDurability = 0;
+        }
+
+        // Build Update Data
+        let updateData = {
             "name": name,
             "data.enchantments": enchantments,
             "data.price": price,
             "data.size": size,
             "data.durability": newDurability
-        });
+        }
+        if (item.data.data.isArmor) {
+            // Armor
+            updateData["data.penalty"] = penalty;
+            updateData["data.defense"] = defense;
+        } else if (item.data.data.isWeapon) {
+            // Weapons
+            updateData["data.accuracyBonus"] = accuracyBonus;
+        } else if (item.data.data.isTraveling) {
+            // Traveling Gear
+            updateData["data.itemBonus"] = itemBonus;
+        }
+
+        // Render and update sheet
+        item.render(true);
+        item.update(updateData);
     }
 }
