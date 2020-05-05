@@ -133,20 +133,20 @@ export class RyuutamaItemSheet extends ItemSheet {
     addRemoveEnchantment(remove, enchantmentName, enchantmentData) {
         // Initialize all variables
         const item = this.object;
-        let accuracyBonus = parseInt(item.data.data.accuracyBonus);
+        let accuracyBonus = Number(item.data.data.accuracyBonus);
         let additive;
         let broken;
-        let defense = parseInt(item.data.data.defense);
+        let defense = Number(item.data.data.defense);
         let durability;
         let enchantments = item.data.data.enchantments || [];
-        let itemBonus = parseInt(item.data.data.itemBonus);
+        let itemBonus = Number(item.data.data.itemBonus);
         let multiplicative;
         let newDurability;
-        let penalty = parseInt(item.data.data.penalty);
-        let price = parseInt(item.data.data.price);
+        let penalty = Number(item.data.data.penalty);
+        let price = Number(item.data.data.price);
         let priceFormulaA = `${price}`;
         let priceFormulaM;
-        let size = parseInt(item.data.data.size);
+        let size = Number(item.data.data.size);
         let unbreakable;
 
         enchantments = enchantments.slice();
