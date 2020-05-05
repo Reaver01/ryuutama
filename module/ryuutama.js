@@ -36,11 +36,11 @@ Hooks.once("init", async function () {
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("dnd5e", RyuutamaActorSheet, {
+    Actors.registerSheet("ryuutama", RyuutamaActorSheet, {
         makeDefault: true
     });
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("dnd5e", RyuutamaItemSheet, {
+    Items.registerSheet("ryuutama", RyuutamaItemSheet, {
         makeDefault: true
     });
 

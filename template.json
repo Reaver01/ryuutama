@@ -63,15 +63,14 @@
         }
     },
     "Item": {
-        "types": ["item", "weapon", "armor", "shield", "class", "feature"],
+        "types": ["item", "weapon", "armor", "shield", "class", "feature", "enchantment"],
         "templates": {
             "item": {
-                "name": "",
-                "description": "",
+                "givenName": "",
                 "price": 0,
                 "size": 1,
                 "durability": 1,
-                "plusOne": false
+                "enchantments": []
             },
             "weapon": {
                 "isWeapon": true,
@@ -103,6 +102,24 @@
         },
         "shield": {
             "templates": ["item", "armor", "shield"]
+        },
+        "enchantment": {
+            "description": "",
+            "costMod": 0,
+            "modType": 0,
+            "durabilityMultiplier": 0,
+            "conditionPenalty": 0,
+            "unusable": false,
+            "armorPenaltyMod": 0,
+            "sizeMod": 0,
+            "setDurability": false,
+            "durabilityValue": 0,
+            "unbreakable": false,
+            "hpMod": 0,
+            "mpMod": 0,
+            "emitsLight": false,
+            "weightless": false,
+            "plusOne": false
         }
     }
 }
