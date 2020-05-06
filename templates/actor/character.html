@@ -12,21 +12,21 @@
                         <br />
                         <label for="data.attributes.condition.value" class="resource-label">{{ localize "RYUU.condition" }}</label>
                         <br />
-                        <img class="resource-image rollable" src="/systems/ryuutama/img/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
+                        <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
                         <input class="resource-input" readonly type="text" name="data.attributes.condition.value" value="{{data.attributes.condition.value}}" data-dtype="Number" />
                     </div>
                     <div>
                         <br />
                         <label for="data.attributes.fumble.value" class="resource-label">{{ localize "RYUU.fumble" }}</label>
                         <br />
-                        <img class="resource-image" src="/systems/ryuutama/img/fumble.svg" id="roll-fumble" title="{{ localize 'RYUU.fumble' }}" />
+                        <img class="resource-image" src="/systems/ryuutama/img/sheet/fumble.svg" id="roll-fumble" title="{{ localize 'RYUU.fumble' }}" />
                         <input class="resource-input" type="text" name="data.attributes.fumble.value" value="{{data.attributes.fumble.value}}" data-dtype="Number" />
                     </div>
                     <div>
                         <br />
                         <label for="data.attributes.initiative.value" class="resource-label">{{ localize "RYUU.initiative" }}</label>
                         <br />
-                        <img class="resource-image rollable" src="/systems/ryuutama/img/dice.svg" id="roll-initiative" title="{{ localize 'RYUU.initiative' }}" />
+                        <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/dice.svg" id="roll-initiative" title="{{ localize 'RYUU.initiative' }}" />
                         <input class="resource-input" type="text" name="data.attributes.initiative.value" value="{{data.attributes.initiative.value}}" data-dtype="Number" />
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                 <option value="8">d8</option>
                                 {{/select}}
                             </select>
-                            <img class="attribute-image rollable" src="/systems/ryuutama/img/str.svg" id="roll-strength" title="{{ localize 'RYUU.str.short' }}" />
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/str.svg" id="roll-strength" title="{{ localize 'RYUU.str.short' }}" />
                         </div>
                         <div class="attribute flex-group-center">
                             <label for="data.attributes.dex.value" class="attribute-label">{{ localize "RYUU.dex.short" }}</label>
@@ -77,7 +77,7 @@
                                 <option value="8">d8</option>
                                 {{/select}}
                             </select>
-                            <img class="attribute-image rollable" src="/systems/ryuutama/img/dex.svg" id="roll-dexterity" title="{{ localize 'RYUU.dex.long' }}" />
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/dex.svg" id="roll-dexterity" title="{{ localize 'RYUU.dex.long' }}" />
                         </div>
                         <div class="attribute flex-group-center">
                             <label for="data.attributes.int.value" class="attribute-label">{{ localize "RYUU.int.short" }}</label>
@@ -90,7 +90,7 @@
                                 <option value="8">d8</option>
                                 {{/select}}
                             </select>
-                            <img class="attribute-image rollable" src="/systems/ryuutama/img/int.svg" id="roll-intelligence" title="{{ localize 'RYUU.int.long' }}" />
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/int.svg" id="roll-intelligence" title="{{ localize 'RYUU.int.long' }}" />
                         </div>
                         <div class="attribute flex-group-center">
                             <label for="data.attributes.spi.value" class="attribute-label">{{ localize "RYUU.spi.short" }}</label>
@@ -103,7 +103,7 @@
                                 <option value="8">d8</option>
                                 {{/select}}
                             </select>
-                            <img class="attribute-image rollable" src="/systems/ryuutama/img/spi.svg" id="roll-spirit" title="{{ localize 'RYUU.spi.long' }}" />
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/spi.svg" id="roll-spirit" title="{{ localize 'RYUU.spi.long' }}" />
                         </div>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                         <div class="resource flex-group-center">
                             <div class="resource-content flexrow flex-center flex-between">
                                 <label for="data.hp.value" class="resource-label">{{ localize "RYUU.hp.short" }}</label>
-                                <img class="resource-image" src="/systems/ryuutama/img/hp.svg" title="{{ localize 'RYUU.hp.long' }}" height="30" width="30" />
+                                <img class="resource-image" src="/systems/ryuutama/img/sheet/hp.svg" title="{{ localize 'RYUU.hp.long' }}" height="30" width="30" />
                                 <input class="resource-input" type="text" name="data.hp.value" value="{{data.hp.value}}" data-dtype="Number" />
                                 <span> / </span>
                                 <input readonly class="resource-input" type="text" name="data.hp.max" value="{{data.hp.max}}" data-dtype="Number" />
@@ -121,7 +121,7 @@
                         <div class="resource flex-group-center">
                             <div class="resource-content flexrow flex-center flex-between">
                                 <label for="data.mp.value" class="resource-label">{{ localize "RYUU.mp.short" }}</label>
-                                <img class="resource-image" src="/systems/ryuutama/img/mp.svg" title="{{ localize 'RYUU.mp.long' }}" height="30" width="30" />
+                                <img class="resource-image" src="/systems/ryuutama/img/sheet/mp.svg" title="{{ localize 'RYUU.mp.long' }}" height="30" width="30" />
                                 <input class="resource-input" type="text" name="data.mp.value" value="{{data.mp.value}}" data-dtype="Number" />
                                 <span> / </span>
                                 <input readonly class="resource-input" type="text" name="data.mp.max" value="{{data.mp.max}}" data-dtype="Number" />
@@ -132,13 +132,13 @@
                 <div class="col2-6">
                     <div class="checks grid grid-3col">
                         <div class="check flex-group-center">
-                            <img class="check-image rollable" src="/systems/ryuutama/img/map.svg" id="roll-travel" title="{{ localize 'RYUU.travel' }}" />
+                            <img class="check-image rollable" src="/systems/ryuutama/img/sheet/map.svg" id="roll-travel" title="{{ localize 'RYUU.travel' }}" />
                         </div>
                         <div class="check flex-group-center">
-                            <img class="check-image rollable" src="/systems/ryuutama/img/compass.svg" id="roll-direction" title="{{ localize 'RYUU.direction' }}" />
+                            <img class="check-image rollable" src="/systems/ryuutama/img/sheet/compass.svg" id="roll-direction" title="{{ localize 'RYUU.direction' }}" />
                         </div>
                         <div class="check flex-group-center">
-                            <img class="check-image rollable" src="/systems/ryuutama/img/camp.svg" id="roll-camp" title="{{ localize 'RYUU.camp' }}" />
+                            <img class="check-image rollable" src="/systems/ryuutama/img/sheet/camp.svg" id="roll-camp" title="{{ localize 'RYUU.camp' }}" />
                         </div>
                     </div>
                     <div class="checks grid grid-3col">
