@@ -9,11 +9,14 @@ import {
     RyuutamaActor
 } from "./actor/actor.js";
 import {
-    RyuutamaItemSheet
-} from "./item/sheet.js";
+    RyuutamaItem
+} from "./item/item.js";
 import {
     RyuutamaActorSheet
-} from "./actor/sheet.js";
+} from "./actor/actor-sheet.js";
+import {
+    RyuutamaItemSheet
+} from "./item/item-sheet.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -33,6 +36,7 @@ Hooks.once("init", async function () {
 
     // Define custom Entity classes
     CONFIG.Actor.entityClass = RyuutamaActor;
+    CONFIG.Item.entityClass = RyuutamaItem;
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);

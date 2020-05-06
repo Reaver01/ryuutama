@@ -13,11 +13,11 @@ export class RyuutamaActorSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["ryuutama", "sheet", "actor", "character"],
             width: 600,
-            height: 620,
+            height: 600,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
-                initial: "features"
+                initial: "description"
             }]
         });
     }
@@ -58,8 +58,6 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Initialize containers.
         const gear = [];
-        const weapons = [];
-        const armor = [];
         const features = [];
         const spells = {
             0: [],
@@ -80,16 +78,8 @@ export class RyuutamaActorSheet extends ActorSheet {
             let item = i.data;
             i.img = i.img || DEFAULT_TOKEN;
             // Append to gear.
-            if (i.type === 'item') {
+            if (i.type === 'item' || i.type === 'weapon' || i.type === 'armor' || i.type === 'shield') {
                 gear.push(i);
-            }
-            // Append to weapons.
-            if (i.type === 'weapon') {
-                weapons.push(i);
-            }
-            // Append to armor.
-            if (i.type === 'armor' || i.type === 'shield') {
-                armor.push(i);
             }
             // Append to features.
             else if (i.type === 'feature') {
@@ -105,8 +95,6 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Assign and return
         actorData.gear = gear;
-        actorData.weapons = weapons;
-        actorData.armor = armor;
         actorData.features = features;
         actorData.spells = spells;
     }
@@ -120,6 +108,12 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Everything below here is only needed if the sheet is editable
         if (!this.options.editable) return;
+
+        // Add Inventory Item
+        html.find('.item-create').click(this._onItemCreate.bind(this));
+
+        // Item summaries
+        html.find('.item .item-name h4').click(event => this._onItemSummary(event));
 
         // Update Inventory Item
         html.find('.item-edit').click(ev => {
@@ -136,7 +130,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         });
 
         // Check Buttons
-        html.find('.roll-button').click(ev => {
+        html.find('.rollable').click(ev => {
             console.log(ev);
             const actor = this.actor;
             let str = Number(actor.data.data.attributes.str.value);
@@ -165,13 +159,15 @@ export class RyuutamaActorSheet extends ActorSheet {
                         let damage = item.data.data.damage.replace("[STR]", "1d@str").replace("[DEX]", "1d@dex").replace("[INT]", "1d@int").replace("[SPI]", "1d@spi");
                         let accuracyRoll;
                         if (ev.currentTarget.classList.contains("accuracy")) {
-                            accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.accuracyBonus}`, `${actor.name} attacks with their ${item.name}`)
+                            if ((!ev.altKey && !ev.shiftKey) || (!ev.altKey && ev.shiftKey)) {
+                                accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.accuracyBonus}`, `${actor.name} attacks with their ${item.name}`)
+                            }
                         }
                         if (ev.currentTarget.classList.contains("damage")) {
-                            if (ev.altKey || accuracyRoll.crit) {
+                            if ((ev.altKey && ev.shiftKey) || (!ev.altKey && !ev.shiftKey && accuracyRoll !== undefined && accuracyRoll.crit)) {
                                 damage = damage += ` + ${damage}`;
                                 rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} CRITICAL damage:`);
-                            } else if (!accuracyRoll.fumble) {
+                            } else if ((ev.altKey && !ev.shiftKey) || (!ev.altKey && !ev.shiftKey && !(accuracyRoll !== undefined && accuracyRoll.fumble))) {
                                 rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} damage:`);
                             }
                         }
@@ -254,6 +250,33 @@ export class RyuutamaActorSheet extends ActorSheet {
         });
     }
 
+    /**
+     * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
+     * @param {Event} event   The originating click event
+     * @private
+     */
+    _onItemCreate(event) {
+        event.preventDefault();
+        const header = event.currentTarget;
+        // Get the type of item to create.
+        const type = header.dataset.type;
+        // Grab any data associated with this control.
+        const data = duplicate(header.dataset);
+        // Initialize a default name.
+        const name = `New ${type.capitalize()}`;
+        // Prepare the item object.
+        const itemData = {
+            name: name,
+            type: type,
+            data: data
+        };
+        // Remove the type from the dataset since it's in the itemData.type prop.
+        delete itemData.data["type"];
+
+        // Finally, create the item!
+        return this.actor.createOwnedItem(itemData);
+    }
+
     /* -------------------------------------------- */
 
     /** @override */
@@ -263,6 +286,36 @@ export class RyuutamaActorSheet extends ActorSheet {
         const bodyHeight = position.height - 192;
         sheetBody.css("height", bodyHeight);
         return position;
+    }
+
+    /* -------------------------------------------- */
+
+    /**
+     * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+     * @private
+     */
+    _onItemSummary(event) {
+        event.preventDefault();
+        console.log(event);
+        let li = $(event.currentTarget).parents(".item"),
+            item = this.actor.getOwnedItem(li.data("item-id"));
+        //chatData = item.getChatData({
+        //    secrets: this.actor.owner
+        //});
+
+        // Toggle summary
+        if (li.hasClass("expanded")) {
+            let summary = li.children(".item-summary");
+            summary.slideUp(200, () => summary.remove());
+        } else {
+            let div = $(`<div class="item-summary">${item.data.data.description}</div>`);
+            let props = $(`<div class="item-properties"></div>`);
+            //chatData.properties.forEach(p => props.append(`<span class="tag">${p}</span>`));
+            div.append(props);
+            li.append(div.hide());
+            div.slideDown(200);
+        }
+        li.toggleClass("expanded");
     }
 
     /* -------------------------------------------- */
