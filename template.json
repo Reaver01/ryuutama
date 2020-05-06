@@ -70,21 +70,20 @@
                 "price": 0,
                 "size": 1,
                 "durability": 1,
-                "enchantments": []
+                "enchantments": [],
+                "equip": ""
             },
             "weapon": {
                 "isWeapon": true,
                 "accuracy": "",
                 "accuracyBonus": 0,
                 "damage": "",
-                "damageBonus": 0,
-                "equip": ""
+                "damageBonus": 0
             },
             "armor": {
                 "isArmor": true,
                 "defense": 0,
-                "penalty": 0,
-                "equip": ""
+                "penalty": 0
             },
             "shield": {
                 "isShield": true,
@@ -93,7 +92,28 @@
             "traveling": {
                 "isTraveling": true,
                 "itemBonus": 1,
-                "itemBonusTypes": []
+                "grassland": false,
+                "wasteland": false,
+                "woods": false,
+                "highlands": false,
+                "rocky": false,
+                "forest": false,
+                "swamp": false,
+                "mountain": false,
+                "desert": false,
+                "jungle": false,
+                "alpine": false,
+                "rain": false,
+                "wind": false,
+                "fog": false,
+                "hot": false,
+                "cold": false,
+                "rain2": false,
+                "snow": false,
+                "fog2": false,
+                "dark": false,
+                "hurricane": false,
+                "blizzard": false
             }
         },
         "item": {
@@ -132,6 +152,9 @@
         "spell": {
             "templates": ["item"],
             "spellLevel": 1
+        },
+        "traveling": {
+            "templates": ["item", "traveling"]
         }
     }
 }
