@@ -322,4 +322,20 @@
   flex: 0 0 86px;
   text-align: right;
 }
+
+.ryuutama .items-list .item-controls .item-toggle {
+  color: #b5b3a4;
+}
+
+.ryuutama .items-list .item-controls .item-toggle.active {
+  color: #4b4a44;
+}
+
+.ryuutama .items-list .item-controls .item-toggle.fixed {
+  color: #44191A;
+}
+
+.ryuutama .items-list .item-controls .item-toggle.fixed:hover {
+  text-shadow: none;
+}
 /*# sourceMappingURL=ryuutama.css.map */
