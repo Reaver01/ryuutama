@@ -8,7 +8,7 @@
     "templateVersion": 2,
     "author": "Reaver01",
     "esmodules": ["module/ryuutama.js"],
-    "styles": ["styles/ryuutama.css"],
+    "styles": ["css/ryuutama.css"],
     "packs": [{
             "name": "monsters",
             "label": "Monsters (Ryuutama)",
