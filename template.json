@@ -58,7 +58,47 @@
                     "value": 0,
                     "min": 0,
                     "max": 10000
-                }
+                },
+                "gender": "",
+                "age": 20,
+                "capacity": {
+                    "max": 0,
+                    "value": 0,
+                    "container": 0
+                },
+                "gold": 0
+            },
+            "traveling": {
+                "grassland": 0,
+                "wasteland": 0,
+                "woods": 0,
+                "highlands": 0,
+                "rocky": 0,
+                "forest": 0,
+                "swamp": 0,
+                "mountain": 0,
+                "desert": 0,
+                "jungle": 0,
+                "alpine": 0,
+                "rain": 0,
+                "wind": 0,
+                "fog": 0,
+                "hot": 0,
+                "cold": 0,
+                "rain2": 0,
+                "snow": 0,
+                "fog2": 0,
+                "dark": 0,
+                "hurricane": 0,
+                "blizzard": 0
+            },
+            "effects": {
+                "injury": 0,
+                "poison": 0,
+                "sickness": 0,
+                "exhaustion": 0,
+                "muddled": 0,
+                "shock": 0
             }
         }
     },
@@ -70,8 +110,11 @@
                 "price": 0,
                 "size": 1,
                 "durability": 1,
-                "enchantments": [],
-                "equip": ""
+                "enchantments": []
+            },
+            "equipment": {
+                "equip": "",
+                "equipped": false
             },
             "weapon": {
                 "isWeapon": true,
@@ -120,13 +163,16 @@
             "templates": ["item"]
         },
         "weapon": {
-            "templates": ["item", "weapon"]
+            "templates": ["item", "equipment", "weapon"]
         },
         "armor": {
-            "templates": ["item", "armor"]
+            "templates": ["item", "equipment", "armor"]
         },
         "shield": {
-            "templates": ["item", "armor", "shield"]
+            "templates": ["item", "equipment", "armor", "shield"]
+        },
+        "traveling": {
+            "templates": ["item", "equipment", "traveling"]
         },
         "enchantment": {
             "description": "",
@@ -152,9 +198,6 @@
         "spell": {
             "templates": ["item"],
             "spellLevel": 1
-        },
-        "traveling": {
-            "templates": ["item", "traveling"]
         }
     }
 }
