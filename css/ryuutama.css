@@ -98,6 +98,11 @@
   text-align: right;
 }
 
+.col1-5 {
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
 .col2-5 {
   grid-column-start: 2;
   grid-column-end: 5;
@@ -106,6 +111,11 @@
 .col2-6 {
   grid-column-start: 2;
   grid-column-end: 6;
+}
+
+.row1-5 {
+  grid-row-start: 1;
+  grid-row-end: 5;
 }
 
 .row1-6 {
@@ -185,10 +195,6 @@
   cursor: pointer;
 }
 
-.ryuutama .sheet-header input {
-  border: none;
-}
-
 .ryuutama .sheet-header .resource-input {
   vertical-align: middle;
   width: 50px;
@@ -197,6 +203,11 @@
 
 .ryuutama .sheet-header .header-fields {
   flex: 1;
+}
+
+.ryuutama .sheet-header .price {
+  padding-top: 10px;
+  vertical-align: middle;
 }
 
 .ryuutama .sheet-header .attribute {
@@ -226,8 +237,20 @@
   border-bottom: 0;
 }
 
+.ryuutama input {
+  border: none;
+}
+
 .ryuutama .sheet-tabs {
   flex: 0;
+}
+
+.ryuutama .body {
+  padding-bottom: 20px;
+}
+
+.ryuutama .body .terrain input {
+  vertical-align: middle;
 }
 
 .ryuutama .sheet-body,
