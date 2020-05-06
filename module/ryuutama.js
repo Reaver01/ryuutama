@@ -66,10 +66,6 @@ Hooks.once("init", async function () {
         default: true,
         config: true
     });
-
-    Handlebars.registerHelper('localize2', function (value, value2, options) {
-        return game.i18n.localize(value + value2);
-    });
 });
 
 Hooks.on("renderChatMessage", (message, html, data) => {

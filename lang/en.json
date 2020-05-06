@@ -97,5 +97,24 @@
     "RYUU.fog2": "Deep Fog",
     "RYUU.dark": "Dark",
     "RYUU.hurricane": "Hurricane",
-    "RYUU.blizzard": "Blizzard"
+    "RYUU.blizzard": "Blizzard",
+
+    "RYUU.toomuch": "You physically can't put anymore equipment on!",
+    "RYUU.toomuchhands": "You are already holding so much!",
+    "RYUU.toomuchchest": "You are already wearing armor!",
+    "RYUU.toomuchback": "You are already wearing a cape!",
+    "RYUU.toomuchfeet": "You are already wearing boots!",
+    "RYUU.toomuchhead": "You are already wearing a hat!",
+    "RYUU.toomuchface": "You are already wearing something on your face!",
+    "RYUU.toomuchaccessory": "You are already wearing enough accessories!",
+    "RYUU.toomuchtravel": "That would be far too much to travel with!",
+
+    "RYUU.1hand": "1 Hand",
+    "RYUU.2hand": "2 Hands",
+    "RYUU.feet": "Feet",
+    "RYUU.chest": "Chest",
+    "RYUU.head": "Head",
+    "RYUU.face": "Face/Eyes",
+    "RYUU.back": "Back",
+    "RYUU.accessory": "Accessory"
 }

@@ -64,7 +64,8 @@
                 "capacity": {
                     "max": 0,
                     "value": 0,
-                    "container": 0
+                    "container": 0,
+                    "equipped": 0
                 },
                 "gold": 0
             },

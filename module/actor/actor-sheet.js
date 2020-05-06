@@ -13,7 +13,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["ryuutama", "sheet", "actor", "character"],
             width: 600,
-            height: 600,
+            height: 900,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
@@ -35,10 +35,13 @@ export class RyuutamaActorSheet extends ActorSheet {
     /** @override */
     getData() {
         const data = super.getData();
+        /*
         data.dtypes = ["String", "Number", "Boolean"];
         for (let attr of Object.values(data.data.attributes)) {
             attr.isCheckbox = attr.dtype === "Boolean";
         }
+        */
+
         // Prepare items.
         if (this.actor.data.type == 'character') {
             this._prepareCharacterItems(data);
@@ -46,6 +49,9 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         return data;
     }
+
+    /* -------------------------------------------- */
+
     /**
      * Organize and classify Items for Character sheets.
      *
@@ -58,6 +64,8 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Initialize containers.
         const gear = [];
+        const equipment = [];
+        const containers = [];
         const features = [];
         const spells = {
             0: [],
@@ -78,15 +86,23 @@ export class RyuutamaActorSheet extends ActorSheet {
             let item = i.data;
             i.img = i.img || DEFAULT_TOKEN;
             // Append to gear.
-            if (i.type === 'item' || i.type === 'weapon' || i.type === 'armor' || i.type === 'shield' || i.type === 'traveling') {
+            if (i.type === "item") {
                 gear.push(i);
             }
+            // Append to equipment.
+            if (i.type === "weapon" || i.type === "armor" || i.type === "shield" || i.type === "traveling") {
+                equipment.push(i);
+            }
+            // Append to container.
+            if (i.type === "container") {
+                containers.push(i);
+            }
             // Append to features.
-            else if (i.type === 'feature') {
+            else if (i.type === "feature") {
                 features.push(i);
             }
             // Append to spells.
-            else if (i.type === 'spell') {
+            else if (i.type === "spell") {
                 if (i.data.spellLevel != undefined) {
                     spells[i.data.spellLevel].push(i);
                 }
@@ -95,10 +111,11 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Assign and return
         actorData.gear = gear;
+        actorData.equipment = equipment;
+        actorData.containers = containers;
         actorData.features = features;
         actorData.spells = spells;
     }
-
 
     /* -------------------------------------------- */
 
@@ -131,10 +148,68 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Check Buttons
         html.find('.rollable').click(this._onRollItem.bind(this));
+
+        // Item State Toggling
+        html.find('.item-toggle').click(this._onToggleItem.bind(this));
     }
 
     /* -------------------------------------------- */
 
+    /**
+     * Handle toggling the state of an Owned Item within the Actor
+     * @param {Event} event   The triggering click event
+     * @private
+     */
+    _onToggleItem(event) {
+        event.preventDefault();
+        const itemId = event.currentTarget.closest(".item").dataset.itemId;
+        const item = this.actor.getOwnedItem(itemId);
+        const attr = item.data.type === "spell" ? "data.preparation.prepared" : "data.equipped";
+
+        if (item.data.type === "armor" || item.data.type === "shield" || item.data.type === "weapon" || item.data.type === "traveling") {
+            const capacity = this.actor.data.data.attributes.capacity;
+            const equippedItems = this.actor.items.filter(i => i.data.data.equipped === true);
+            const hand1 = equippedItems.filter(i => i.data.data.equip === "1hand").length;
+            const hand2 = equippedItems.filter(i => i.data.data.equip === "2hand").length;
+            const feet = equippedItems.filter(i => i.data.data.equip === "feet").length;
+            const chest = equippedItems.filter(i => i.data.data.equip === "chest").length;
+            const head = equippedItems.filter(i => i.data.data.equip === "head").length;
+            const face = equippedItems.filter(i => i.data.data.equip === "face").length;
+            const back = equippedItems.filter(i => i.data.data.equip === "back").length;
+            const accessory = equippedItems.filter(i => i.data.data.equip === "accessory").length;
+            const traveling = equippedItems.filter(i => i.data.type === "traveling").length;
+            const hands = hand2 > 0 ? 2 : hand1
+            const itemHands = item.data.data.equip === "2hand" ? 2 : 1;
+
+            if (!getProperty(item.data, attr) && (Number(capacity.equipped) + Number(item.data.data.size) > capacity.max)) {
+                ui.notifications.error(game.i18n.localize("RYUU.toomuch"));
+            } else if (!getProperty(item.data, attr) && ((item.data.data.equip === "1hand" || item.data.data.equip === "2hand") && hands + itemHands > RYUU.MAX_HAND)) {
+                ui.notifications.error(game.i18n.localize("RYUU.toomuchhands"));
+            } else if (!getProperty(item.data, attr) && (item.data.data.equip === "feet" && feet >= RYUU.MAX_FEET)) {
+                ui.notifications.error(game.i18n.localize("RYUU.toomuchfeet"));
+            } else if (!getProperty(item.data, attr) && (item.data.data.equip === "chest" && chest >= RYUU.MAX_CHEST)) {
+                ui.notifications.error(game.i18n.localize("RYUU.toomuchchest"));
+            } else if (!getProperty(item.data, attr) && (item.data.data.equip === "head" && head >= RYUU.MAX_HEAD)) {
+                ui.notifications.error(game.i18n.localize("RYUU.toomuchhead"));
+            } else if (!getProperty(item.data, attr) && (item.data.data.equip === "face" && face >= RYUU.MAX_FACE)) {
+                ui.notifications.error(game.i18n.localize("RYUU.toomuchface"));
+            } else if (!getProperty(item.data, attr) && (item.data.data.equip === "back" && back >= RYUU.MAX_BACK)) {
+                ui.notifications.error(game.i18n.localize("RYUU.toomuchback"));
+            } else if (!getProperty(item.data, attr) && (item.data.data.equip === "accessory" && accessory >= RYUU.MAX_ACCESSORY)) {
+                ui.notifications.error(game.i18n.localize("RYUU.toomuchaccessory"));
+            } else if (!getProperty(item.data, attr) && (item.data.type === "traveling" && traveling >= RYUU.MAX_TRAVEL)) {
+                ui.notifications.error(game.i18n.localize("RYUU.toomuchtravel"));
+            } else {
+                return item.update({
+                    [attr]: !getProperty(item.data, attr)
+                });
+            }
+        } else {
+            return item.update({
+                [attr]: !getProperty(item.data, attr)
+            });
+        }
+    }
 
     /**
      * Handle rolling things on the Character Sheet
@@ -259,6 +334,8 @@ export class RyuutamaActorSheet extends ActorSheet {
         }
     }
 
+    /* -------------------------------------------- */
+
     /**
      * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
      * @param {Event} event   The originating click event
@@ -332,17 +409,10 @@ export class RyuutamaActorSheet extends ActorSheet {
     /** @override */
     _updateObject(event, formData) {
         // Update the Actor
-        formData["data.hp.max"] = formData["data.attributes.str.value"] * 2;
-        formData["data.mp.max"] = formData["data.attributes.spi.value"] * 2;
-        if (!formData["data.hp.value"]) {
-            formData["data.hp.value"] = formData["data.hp.max"];
-        }
-        if (!formData["data.mp.value"]) {
-            formData["data.mp.value"] = formData["data.mp.max"];
-        }
-        formData["data.attributes.level.value"] = RYUU.CHARACTER_EXP_LEVELS.findIndex(i => i > Number(formData["data.attributes.exp.value"]));
         return this.object.update(formData);
     }
+
+    /* -------------------------------------------- */
 
     /** @override */
     async modifyTokenAttribute(attribute, value, isDelta, isBar) {
