@@ -63,7 +63,7 @@
         }
     },
     "Item": {
-        "types": ["item", "weapon", "armor", "shield", "class", "feature", "enchantment", "container", "traveling"],
+        "types": ["item", "weapon", "armor", "shield", "class", "feature", "enchantment", "container", "traveling", "spell"],
         "templates": {
             "item": {
                 "givenName": "",
@@ -93,7 +93,7 @@
             "traveling": {
                 "isTraveling": true,
                 "itemBonus": 1,
-                "itemBonusType": ""
+                "itemBonusTypes": []
             }
         },
         "item": {
@@ -125,6 +125,13 @@
             "emitsLight": false,
             "weightless": false,
             "plusOne": false
+        },
+        "feature": {
+            "templates": ["item"]
+        },
+        "spell": {
+            "templates": ["item"],
+            "spellLevel": 1
         }
     }
 }

@@ -1,0 +1,302 @@
+@import url("https://fonts.googleapis.com/css2?family=Martel:wght@400;800&family=Roboto:wght@300;400;500&display=swap");
+/* Global styles */
+.window-app {
+  font-family: "Roboto", sans-serif;
+}
+
+.rollable:hover, .rollable:focus {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+
+.dice-roll .dice-total.critical {
+  color: green;
+}
+
+.dice-roll .dice-total.fumble {
+  color: red;
+}
+
+.grid,
+.grid-2col {
+  display: grid;
+  grid-column: span 2 / span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+  margin: 1px 0;
+  padding: 0;
+}
+
+.grid-3col {
+  grid-column: span 3 / span 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4col {
+  grid-column: span 4 / span 4;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-5col {
+  grid-column: span 5 / span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-6col {
+  grid-column: span 5 / span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-7col {
+  grid-column: span 7 / span 7;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-8col {
+  grid-column: span 8 / span 8;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-9col {
+  grid-column: span 9 / span 9;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.grid-10col {
+  grid-column: span 10 / span 10;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.grid-11col {
+  grid-column: span 11 / span 11;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+
+.grid-12col {
+  grid-column: span 12 / span 12;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.flex-group-center,
+.flex-group-left,
+.flex-group-right {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  border: none;
+}
+
+.flex-group-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.flex-group-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.col2-5 {
+  grid-column-start: 2;
+  grid-column-end: 5;
+}
+
+.col2-6 {
+  grid-column-start: 2;
+  grid-column-end: 6;
+}
+
+.row1-6 {
+  grid-row-start: 1;
+  grid-row-end: 6;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+/* Styles limited to ryuutama sheets */
+.ryuutama .item-form {
+  font-family: "Roboto", sans-serif;
+}
+
+.ryuutama .sheet-header {
+  flex: 0 0 300px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.ryuutama .sheet-header .profile-img {
+  flex: 0 0 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.ryuutama .sheet-header .resource-image {
+  vertical-align: middle;
+  flex: 0 0 30px;
+  height: 30px;
+  margin-right: 10px;
+  border: none;
+}
+
+.ryuutama .sheet-header .attribute-image {
+  flex: 0 0 50px;
+  height: 50px;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+}
+
+.ryuutama .sheet-header .check-image {
+  flex: 0 0 50px;
+  height: 50px;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+}
+
+.ryuutama .sheet-header .attribute-select {
+  vertical-align: top;
+}
+
+.ryuutama .sheet-header .attribute-label {
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0px;
+  margin: 0px;
+}
+
+.ryuutama .sheet-header .attribute-bonus {
+  vertical-align: middle;
+  height: 10px;
+  cursor: pointer;
+}
+
+.ryuutama .sheet-header input {
+  border: none;
+}
+
+.ryuutama .sheet-header .resource-input {
+  vertical-align: middle;
+  width: 50px;
+  height: 30px;
+}
+
+.ryuutama .sheet-header .header-fields {
+  flex: 1;
+}
+
+.ryuutama .sheet-header .attribute {
+  text-align: center;
+  vertical-align: middle;
+  padding: 2px;
+  margin: 2px;
+}
+
+.ryuutama .sheet-header h1.charname {
+  height: 50px;
+  padding: 0px;
+  margin: 5px 0;
+  border-bottom: 0;
+}
+
+.ryuutama .sheet-header h1.charname input {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.ryuutama .sheet-header .level {
+  height: 20px;
+  padding: 0px;
+  margin: 5px 0;
+  border-bottom: 0;
+}
+
+.ryuutama .sheet-tabs {
+  flex: 0;
+}
+
+.ryuutama .sheet-body,
+.ryuutama .sheet-body .tab,
+.ryuutama .sheet-body .tab .editor {
+  height: 200px;
+}
+
+.ryuutama .tox .tox-editor-container {
+  background: #fff;
+}
+
+.ryuutama .tox .tox-edit-area {
+  padding: 0 8px;
+}
+
+.ryuutama .resource-label {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.ryuutama .tabs {
+  height: 40px;
+  border-top: 1px solid #AAA;
+  border-bottom: 1px solid #AAA;
+}
+
+.ryuutama .tabs .item {
+  line-height: 40px;
+  font-weight: bold;
+}
+
+.ryuutama .tabs .item.active {
+  text-decoration: underline;
+  text-shadow: none;
+}
+
+.ryuutama .items-list {
+  list-style: none;
+  margin: 7px 0;
+  padding: 0;
+}
+
+.ryuutama .items-list .item-header {
+  font-weight: bold;
+}
+
+.ryuutama .items-list .item {
+  height: 30px;
+  line-height: 24px;
+  padding: 3px 0;
+  border-bottom: 1px solid #BBB;
+}
+
+.ryuutama .items-list .item .item-image {
+  flex: 0 0 24px;
+  margin-right: 5px;
+}
+
+.ryuutama .items-list .item img {
+  display: block;
+}
+
+.ryuutama .items-list .item-name {
+  margin: 0;
+}
+
+.ryuutama .items-list .item-controls {
+  flex: 0 0 86px;
+  text-align: right;
+}
+/*# sourceMappingURL=ryuutama.css.map */

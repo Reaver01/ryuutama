@@ -1,192 +1,181 @@
-<form class="{{cssClass}}" autocomplete="off">
+<form class="{{cssClass}} flexcol" autocomplete="off">
 
     {{!-- Sheet Header --}}
     <header class="sheet-header">
-        <table class="header-table">
-            <tr>
-                <td class="left-header-column">
-                    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
-                </td>
-                <td rowspan="4" class="right-header-column">
-                    <table class="right-header-table">
-                        <tr>
-                            <td colspan="3">
-                                <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'RYUU.name' }}" /></h1>
-                            </td>
-                            <td class="level">
-                                <strong>{{ localize "RYUU.level" }}</strong>
-                                <input readonly class="resource-val" type="text" name="data.attributes.level.value" value="{{data.attributes.level.value}}" data-dtype="Number" />
-                                <br />
-                                <strong>{{ localize "RYUU.experience.short" }}</strong>
-                                <input class="resource-val" type="text" name="data.attributes.exp.value" value="{{data.attributes.exp.value}}" data-dtype="Number" />
-                            </td>
-                        </tr>
-                        {{!-- Character Attributes --}}
-                        <tr>
-                            <td>
-                                <div class="attribute">
-                                    <strong>{{ localize "RYUU.str.short" }}</strong>
-                                    <input class="attribute-bonus" type="checkbox" name="data.attributes.str.bonus" {{checked data.attributes.str.bonus}} />
-                                    <br />
-                                    <select name="data.attributes.str.value">
-                                        {{#select data.attributes.str.value}}
-                                        <option value="4">d4</option>
-                                        <option value="6">d6</option>
-                                        <option value="8">d8</option>
-                                        {{/select}}
-                                    </select>
-                                    <img class="attribute-img roll-button" src="/systems/ryuutama/img/str.svg" id="roll-strength" title="{{ localize 'RYUU.str.short' }}" />
-                                </div>
-                            </td>
-                            <td>
-                                <div class="attribute">
-                                    <strong>{{ localize "RYUU.dex.short" }}</strong>
-                                    <input class="attribute-bonus" type="checkbox" name="data.attributes.dex.bonus" {{checked data.attributes.dex.bonus}} />
-                                    <br />
-                                    <select name="data.attributes.dex.value">
-                                        {{#select data.attributes.dex.value}}
-                                        <option value="4">d4</option>
-                                        <option value="6">d6</option>
-                                        <option value="8">d8</option>
-                                        {{/select}}
-                                    </select>
-                                    <img class="attribute-img roll-button" src="/systems/ryuutama/img/dex.svg" id="roll-dexterity" title="{{ localize 'RYUU.dex.long' }}" />
-                                </div>
-                            </td>
-                            <td>
-                                <div class="attribute">
-                                    <strong>{{ localize "RYUU.int.short" }}</strong>
-                                    <input class="attribute-bonus" type="checkbox" name="data.attributes.int.bonus" {{checked data.attributes.int.bonus}} />
-                                    <br />
-                                    <select name="data.attributes.int.value">
-                                        {{#select data.attributes.int.value}}
-                                        <option value="4">d4</option>
-                                        <option value="6">d6</option>
-                                        <option value="8">d8</option>
-                                        {{/select}}
-                                    </select>
-                                    <img class="attribute-img roll-button" src="/systems/ryuutama/img/int.svg" id="roll-intelligence" title="{{ localize 'RYUU.int.long' }}" />
-                                </div>
-                            </td>
-                            <td>
-                                <div class="attribute">
-                                    <strong>{{ localize "RYUU.spi.short" }}</strong>
-                                    <input class="attribute-bonus" type="checkbox" name="data.attributes.spi.bonus" {{checked data.attributes.spi.bonus}} />
-                                    <br />
-                                    <select name="data.attributes.spi.value">
-                                        {{#select data.attributes.spi.value}}
-                                        <option value="4">d4</option>
-                                        <option value="6">d6</option>
-                                        <option value="8">d8</option>
-                                        {{/select}}
-                                    </select>
-                                    <img class="attribute-img roll-button" src="/systems/ryuutama/img/spi.svg" id="roll-spirit" title="{{ localize 'RYUU.spi.long' }}" />
-                                </div>
-                            </td>
-                        </tr>
-                        {{!-- Character Recources --}}
-                        <tr>
-                            <td colspan="2">
-                                <div class="resource">
-                                    <strong>HP</strong>
-                                    <img class="resource-img" src="/systems/ryuutama/img/hp.svg" title="{{ localize 'RYUU.hp.long' }}" />
-                                    <input class="resource-val" type="text" name="data.hp.value" value="{{data.hp.value}}" data-dtype="Number" />
-                                    <span class="sep"> / </span>
-                                    <input class="resource-val" readonly type="text" name="data.hp.max" value="{{data.hp.max}}" data-dtype="Number" />
-                                </div>
-                            </td>
-                            <td colspan="2">
-                                <div class="resource">
-                                    <strong>MP</strong>
-                                    <img class="resource-img" src="/systems/ryuutama/img/mp.svg" title="{{ localize 'RYUU.mp.long' }}" />
-                                    <input class="resource-val" type="text" name="data.mp.value" value="{{data.mp.value}}" data-dtype="Number" />
-                                    <span class="sep"> / </span>
-                                    <input class="resource-val" readonly type="text" name="data.mp.max" value="{{data.mp.max}}" data-dtype="Number" />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" class="check-container">
-                                <table class="check-table">
-                                    <tr>
-                                        <td class="check-container">
-                                            <strong>{{ localize "RYUU.travel" }}</strong>
-                                            <img class="check-img roll-button" src="/systems/ryuutama/img/map.svg" id="roll-travel" title="{{ localize 'RYUU.travel' }}" />
-                                        </td>
-                                        <td class="check-container">
-                                            <strong>{{ localize "RYUU.direction" }}</strong>
-                                            <img class="check-img roll-button" src="/systems/ryuutama/img/compass.svg" id="roll-direction" title="{{ localize 'RYUU.direction' }}" />
-                                        </td>
-                                        <td class="check-container">
-                                            <strong>{{ localize "RYUU.camp" }}</strong>
-                                            <img class="check-img roll-button" src="/systems/ryuutama/img/camp.svg" id="roll-camp" title="{{ localize 'RYUU.camp' }}" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            {{!-- Character Checks --}}
-            <tr>
-                <td>
-                    <div class="sub-resource">
-                        <strong>{{ localize "RYUU.condition" }}</strong>
-                        <br />
-                        <img class="resource-img roll-button" src="/systems/ryuutama/img/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
-                        <input class="resource-val" readonly type="text" name="data.attributes.condition.value" value="{{data.attributes.condition.value}}" data-dtype="Number" />
+        <div class="header-fields">
+            <div class="grid grid-6col">
+                <div class="row1-6">
+                    <div>
+                        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
                     </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="sub-resource">
-                        <strong>{{ localize "RYUU.fumble" }}</strong>
+                    <div>
                         <br />
-                        <img class="resource-img" src="/systems/ryuutama/img/fumble.svg" id="roll-fumble" title="{{ localize 'RYUU.fumble' }}" />
-                        <input class="resource-val" type="text" name="data.attributes.fumble.value" value="{{data.attributes.fumble.value}}" data-dtype="Number" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="sub-resource">
-                        <strong>{{ localize "RYUU.initiative" }}</strong>
+                        <label for="data.attributes.condition.value" class="resource-label">{{ localize "RYUU.condition" }}</label>
                         <br />
-                        <img class="resource-img roll-button" src="/systems/ryuutama/img/dice.svg" id="roll-initiative" title="{{ localize 'RYUU.initiative' }}" />
-                        <input class="resource-val" type="text" name="data.attributes.initiative.value" value="{{data.attributes.initiative.value}}" data-dtype="Number" />
+                        <img class="resource-image rollable" src="/systems/ryuutama/img/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
+                        <input class="resource-input" readonly type="text" name="data.attributes.condition.value" value="{{data.attributes.condition.value}}" data-dtype="Number" />
                     </div>
-                </td>
-            </tr>
-        </table>
+                    <div>
+                        <br />
+                        <label for="data.attributes.fumble.value" class="resource-label">{{ localize "RYUU.fumble" }}</label>
+                        <br />
+                        <img class="resource-image" src="/systems/ryuutama/img/fumble.svg" id="roll-fumble" title="{{ localize 'RYUU.fumble' }}" />
+                        <input class="resource-input" type="text" name="data.attributes.fumble.value" value="{{data.attributes.fumble.value}}" data-dtype="Number" />
+                    </div>
+                    <div>
+                        <br />
+                        <label for="data.attributes.initiative.value" class="resource-label">{{ localize "RYUU.initiative" }}</label>
+                        <br />
+                        <img class="resource-image rollable" src="/systems/ryuutama/img/dice.svg" id="roll-initiative" title="{{ localize 'RYUU.initiative' }}" />
+                        <input class="resource-input" type="text" name="data.attributes.initiative.value" value="{{data.attributes.initiative.value}}" data-dtype="Number" />
+                    </div>
+                </div>
+                <div class="col2-5">
+                    <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
+                </div>
+                <div>
+                    <div class="grid grid-2col level">
+                        <div>
+                            <label class="resource-label">{{ localize "RYUU.level" }}</label>
+                        </div>
+                        <div>
+                            <input readonly type="text" name="data.attributes.level.value" value="{{data.attributes.level.value}}" data-dtype="Number" />
+                        </div>
+                    </div>
+                    <div class="grid grid-2col level">
+                        <div>
+                            <label class="resource-label">{{ localize "RYUU.experience.short" }}</label>
+                        </div>
+                        <div>
+                            <input type="text" name="data.attributes.exp.value" value="{{data.attributes.exp.value}}" data-dtype="Number" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col2-6">
+                    <div class="resources grid grid-4col">
+                        <div class="attribute flex-group-center">
+                            <label for="data.attributes.str.value" class="attribute-label">{{ localize "RYUU.str.short" }}</label>
+                            <input class="attribute-bonus" type="checkbox" name="data.attributes.str.bonus" {{checked data.attributes.str.bonus}} />
+                            <br />
+                            <select class="attribute-select" name="data.attributes.str.value">
+                                {{#select data.attributes.str.value}}
+                                <option value="4">d4</option>
+                                <option value="6">d6</option>
+                                <option value="8">d8</option>
+                                {{/select}}
+                            </select>
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/str.svg" id="roll-strength" title="{{ localize 'RYUU.str.short' }}" />
+                        </div>
+                        <div class="attribute flex-group-center">
+                            <label for="data.attributes.dex.value" class="attribute-label">{{ localize "RYUU.dex.short" }}</label>
+                            <input class="attribute-bonus" type="checkbox" name="data.attributes.dex.bonus" {{checked data.attributes.dex.bonus}} />
+                            <br />
+                            <select class="attribute-select" name="data.attributes.dex.value">
+                                {{#select data.attributes.dex.value}}
+                                <option value="4">d4</option>
+                                <option value="6">d6</option>
+                                <option value="8">d8</option>
+                                {{/select}}
+                            </select>
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/dex.svg" id="roll-dexterity" title="{{ localize 'RYUU.dex.long' }}" />
+                        </div>
+                        <div class="attribute flex-group-center">
+                            <label for="data.attributes.int.value" class="attribute-label">{{ localize "RYUU.int.short" }}</label>
+                            <input class="attribute-bonus" type="checkbox" name="data.attributes.int.bonus" {{checked data.attributes.int.bonus}} />
+                            <br />
+                            <select class="attribute-select" name="data.attributes.int.value">
+                                {{#select data.attributes.int.value}}
+                                <option value="4">d4</option>
+                                <option value="6">d6</option>
+                                <option value="8">d8</option>
+                                {{/select}}
+                            </select>
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/int.svg" id="roll-intelligence" title="{{ localize 'RYUU.int.long' }}" />
+                        </div>
+                        <div class="attribute flex-group-center">
+                            <label for="data.attributes.spi.value" class="attribute-label">{{ localize "RYUU.spi.short" }}</label>
+                            <input class="attribute-bonus" type="checkbox" name="data.attributes.spi.bonus" {{checked data.attributes.spi.bonus}} />
+                            <br />
+                            <select class="attribute-select" name="data.attributes.spi.value">
+                                {{#select data.attributes.spi.value}}
+                                <option value="4">d4</option>
+                                <option value="6">d6</option>
+                                <option value="8">d8</option>
+                                {{/select}}
+                            </select>
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/spi.svg" id="roll-spirit" title="{{ localize 'RYUU.spi.long' }}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col2-6">
+                    <div class="resources grid grid-2col">
+                        <div class="resource flex-group-center">
+                            <div class="resource-content flexrow flex-center flex-between">
+                                <label for="data.hp.value" class="resource-label">{{ localize "RYUU.hp.short" }}</label>
+                                <img class="resource-image" src="/systems/ryuutama/img/hp.svg" title="{{ localize 'RYUU.hp.long' }}" height="30" width="30" />
+                                <input class="resource-input" type="text" name="data.hp.value" value="{{data.hp.value}}" data-dtype="Number" />
+                                <span> / </span>
+                                <input readonly class="resource-input" type="text" name="data.hp.max" value="{{data.hp.max}}" data-dtype="Number" />
+                            </div>
+                        </div>
+                        <div class="resource flex-group-center">
+                            <div class="resource-content flexrow flex-center flex-between">
+                                <label for="data.mp.value" class="resource-label">{{ localize "RYUU.mp.short" }}</label>
+                                <img class="resource-image" src="/systems/ryuutama/img/mp.svg" title="{{ localize 'RYUU.mp.long' }}" height="30" width="30" />
+                                <input class="resource-input" type="text" name="data.mp.value" value="{{data.mp.value}}" data-dtype="Number" />
+                                <span> / </span>
+                                <input readonly class="resource-input" type="text" name="data.mp.max" value="{{data.mp.max}}" data-dtype="Number" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col2-6">
+                    <div class="checks grid grid-3col">
+                        <div class="check flex-group-center">
+                            <img class="check-image rollable" src="/systems/ryuutama/img/map.svg" id="roll-travel" title="{{ localize 'RYUU.travel' }}" />
+                        </div>
+                        <div class="check flex-group-center">
+                            <img class="check-image rollable" src="/systems/ryuutama/img/compass.svg" id="roll-direction" title="{{ localize 'RYUU.direction' }}" />
+                        </div>
+                        <div class="check flex-group-center">
+                            <img class="check-image rollable" src="/systems/ryuutama/img/camp.svg" id="roll-camp" title="{{ localize 'RYUU.camp' }}" />
+                        </div>
+                    </div>
+                    <div class="checks grid grid-3col">
+                        <div class="check flex-group-center">
+                            <label class="attribute-label">{{ localize "RYUU.travel" }}</label>
+                        </div>
+                        <div class="check flex-group-center">
+                            <label class="attribute-label">{{ localize "RYUU.direction" }}</label>
+                        </div>
+                        <div class="check flex-group-center">
+                            <label class="attribute-label">{{ localize "RYUU.camp" }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="abilities grid grid-3col">
+                {{#each data.abilities as |ability key|}}
+                <div class="ability flexrow flex-group-center">
+                    <label for="data.abilities.{{key}}.value" class="resource-label">{{key}}</label>
+                    <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
+                    <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{key}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+                </div>
+                {{/each}}
+            </div>
+        </div>
     </header>
 
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="features">{{ localize "RYUU.features" }}</a>
-        <a class="item" data-tab="description">{{ localize "RYUU.description" }}</a>
-        <a class="item" data-tab="items">{{ localize "RYUU.items" }}</a>
+        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="items">Items</a>
+        <a class="item" data-tab="features">Features</a>
+        <a class="item" data-tab="spells">Spells</a>
     </nav>
 
     {{!-- Sheet Body --}}
     <section class="sheet-body">
-
-        {{!-- features Tab --}}
-        <div class="tab features" data-group="primary" data-tab="features">
-            <ol class="items-list">
-                {{#each actor.features as |item id|}}
-                <li class="item flexrow" data-item-id="{{item._id}}">
-                    <img class="roll-button {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
-                    <h4 class="item-name">{{item.name}}</h4>
-                    <div class="item-controls">
-                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                    </div>
-                </li>
-                {{/each}}
-            </ol>
-        </div>
 
         {{!-- Biography Tab --}}
         <div class="tab biography" data-group="primary" data-tab="description">
@@ -195,39 +184,17 @@
 
         {{!-- Owned Items Tab --}}
         <div class="tab items" data-group="primary" data-tab="items">
-            <h3>Weapons</h3>
             <ol class="items-list">
-                {{#each actor.weapons as |item id|}}
-                <li class="item flexrow" data-item-id="{{item._id}}">
-                    <img class="roll-button {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
-                    <h4 class="item-name">{{item.name}}</h4>
-                    <h4 class="roll-button {{item.type}} accuracy">{{item.data.accuracy}} + {{item.data.accuracyBonus}}</h4>
-                    <h4 class="roll-button {{item.type}} damage">{{item.data.damage}} + {{item.data.damageBonus}}</h4>
+                <li class="item flexrow item-header">
+                    <div class="item-image"></div>
+                    <div class="item-name">Name</div>
                     <div class="item-controls">
-                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
                     </div>
                 </li>
-                {{/each}}
-            </ol>
-            <h3>Armor</h3>
-            <ol class="items-list">
-                {{#each actor.armor as |item id|}}
-                <li class="item flexrow" data-item-id="{{item._id}}">
-                    <img class="roll-button {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
-                    <h4 class="item-name">{{item.name}}</h4>
-                    <div class="item-controls">
-                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                    </div>
-                </li>
-                {{/each}}
-            </ol>
-            <h3>Gear</h3>
-            <ol class="items-list">
                 {{#each actor.gear as |item id|}}
                 <li class="item flexrow" data-item-id="{{item._id}}">
-                    <img class="roll-button {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
+                    <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
                     <h4 class="item-name">{{item.name}}</h4>
                     <div class="item-controls">
                         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -237,5 +204,58 @@
                 {{/each}}
             </ol>
         </div>
+
+        {{!-- Owned Features Tab --}}
+        <div class="tab features" data-group="primary" data-tab="features">
+            <ol class="items-list">
+                <li class="item flexrow item-header">
+                    <div class="item-image"></div>
+                    <div class="item-name">Name</div>
+                    <div class="item-controls">
+                        <a class="item-control item-create" title="Create item" data-type="feature"><i class="fas fa-plus"></i> Add item</a>
+                    </div>
+                </li>
+                {{#each actor.features as |item id|}}
+                <li class="item flexrow" data-item-id="{{item._id}}">
+                    <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
+                    <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-controls">
+                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
+                </li>
+                {{/each}}
+            </ol>
+        </div>
+
+        {{!-- Owned Spells Tab --}}
+        <div class="tab spells" data-group="primary" data-tab="spells">
+            <ol class="items-list">
+                <li class="item flexrow item-header">
+                    <div class="item-image"></div>
+                    <div class="item-name">Name</div>
+                    <div class="item-controls"></div>
+                </li>
+                {{#each actor.spells as |spells spellLevel|}}
+                <li class="item flexrow item-header">
+                    <div class="item-name">Level {{spellLevel}} Spells</div>
+                    <div class="item-controls">
+                        <a class="item-control item-create" title="Create item" data-type="spell" data-spell-level="{{spellLevel}}"><i class="fas fa-plus"></i> Add LVL {{spellLevel}}</a>
+                    </div>
+                </li>
+                {{#each spells as |item id|}}
+                <li class="item flexrow" data-item-id="{{item._id}}">
+                    <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
+                    <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-controls">
+                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
+                </li>
+                {{/each}}
+                {{/each}}
+            </ol>
+        </div>
+
     </section>
 </form>
