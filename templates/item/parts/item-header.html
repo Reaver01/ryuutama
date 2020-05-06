@@ -21,7 +21,19 @@
             </div>
             <div class="resource">
                 <label for="data.equip" class="resource-label">{{ localize "RYUU.equip" }}</label>
-                <input type="text" name="data.equip" value="{{data.equip}}" data-dtype="String" />
+                <select class="attribute-select" name="data.equip">
+                    {{#select data.equip}}
+                    <option value=""></option>
+                    <option value="1hand">{{ localize "RYUU.1hand" }}</option>
+                    <option value="2hand">{{ localize "RYUU.2hand" }}</option>
+                    <option value="feet">{{ localize "RYUU.feet" }}</option>
+                    <option value="chest">{{ localize "RYUU.chest" }}</option>
+                    <option value="head">{{ localize "RYUU.head" }}</option>
+                    <option value="face">{{ localize "RYUU.face" }}</option>
+                    <option value="back">{{ localize "RYUU.back" }}</option>
+                    <option value="accessory">{{ localize "RYUU.accessory" }}</option>
+                    {{/select}}
+                </select>
             </div>
         </div>
 </header>
