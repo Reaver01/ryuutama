@@ -27,8 +27,30 @@
     margin: 0;
   }
 
+  .item-size {
+    flex: 0 0 10px;
+    text-align: left;
+  }
+
+  .item-damage {
+    flex: 0 0 90px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .item-accuracy {
+    flex: 0 0 120px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .item-equip {
+    flex: 0 0 90px;
+    text-align: center;
+  }
+
   .item-controls {
-    flex: 0 0 86px;
+    flex: 0 0 65px;
     text-align: right;
 
     .item-toggle {
