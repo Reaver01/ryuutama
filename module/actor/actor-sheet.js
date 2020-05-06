@@ -17,7 +17,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
-                initial: "description"
+                initial: "equipment"
             }]
         });
     }
@@ -130,124 +130,133 @@ export class RyuutamaActorSheet extends ActorSheet {
         });
 
         // Check Buttons
-        html.find('.rollable').click(ev => {
-            console.log(ev);
-            const actor = this.actor;
-            let str = Number(actor.data.data.attributes.str.value);
-            let dex = Number(actor.data.data.attributes.dex.value);
-            let int = Number(actor.data.data.attributes.int.value);
-            let spi = Number(actor.data.data.attributes.spi.value);
-            if (actor.data.data.attributes.str.bonus) {
-                str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) + 1];
-            }
-            if (actor.data.data.attributes.dex.bonus) {
-                dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) + 1];
-            }
-            if (actor.data.data.attributes.int.bonus) {
-                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) + 1];
-                console.log(RYUU.DICE.findIndex(i => i === int));
-            }
-            if (actor.data.data.attributes.spi.bonus) {
-                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1];
-            }
-            const li = $(ev.currentTarget).parents(".item");
-            const item = this.actor.items.find(i => i.id === li.data("itemId"));
-            if (item !== undefined) {
-                switch (item.data.type) {
-                    case "weapon":
-                        let accuracy = item.data.data.accuracy.replace("[STR]", "1d@str").replace("[DEX]", "1d@dex").replace("[INT]", "1d@int").replace("[SPI]", "1d@spi");
-                        let damage = item.data.data.damage.replace("[STR]", "1d@str").replace("[DEX]", "1d@dex").replace("[INT]", "1d@int").replace("[SPI]", "1d@spi");
-                        let accuracyRoll;
-                        if (ev.currentTarget.classList.contains("accuracy")) {
-                            if ((!ev.altKey && !ev.shiftKey) || (!ev.altKey && ev.shiftKey)) {
-                                accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.accuracyBonus}`, `${actor.name} attacks with their ${item.name}`)
-                            }
-                        }
-                        if (ev.currentTarget.classList.contains("damage")) {
-                            if ((ev.altKey && ev.shiftKey) || (!ev.altKey && !ev.shiftKey && accuracyRoll !== undefined && accuracyRoll.crit)) {
-                                damage = damage += ` + ${damage}`;
-                                rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} CRITICAL damage:`);
-                            } else if ((ev.altKey && !ev.shiftKey) || (!ev.altKey && !ev.shiftKey && !(accuracyRoll !== undefined && accuracyRoll.fumble))) {
-                                rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} damage:`);
-                            }
-                        }
-                        break;
+        html.find('.rollable').click(this._onRollItem.bind(this));
+    }
 
-                    default:
-                        break;
-                }
-            }
-            switch (ev.target.id) {
-                case "roll-travel":
-                    rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`);
+    /* -------------------------------------------- */
+
+
+    /**
+     * Handle rolling things on the Character Sheet
+     * @param {Event} event   The triggering click event
+     * @private
+     */
+    _onRollItem(event) {
+        const actor = this.actor;
+        let str = Number(actor.data.data.attributes.str.value);
+        let dex = Number(actor.data.data.attributes.dex.value);
+        let int = Number(actor.data.data.attributes.int.value);
+        let spi = Number(actor.data.data.attributes.spi.value);
+        if (actor.data.data.attributes.str.bonus) {
+            str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) + 1];
+        }
+        if (actor.data.data.attributes.dex.bonus) {
+            dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) + 1];
+        }
+        if (actor.data.data.attributes.int.bonus) {
+            int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) + 1];
+            console.log(RYUU.DICE.findIndex(i => i === int));
+        }
+        if (actor.data.data.attributes.spi.bonus) {
+            int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1];
+        }
+        const li = $(event.currentTarget).parents(".item");
+        const item = this.actor.items.find(i => i.id === li.data("itemId"));
+        if (item !== undefined) {
+            switch (item.data.type) {
+                case "weapon":
+                    let accuracy = item.data.data.accuracy.replace("[STR]", "1d@str").replace("[DEX]", "1d@dex").replace("[INT]", "1d@int").replace("[SPI]", "1d@spi");
+                    let damage = item.data.data.damage.replace("[STR]", "1d@str").replace("[DEX]", "1d@dex").replace("[INT]", "1d@int").replace("[SPI]", "1d@spi");
+                    let accuracyRoll;
+                    if (event.currentTarget.classList.contains("accuracy")) {
+                        if ((!event.altKey && !event.shiftKey) || (!event.altKey && event.shiftKey)) {
+                            accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.accuracyBonus}`, `${actor.name} attacks with their ${item.name}`)
+                        }
+                    }
+                    if (event.currentTarget.classList.contains("damage")) {
+                        if ((event.altKey && event.shiftKey) || (!event.altKey && !event.shiftKey && accuracyRoll !== undefined && accuracyRoll.crit)) {
+                            damage = damage += ` + ${damage}`;
+                            rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} CRITICAL damage:`);
+                        } else if ((event.altKey && !event.shiftKey) || (!event.altKey && !event.shiftKey && !(accuracyRoll !== undefined && accuracyRoll.fumble))) {
+                            rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} damage:`);
+                        }
+                    }
                     break;
-                case "roll-direction":
-                    rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`);
-                    break;
-                case "roll-camp":
-                    rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`);
-                    break;
-                case "roll-condition":
-                    const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`);
-                    actor.update({
-                        "data.attributes.condition.value": condition.roll
-                    })
-                    break;
-                case "roll-initiative":
-                    const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`);
-                    actor.update({
-                        "data.attributes.initiative.value": initiative.roll
-                    })
-                    break;
-                case "roll-strength":
-                    rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.check.str")} [STR]`);
-                    break;
-                case "roll-dexterity":
-                    rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.dex")} [DEX]`);
-                    break;
-                case "roll-intelligence":
-                    rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.int")} [INT]`);
-                    break;
-                case "roll-spirit":
-                    rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.spi")} [SPI]`);
-                    break;
+
                 default:
                     break;
             }
+        }
+        switch (event.target.id) {
+            case "roll-travel":
+                rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`);
+                break;
+            case "roll-direction":
+                rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`);
+                break;
+            case "roll-camp":
+                rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`);
+                break;
+            case "roll-condition":
+                const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`);
+                actor.update({
+                    "data.attributes.condition.value": condition.roll
+                })
+                break;
+            case "roll-initiative":
+                const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`);
+                actor.update({
+                    "data.attributes.initiative.value": initiative.roll
+                })
+                break;
+            case "roll-strength":
+                rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.check.str")} [STR]`);
+                break;
+            case "roll-dexterity":
+                rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.dex")} [DEX]`);
+                break;
+            case "roll-intelligence":
+                rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.int")} [INT]`);
+                break;
+            case "roll-spirit":
+                rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.spi")} [SPI]`);
+                break;
+            default:
+                break;
+        }
 
-            function rollCheck(formula, flavor) {
-                const r = new Roll(formula, {
-                    str: str,
-                    dex: dex,
-                    int: int,
-                    spi: spi
-                });
-                const roll = r.roll();
-                const dice = roll.dice;
-                const smallDice = dice.filter(r => r.faces < 6);
-                const maxRolls = dice.filter(r => r.rolls[0].roll === r.faces);
-                const largeCrits = dice.filter(r => r.rolls[0].roll === r.faces || r.rolls[0].roll === 6);
-                const fumbleRolls = dice.filter(r => r.rolls[0].roll === 1);
-                let crit = false;
-                let fumble = false;
-                if (dice.length > 1 && ((smallDice !== undefined && maxRolls.length === dice.length) || (largeCrits.length === dice.length))) {
-                    crit = true;
-                    flavor += game.i18n.localize("RYUU.rollcrit");
-                }
-                if (dice.length > 1 && fumbleRolls.length === dice.length) {
-                    fumble = true;
-                    flavor += game.i18n.localize("RYUU.rollfumble");
-                }
-                roll.toMessage({
-                    flavor: flavor
-                });
-                return {
-                    roll: roll._total,
-                    crit: crit,
-                    fumble: fumble,
-                };
+        function rollCheck(formula, flavor) {
+            const r = new Roll(formula, {
+                str: str,
+                dex: dex,
+                int: int,
+                spi: spi
+            });
+            const roll = r.roll();
+            const dice = roll.dice;
+            const smallDice = dice.filter(r => r.faces < 6);
+            const maxRolls = dice.filter(r => r.rolls[0].roll === r.faces);
+            const largeCrits = dice.filter(r => r.rolls[0].roll === r.faces || r.rolls[0].roll === 6);
+            const fumbleRolls = dice.filter(r => r.rolls[0].roll === 1);
+            let crit = false;
+            let fumble = false;
+            if (dice.length > 1 && ((smallDice !== undefined && maxRolls.length === dice.length) || (largeCrits.length === dice.length))) {
+                crit = true;
+                flavor += game.i18n.localize("RYUU.rollcrit");
             }
-        });
+            if (dice.length > 1 && fumbleRolls.length === dice.length) {
+                fumble = true;
+                flavor += game.i18n.localize("RYUU.rollfumble");
+            }
+            roll.toMessage({
+                flavor: flavor
+            });
+            return {
+                roll: roll._total,
+                crit: crit,
+                fumble: fumble,
+            };
+        }
     }
 
     /**
