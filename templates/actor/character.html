@@ -180,7 +180,7 @@
                     </div>
                     <div></div>
                     <div></div>
-                    <div class="item-name">Capacity: {{data.attributes.capacity.equipped}}/{{data.attributes.capacity.max}}</div>
+                    <div class="item-name">Equipped: {{data.attributes.capacity.equipped}}/{{data.attributes.capacity.max}}</div>
                     <div></div>
                 </li>
             </ol>
@@ -194,6 +194,9 @@
                 <li class="item flexrow" data-item-id="{{item._id}}">
                     <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
                     <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-accuracy rollable accuracy">{{item.data.accuracy}} + {{item.data.accuracyBonus}}</div>
+                    <div class="item-damage rollable damage">{{item.data.damage}} + {{item.data.damageBonus}}</div>
+                    <div class="item-size">{{item.data.size}}</div>
                     <div class="item-controls">
                         <a class="item-control item-toggle {{#if item.data.equipped}}active{{/if}}" title='{{#if item.data.equipped}}un{{/if}}equip'><i class="fas fa-shield-alt"></i></a>
                         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -214,6 +217,7 @@
                 <li class="item flexrow" data-item-id="{{item._id}}">
                     <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
                     <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-size">{{item.data.size}}</div>
                     <div class="item-controls">
                         <a class="item-control item-toggle {{#if item.data.equipped}}active{{/if}}" title='{{#if item.data.equipped}}un{{/if}}equip'><i class="fas fa-shield-alt"></i></a>
                         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -234,6 +238,7 @@
                 <li class="item flexrow" data-item-id="{{item._id}}">
                     <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
                     <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-size">{{item.data.size}}</div>
                     <div class="item-controls">
                         <a class="item-control item-toggle {{#if item.data.equipped}}active{{/if}}" title='{{#if item.data.equipped}}un{{/if}}equip'><i class="fas fa-shield-alt"></i></a>
                         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -259,13 +264,15 @@
                     <div class="item-name">Equipped: {{data.attributes.capacity.equipped}}/{{data.attributes.capacity.max}}</div>
                     <div class="item-name">Capacity: {{data.attributes.capacity.value}}/{{data.attributes.capacity.max}}</div>
                     <div class="item-controls">
-                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
+                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i></a>
                     </div>
                 </li>
                 {{#each actor.equipment as |item id|}}
                 <li class="item flexrow" data-item-id="{{item._id}}">
                     <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
                     <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-equip">{{ localize (concat "RYUU." item.data.equip) }}</div>
+                    <div class="item-size">{{item.data.size}}</div>
                     <div class="item-controls">
                         <a class="item-control item-toggle {{#if item.data.equipped}}active{{/if}}" title='{{#if item.data.equipped}}un{{/if}}equip'><i class="fas fa-shield-alt"></i></a>
                         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -279,7 +286,7 @@
                     <div class="item-image"></div>
                     <div class="item-name">Gear</div>
                     <div class="item-controls">
-                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
+                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i></a>
                     </div>
                 </li>
                 {{#each actor.gear as |item id|}}
@@ -298,7 +305,7 @@
                     <div class="item-image"></div>
                     <div class="item-name">Containers</div>
                     <div class="item-controls">
-                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
+                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i></a>
                     </div>
                 </li>
                 {{#each actor.containers as |item id|}}
@@ -321,7 +328,7 @@
                     <div class="item-image"></div>
                     <div class="item-name">Name</div>
                     <div class="item-controls">
-                        <a class="item-control item-create" title="Create item" data-type="feature"><i class="fas fa-plus"></i> Add item</a>
+                        <a class="item-control item-create" title="Create item" data-type="feature"><i class="fas fa-plus"></i></a>
                     </div>
                 </li>
                 {{#each actor.features as |item id|}}
