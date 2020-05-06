@@ -3,71 +3,75 @@
         <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
         <div class="header-fields">
             <h1 class="charname"><input name="item.name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
-            <div class="attribute">
-                <label>{{ localize "RYUU.costmod" }}</label>
+        </div>
+    </header>
+    <section class="body">
+        <div class="resource grid grid-2col">
+            <div>
+                <label for="data.modType" class="resource-label">{{ localize "RYUU.costmod" }}</label>
                 <select name="data.modType">
                     {{#select data.modType}}
                     <option value="0">x</option>
                     <option value="1">+</option>
                     {{/select}}
                 </select>
+            </div>
+            <div>
                 <input type="text" name="data.costMod" value="{{data.costMod}}" data-dtype="Number" />
             </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.durabilityMultiplier" }}</label>
-                <input type="text" name="data.durabilityMultiplier" value="{{data.durabilityMultiplier}}" data-dtype="Number" />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.conditionPenalty" }}</label>
-                <input type="text" name="data.conditionPenalty" value="{{data.conditionPenalty}}" data-dtype="Number" />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.armorPenaltyMod" }}</label>
-                <input type="text" name="data.armorPenaltyMod" value="{{data.armorPenaltyMod}}" data-dtype="Number" />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.sizeMod" }}</label>
-                <input type="text" name="data.sizeMod" value="{{data.sizeMod}}" data-dtype="Number" />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.mpMod" }}</label>
-                <input type="text" name="data.mpMod" value="{{data.mpMod}}" data-dtype="Number" />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.hpMod" }}</label>
-                <input type="text" name="data.hpMod" value="{{data.hpMod}}" data-dtype="Number" />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.setDurability" }}</label>
-                <input type="checkbox" name="data.setDurability" {{checked data.setDurability}} />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.durabilityValue" }}</label>
-                <input type="text" name="data.durabilityValue" value="{{data.durabilityValue}}" data-dtype="Number" />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.unusable" }}</label>
-                <input type="checkbox" name="data.unusable" {{checked data.unusable}} />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.unbreakable" }}</label>
-                <input type="checkbox" name="data.unbreakable" {{checked data.unbreakable}} />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.weightless" }}</label>
-                <input type="checkbox" name="data.weightless" {{checked data.weightless}} />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.emitsLight" }}</label>
-                <input type="checkbox" name="data.emitsLight" {{checked data.emitsLight}} />
-            </div>
-            <div class="attribute">
-                <label>{{ localize "RYUU.plusOne" }}</label>
-                <input type="checkbox" name="data.plusOne" {{checked data.plusOne}} />
-            </div>
-
         </div>
-    </header>
+        <div class="resource grid grid-2col">
+            <label for="data.durabilityMultiplier" class="resource-label">{{ localize "RYUU.durabilityMultiplier" }}</label>
+            <input type="text" name="data.durabilityMultiplier" value="{{data.durabilityMultiplier}}" data-dtype="Number" />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.conditionPenalty" class="resource-label">{{ localize "RYUU.conditionPenalty" }}</label>
+            <input type="text" name="data.conditionPenalty" value="{{data.conditionPenalty}}" data-dtype="Number" />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.armorPenaltyMod" class="resource-label">{{ localize "RYUU.armorPenaltyMod" }}</label>
+            <input type="text" name="data.armorPenaltyMod" value="{{data.armorPenaltyMod}}" data-dtype="Number" />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.sizeMod" class="resource-label">{{ localize "RYUU.sizeMod" }}</label>
+            <input type="text" name="data.sizeMod" value="{{data.sizeMod}}" data-dtype="Number" />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.mpMod" class="resource-label">{{ localize "RYUU.mpMod" }}</label>
+            <input type="text" name="data.mpMod" value="{{data.mpMod}}" data-dtype="Number" />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.hpMod" class="resource-label">{{ localize "RYUU.hpMod" }}</label>
+            <input type="text" name="data.hpMod" value="{{data.hpMod}}" data-dtype="Number" />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.durabilityValue" class="resource-label">{{ localize "RYUU.durabilityValue" }}</label>
+            <input type="text" name="data.durabilityValue" value="{{data.durabilityValue}}" data-dtype="Number" />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.setDurability" class="resource-label">{{ localize "RYUU.setDurability" }}</label>
+            <input type="checkbox" name="data.setDurability" {{checked data.setDurability}} />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.unusable" class="resource-label">{{ localize "RYUU.unusable" }}</label>
+            <input type="checkbox" name="data.unusable" {{checked data.unusable}} />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.unbreakable" class="resource-label">{{ localize "RYUU.unbreakable" }}</label>
+            <input type="checkbox" name="data.unbreakable" {{checked data.unbreakable}} />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.weightless" class="resource-label">{{ localize "RYUU.weightless" }}</label>
+            <input type="checkbox" name="data.weightless" {{checked data.weightless}} />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.emitsLight" class="resource-label">{{ localize "RYUU.emitsLight" }}</label>
+            <input type="checkbox" name="data.emitsLight" {{checked data.emitsLight}} />
+        </div>
+        <div class="resource grid grid-2col">
+            <label for="data.plusOne" class="resource-label">{{ localize "RYUU.plusOne" }}</label>
+            <input type="checkbox" name="data.plusOne" {{checked data.plusOne}} />
+        </div>
     </section>
     <section class="sheet-body">
         <h3>{{ localize "RYUU.description" }}</h3>

@@ -4,19 +4,19 @@ RYUU.DICE = [4, 6, 8, 12];
 
 RYUU.CHARACTER_EXP_LEVELS = [0, 100, 600, 1200, 2000, 3000, 4200, 5800, 7500, 10000, 100000000];
 
-RYUU.LEVEL_1_TTERRAIN = ["grassland", "wasteland"];
-RYUU.LEVEL_2_TTERRAIN = ["woods", "highlands", "rocky"];
-RYUU.LEVEL_3_TTERRAIN = ["forest", "swamp", "mountain"];
-RYUU.LEVEL_4_TTERRAIN = ["desert", "jungle"];
-RYUU.LEVEL_5_TTERRAIN = ["alpine"];
+RYUU.LEVEL_1_TERRAIN = ["grassland", "wasteland"];
+RYUU.LEVEL_2_TERRAIN = ["woods", "highlands", "rocky"];
+RYUU.LEVEL_3_TERRAIN = ["forest", "swamp", "mountain"];
+RYUU.LEVEL_4_TERRAIN = ["desert", "jungle"];
+RYUU.LEVEL_5_TERRAIN = ["alpine"];
 
 let allTerrain = [];
 
-allTerrain.push(RYUU.LEVEL_1_TTERRAIN);
-allTerrain.push(RYUU.LEVEL_2_TTERRAIN);
-allTerrain.push(RYUU.LEVEL_3_TTERRAIN);
-allTerrain.push(RYUU.LEVEL_4_TTERRAIN);
-allTerrain.push(RYUU.LEVEL_5_TTERRAIN);
+allTerrain.push(RYUU.LEVEL_1_TERRAIN);
+allTerrain.push(RYUU.LEVEL_2_TERRAIN);
+allTerrain.push(RYUU.LEVEL_3_TERRAIN);
+allTerrain.push(RYUU.LEVEL_4_TERRAIN);
+allTerrain.push(RYUU.LEVEL_5_TERRAIN);
 
 RYUU.ITEM_BONUS_TERRAIN_TYPES = allTerrain;
 

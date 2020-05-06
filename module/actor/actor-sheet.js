@@ -78,7 +78,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             let item = i.data;
             i.img = i.img || DEFAULT_TOKEN;
             // Append to gear.
-            if (i.type === 'item' || i.type === 'weapon' || i.type === 'armor' || i.type === 'shield') {
+            if (i.type === 'item' || i.type === 'weapon' || i.type === 'armor' || i.type === 'shield' || i.type === 'traveling') {
                 gear.push(i);
             }
             // Append to features.
@@ -232,11 +232,11 @@ export class RyuutamaActorSheet extends ActorSheet {
                 let fumble = false;
                 if (dice.length > 1 && ((smallDice !== undefined && maxRolls.length === dice.length) || (largeCrits.length === dice.length))) {
                     crit = true;
-                    flavor += game.i18n.localize("RYUU.roll.crit");
+                    flavor += game.i18n.localize("RYUU.rollcrit");
                 }
                 if (dice.length > 1 && fumbleRolls.length === dice.length) {
                     fumble = true;
-                    flavor += game.i18n.localize("RYUU.roll.fumble");
+                    flavor += game.i18n.localize("RYUU.rollfumble");
                 }
                 roll.toMessage({
                     flavor: flavor

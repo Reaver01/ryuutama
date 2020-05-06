@@ -39,6 +39,7 @@ export class RyuutamaItemSheet extends ItemSheet {
         if (data.data.givenName === "") {
             data.data.givenName = data.item.name;
         }
+
         return data;
     }
 
@@ -124,13 +125,17 @@ export class RyuutamaItemSheet extends ItemSheet {
     /** @override */
     _updateObject(event, formData) {
         // Update the Item
-        return this.object.update(formData);
+        let update = this.object.update(formData);
+        if (formData["data.givenName"] !== undefined) {
+            this.addRemoveEnchantment(false, undefined, undefined, formData["data.givenName"]);
+        }
+        return update;
     }
 
     /* -------------------------------------------- */
 
     /** @override */
-    addRemoveEnchantment(remove, enchantmentName, enchantmentData) {
+    addRemoveEnchantment(remove, enchantmentName, enchantmentData, givenName) {
         // Initialize all variables
         const item = this.object;
         let accuracyBonus = Number(item.data.data.accuracyBonus);
@@ -208,10 +213,10 @@ export class RyuutamaItemSheet extends ItemSheet {
         /* Resolve Current Enchantment List */
         /* -------------------------------- */
 
-        if (remove) {
+        if (remove && enchantmentName !== undefined) {
             // Filter enchantments
             enchantments = enchantments.filter(e => e.name !== enchantmentName);
-        } else {
+        } else if (enchantmentData !== undefined) {
             // Disalow duplicate enchantments
             let existing = enchantments.find(e => e.name === enchantmentName);
             if (existing !== undefined) return;
@@ -231,7 +236,12 @@ export class RyuutamaItemSheet extends ItemSheet {
         enchantments.forEach(enchantment => {
             name += `${enchantment.name} `;
         });
-        name += item.data.data.givenName;
+        if (givenName !== undefined) {
+            name += givenName;
+        } else {
+            name += item.data.data.givenName;
+        }
+
 
         // Item Price
         multiplicative = enchantments.filter(e => e.data.modType === "0");
@@ -326,8 +336,11 @@ export class RyuutamaItemSheet extends ItemSheet {
             updateData["data.itemBonus"] = itemBonus;
         }
 
-        // Render and update sheet
-        item.render(true);
+        // Update data
         item.update(updateData);
+        if (enchantmentName !== undefined) {
+            // Render sheet
+            item.render(true);
+        }
     }
 }
