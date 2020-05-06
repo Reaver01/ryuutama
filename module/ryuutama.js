@@ -4,7 +4,13 @@
  * Software License: GNU GPLv3
  */
 
-// Import Modules
+// Import Modulesimport {
+import {
+    RYUU
+} from './config.js';
+import {
+    preloadHandlebarsTemplates
+} from "./templates.js";
 import {
     RyuutamaActor
 } from "./actor/actor.js";
@@ -48,6 +54,9 @@ Hooks.once("init", async function () {
         makeDefault: true
     });
 
+    // Preload Handlebars Templates
+    preloadHandlebarsTemplates();
+
     // Register system settings
     game.settings.register("ryuutama", "macroShorthand", {
         name: "Shortened Macro Syntax",
@@ -56,6 +65,10 @@ Hooks.once("init", async function () {
         type: Boolean,
         default: true,
         config: true
+    });
+
+    Handlebars.registerHelper('localize2', function (value, value2, options) {
+        return game.i18n.localize(value + value2);
     });
 });
 

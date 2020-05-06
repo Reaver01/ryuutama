@@ -58,10 +58,6 @@
     cursor: pointer;
   }
 
-  input {
-    border: none;
-  }
-
   .resource-input {
     vertical-align: middle;
     width: 50px;
@@ -70,6 +66,11 @@
 
   .header-fields {
     flex: 1;
+  }
+
+  .price {
+    padding-top: 10px;
+    vertical-align: middle;
   }
 
   .attribute {
@@ -101,8 +102,20 @@
   }
 }
 
+input {
+  border: none;
+}
+
 .sheet-tabs {
   flex: 0;
+}
+
+.body {
+  padding-bottom: 20px;
+
+  .terrain input {
+    vertical-align: middle;
+  }
 }
 
 .sheet-body,

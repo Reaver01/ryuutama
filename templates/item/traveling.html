@@ -1,49 +1,168 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <header class="sheet-header">
-        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
-        <div class="header-fields">
-            <h1 class="charname"><input name="data.givenName" type="text" value="{{data.givenName}}" placeholder="Name" /></h1>
-            <div class="resource">
-                <label>{{ localize "RYUU.price" }}</label>
-                <input type="text" name="data.price" value="{{data.price}}" data-dtype="Number" />
-            </div>
-            <div class="resource">
-                <label>{{ localize "RYUU.size" }}</label>
-                <input type="text" name="data.size" value="{{data.size}}" data-dtype="Number" />
-            </div>
-            <div class="resource">
-                <label>{{ localize "RYUU.durability" }}</label>
-                <input type="text" name="data.durability" value="{{data.durability}}" data-dtype="Number" />
+    {{> "systems/ryuutama/templates/item/parts/item-header.html"}}
+
+    <section class="body">
+        <div>
+            <div class="terrain grid grid-2col">
+                <label for="data.itemBonus" class="resource-label">{{ localize "RYUU.terrainBonus" }}</label>
+                <input type="text" name="data.itemBonus" value="{{data.itemBonus}}" data-dtype="Number" />
             </div>
         </div>
-    </header>
-
-    {{!-- Sheet Tab Navigation --}}
-    <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">{{ localize "RYUU.description" }}</a>
-        <a class="item" data-tab="enchantments">{{ localize "RYUU.enchantments" }}</a>
-    </nav>
-
-    {{!-- Sheet Body --}}
-    <section class="sheet-body">
-
-        {{!-- Description Tab --}}
-        <div class="tab" data-group="primary" data-tab="description">
-            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        <h3>Terrain</h3>
+        <div class="terrain grid grid-3col">
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.grassland" {{checked data.grassland}} />
+                    <label for="data.grassland" class="resource-label">{{ localize "RYUU.grassland" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.wasteland" {{checked data.wasteland}} />
+                    <label for="data.wasteland" class="resource-label">{{ localize "RYUU.wasteland" }}</label>
+                </div>
+            </div>
         </div>
-
-        {{!-- Enchantments Tab --}}
-        <div class="tab enchantments" data-group="primary" data-tab="enchantments">
-            <ol class="items-list">
-                {{#each item.data.enchantments as |item id|}}
-                <li class="item flexrow" data-item-id="{{item.name}}">
-                    <h4 class="item-name">{{item.name}}</h4>
-                    <div class="item-controls">
-                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                    </div>
-                </li>
-                {{/each}}
-            </ol>
+        <div class="terrain grid grid-3col">
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.woods" {{checked data.woods}} />
+                    <label for="data.woods" class="resource-label">{{ localize "RYUU.woods" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.highlands" {{checked data.highlands}} />
+                    <label for="data.highlands" class="resource-label">{{ localize "RYUU.highlands" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.rocky" {{checked data.rocky}} />
+                    <label for="data.rocky" class="resource-label">{{ localize "RYUU.rocky" }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="terrain grid grid-3col">
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.forest" {{checked data.forest}} />
+                    <label for="data.forest" class="resource-label">{{ localize "RYUU.forest" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.swamp" {{checked data.swamp}} />
+                    <label for="data.swamp" class="resource-label">{{ localize "RYUU.swamp" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.mountain" {{checked data.mountain}} />
+                    <label for="data.mountain" class="resource-label">{{ localize "RYUU.mountain" }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="terrain grid grid-3col">
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.desert" {{checked data.desert}} />
+                    <label for="data.desert" class="resource-label">{{ localize "RYUU.desert" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.jungle" {{checked data.jungle}} />
+                    <label for="data.jungle" class="resource-label">{{ localize "RYUU.jungle" }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="terrain grid grid-3col">
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.alpine" {{checked data.alpine}} />
+                    <label for="data.alpine" class="resource-label">{{ localize "RYUU.alpine" }}</label>
+                </div>
+            </div>
+        </div>
+        <h3>Weather</h3>
+        <div class="terrain grid grid-3col">
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.rain" {{checked data.rain}} />
+                    <label for="data.rain" class="resource-label">{{ localize "RYUU.rain" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.wind" {{checked data.wind}} />
+                    <label for="data.wind" class="resource-label">{{ localize "RYUU.wind" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.fog" {{checked data.fog}} />
+                    <label for="data.fog" class="resource-label">{{ localize "RYUU.fog" }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="terrain grid grid-3col">
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.hot" {{checked data.hot}} />
+                    <label for="data.hot" class="resource-label">{{ localize "RYUU.hot" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.cold" {{checked data.cold}} />
+                    <label for="data.cold" class="resource-label">{{ localize "RYUU.cold" }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="terrain grid grid-3col">
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.rain2" {{checked data.rain2}} />
+                    <label for="data.rain2" class="resource-label">{{ localize "RYUU.rain2" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.snow" {{checked data.snow}} />
+                    <label for="data.snow" class="resource-label">{{ localize "RYUU.snow" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.fog2" {{checked data.fog2}} />
+                    <label for="data.fog2" class="resource-label">{{ localize "RYUU.fog2" }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="terrain grid grid-3col">
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.dark" {{checked data.dark}} />
+                    <label for="data.dark" class="resource-label">{{ localize "RYUU.dark" }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="terrain grid grid-3col">
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.hurricane" {{checked data.hurricane}} />
+                    <label for="data.hurricane" class="resource-label">{{ localize "RYUU.hurricane" }}</label>
+                </div>
+            </div>
+            <div>
+                <div class="terrain">
+                    <input class="terrain" type="checkbox" name="data.blizzard" {{checked data.blizzard}} />
+                    <label for="data.blizzard" class="resource-label">{{ localize "RYUU.blizzard" }}</label>
+                </div>
+            </div>
         </div>
     </section>
+
+    {{> "systems/ryuutama/templates/item/parts/item-navigation.html"}}
 </form>
