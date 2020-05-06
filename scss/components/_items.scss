@@ -30,5 +30,21 @@
   .item-controls {
     flex: 0 0 86px;
     text-align: right;
+
+    .item-toggle {
+      color: $c-beige;
+
+      &.active {
+        color: $c-olive;
+      }
+
+      &.fixed {
+        color: $c-crimson;
+
+        &:hover {
+          text-shadow: none;
+        }
+      }
+    }
   }
 }
