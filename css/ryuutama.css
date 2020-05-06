@@ -318,8 +318,30 @@
   margin: 0;
 }
 
+.ryuutama .items-list .item-size {
+  flex: 0 0 10px;
+  text-align: left;
+}
+
+.ryuutama .items-list .item-damage {
+  flex: 0 0 90px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.ryuutama .items-list .item-accuracy {
+  flex: 0 0 120px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.ryuutama .items-list .item-equip {
+  flex: 0 0 90px;
+  text-align: center;
+}
+
 .ryuutama .items-list .item-controls {
-  flex: 0 0 86px;
+  flex: 0 0 65px;
   text-align: right;
 }
 

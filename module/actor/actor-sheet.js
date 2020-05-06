@@ -222,6 +222,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         let dex = Number(actor.data.data.attributes.dex.value);
         let int = Number(actor.data.data.attributes.int.value);
         let spi = Number(actor.data.data.attributes.spi.value);
+        let modifiers = [];
         if (actor.data.data.attributes.str.bonus) {
             str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) + 1];
         }
@@ -236,7 +237,21 @@ export class RyuutamaActorSheet extends ActorSheet {
             int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1];
         }
         const li = $(event.currentTarget).parents(".item");
-        const item = this.actor.items.find(i => i.id === li.data("itemId"));
+        const items = this.actor.items
+        const item = items.find(i => i.id === li.data("itemId"));
+        const cursedItems = items.filter(i => i.data.data.enchantments.find(e => e.data.conditionPenalty !== 0) !== undefined && i.data.data.equipped);
+        let conditionPenalty = 0;
+        cursedItems.forEach(cursed => {
+            cursed.data.data.enchantments.forEach(enchantment => {
+                conditionPenalty += enchantment.data.conditionPenalty;
+            });
+        });
+        const maxCapacity = actor.data.data.attributes.capacity.max;
+        const currentCarried = actor.data.data.attributes.capacity.value;
+        let weightPenalty = currentCarried > maxCapacity ? maxCapacity - currentCarried : 0;
+        if (weightPenalty !== 0) {
+            modifiers.push(weightPenalty);
+        }
         if (item !== undefined) {
             switch (item.data.type) {
                 case "weapon":
@@ -245,7 +260,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                     let accuracyRoll;
                     if (event.currentTarget.classList.contains("accuracy")) {
                         if ((!event.altKey && !event.shiftKey) || (!event.altKey && event.shiftKey)) {
-                            accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.accuracyBonus}`, `${actor.name} attacks with their ${item.name}`)
+                            accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.accuracyBonus}`, `${actor.name} attacks with their ${item.name}`, modifiers)
                         }
                     }
                     if (event.currentTarget.classList.contains("damage")) {
@@ -264,43 +279,51 @@ export class RyuutamaActorSheet extends ActorSheet {
         }
         switch (event.target.id) {
             case "roll-travel":
-                rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`);
+                rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`, modifiers);
                 break;
             case "roll-direction":
-                rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`);
+                rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`, modifiers);
                 break;
             case "roll-camp":
-                rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`);
+                rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`, modifiers);
                 break;
             case "roll-condition":
-                const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`);
+                if (conditionPenalty !== 0) {
+                    modifiers.push(conditionPenalty);
+                }
+                const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`, modifiers);
                 actor.update({
                     "data.attributes.condition.value": condition.roll
                 })
                 break;
             case "roll-initiative":
-                const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`);
+                const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`, modifiers);
                 actor.update({
                     "data.attributes.initiative.value": initiative.roll
                 })
                 break;
             case "roll-strength":
-                rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.check.str")} [STR]`);
+                rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.check.str")} [STR]`, modifiers);
                 break;
             case "roll-dexterity":
-                rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.dex")} [DEX]`);
+                rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.dex")} [DEX]`, modifiers);
                 break;
             case "roll-intelligence":
-                rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.int")} [INT]`);
+                rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.int")} [INT]`, modifiers);
                 break;
             case "roll-spirit":
-                rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.spi")} [SPI]`);
+                rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.spi")} [SPI]`, modifiers);
                 break;
             default:
                 break;
         }
 
-        function rollCheck(formula, flavor) {
+        function rollCheck(formula, flavor, modifiers) {
+            if (modifiers !== undefined && modifiers.length > 0) {
+                modifiers.forEach(mod => {
+                    formula += ` + ${mod}`;
+                });
+            }
             const r = new Roll(formula, {
                 str: str,
                 dex: dex,
