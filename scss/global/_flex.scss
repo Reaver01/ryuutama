@@ -4,6 +4,12 @@
   text-align: center;
 }
 
+.flex-left {
+  align-items: left;
+  justify-content: left;
+  text-align: left;
+}
+
 .flex-between {
   justify-content: space-between;
 }

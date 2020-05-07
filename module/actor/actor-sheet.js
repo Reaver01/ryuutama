@@ -13,7 +13,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["ryuutama", "sheet", "actor", "character"],
             width: 600,
-            height: 900,
+            height: 650,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
@@ -223,19 +223,63 @@ export class RyuutamaActorSheet extends ActorSheet {
         let int = Number(actor.data.data.attributes.int.value);
         let spi = Number(actor.data.data.attributes.spi.value);
         let modifiers = [];
-        if (actor.data.data.attributes.str.bonus) {
+
+        // Attribute bonuses
+        if (actor.data.data.attributes.str.bonus && str < 12) {
             str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) + 1];
         }
-        if (actor.data.data.attributes.dex.bonus) {
+        if (actor.data.data.attributes.dex.bonus && dex < 12) {
             dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) + 1];
         }
-        if (actor.data.data.attributes.int.bonus) {
+        if (actor.data.data.attributes.int.bonus && int < 12) {
             int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) + 1];
-            console.log(RYUU.DICE.findIndex(i => i === int));
         }
-        if (actor.data.data.attributes.spi.bonus) {
+        if (actor.data.data.attributes.spi.bonus && spi < 12) {
             int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1];
         }
+
+        // Status effect decreases
+        if (actor.data.data.effects.injury > 0 && dex > 4) {
+            dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) - 1];
+        }
+        if (actor.data.data.effects.poison > 0 && str > 4) {
+            str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) - 1];
+        }
+        if (actor.data.data.effects.sickness > 0) {
+            if (dex > 4) {
+                dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) - 1];
+            }
+            if (str > 4) {
+                str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) - 1];
+            }
+            if (spi > 4) {
+                spi = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) - 1];
+            }
+            if (int > 4) {
+                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) - 1];
+            }
+        }
+        if (actor.data.data.effects.exhaustion > 0 && spi > 4) {
+            spi = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) - 1];
+        }
+        if (actor.data.data.effects.muddled > 0 && int > 4) {
+            int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) - 1];
+        }
+        if (actor.data.data.effects.shock > 0) {
+            if (dex > 4) {
+                dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) - 1];
+            }
+            if (str > 4) {
+                str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) - 1];
+            }
+            if (spi > 4) {
+                spi = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) - 1];
+            }
+            if (int > 4) {
+                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) - 1];
+            }
+        }
+
         const li = $(event.currentTarget).parents(".item");
         const items = this.actor.items
         const item = items.find(i => i.id === li.data("itemId"));
@@ -249,6 +293,9 @@ export class RyuutamaActorSheet extends ActorSheet {
         const maxCapacity = actor.data.data.attributes.capacity.max;
         const currentCarried = actor.data.data.attributes.capacity.value;
         let weightPenalty = currentCarried > maxCapacity ? maxCapacity - currentCarried : 0;
+        const hpUp = actor.data.data.attributes.statIncreases.hp;
+        const mpUp = actor.data.data.attributes.statIncreases.mp;
+        const upEarned = actor.data.data.attributes.statIncreases.earned;
         if (weightPenalty !== 0) {
             modifiers.push(weightPenalty);
         }
@@ -277,6 +324,15 @@ export class RyuutamaActorSheet extends ActorSheet {
                     break;
             }
         }
+        let currentModifiers = "";
+        if (modifiers.length > 0) {
+            currentModifiers = `\n${actor.name} ${game.i18n.localize("RYUU.check.modifiers")}:`;
+            modifiers.forEach(element => {
+                currentModifiers += ` ${element},`;
+            });
+            currentModifiers.slice(0, -1);
+        }
+
         switch (event.target.id) {
             case "roll-travel":
                 rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`, modifiers);
@@ -292,6 +348,15 @@ export class RyuutamaActorSheet extends ActorSheet {
                     modifiers.push(conditionPenalty);
                 }
                 const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`, modifiers);
+                const effects = actor.data.data.effects;
+                for (const name in effects) {
+                    if (effects.hasOwnProperty(name) && condition.roll >= effects[name]) {
+                        let attr = `data.effects.${name}`;
+                        actor.update({
+                            [attr]: 0
+                        });
+                    }
+                }
                 actor.update({
                     "data.attributes.condition.value": condition.roll
                 })
@@ -303,22 +368,53 @@ export class RyuutamaActorSheet extends ActorSheet {
                 })
                 break;
             case "roll-strength":
-                rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.check.str")} [STR]`, modifiers);
+                rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.check.str")} [STR]${currentModifiers}`);
                 break;
             case "roll-dexterity":
-                rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.dex")} [DEX]`, modifiers);
+                rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.dex")} [DEX]${currentModifiers}`);
                 break;
             case "roll-intelligence":
-                rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.int")} [INT]`, modifiers);
+                rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.int")} [INT]${currentModifiers}`);
                 break;
             case "roll-spirit":
-                rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.spi")} [SPI]`, modifiers);
+                rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.spi")} [SPI]${currentModifiers}`);
+                break;
+            case "set-max-hp":
+                if (event.shiftKey && hpUp + mpUp < upEarned) {
+                    actor.update({
+                        "data.attributes.statIncreases.hp": hpUp + 1
+                    });
+                } else if (event.altKey) {
+                    actor.update({
+                        "data.attributes.statIncreases.hp": hpUp - 1
+                    });
+                } else {
+                    actor.update({
+                        "data.hp.value": actor.data.data.hp.max
+                    });
+                }
+                break;
+            case "set-max-mp":
+                if (event.shiftKey && hpUp + mpUp < upEarned) {
+                    actor.update({
+                        "data.attributes.statIncreases.mp": mpUp + 1
+                    });
+                } else if (event.altKey) {
+                    actor.update({
+                        "data.attributes.statIncreases.mp": mpUp - 1
+                    });
+                } else {
+                    actor.update({
+                        "data.mp.value": actor.data.data.mp.max
+                    });
+                }
                 break;
             default:
                 break;
         }
 
         function rollCheck(formula, flavor, modifiers) {
+            console.log(formula);
             if (modifiers !== undefined && modifiers.length > 0) {
                 modifiers.forEach(mod => {
                     formula += ` + ${mod}`;
