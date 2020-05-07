@@ -338,7 +338,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         }
         let currentModifiers = "";
         if (modifiers.length > 0) {
-            currentModifiers = `\n${actor.name} ${game.i18n.localize("RYUU.check.modifiers")}:`;
+            currentModifiers = `<br />${actor.name} ${game.i18n.localize("RYUU.check.modifiers")}:`;
             modifiers.forEach(element => {
                 currentModifiers += ` ${element},`;
             });
