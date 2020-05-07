@@ -15,27 +15,27 @@
             },
             "attributes": {
                 "str": {
-                    "value": 0,
-                    "min": 0,
-                    "max": 0,
+                    "value": 4,
+                    "min": 4,
+                    "max": 12,
                     "bonus": false
                 },
                 "dex": {
-                    "value": 0,
-                    "min": 0,
-                    "max": 0,
+                    "value": 4,
+                    "min": 4,
+                    "max": 12,
                     "bonus": false
                 },
                 "int": {
-                    "value": 0,
-                    "min": 0,
-                    "max": 0,
+                    "value": 4,
+                    "min": 4,
+                    "max": 12,
                     "bonus": false
                 },
                 "spi": {
-                    "value": 0,
-                    "min": 0,
-                    "max": 0,
+                    "value": 4,
+                    "min": 4,
+                    "max": 12,
                     "bonus": false
                 },
                 "condition": {
@@ -53,6 +53,11 @@
                     "value": 1,
                     "min": 1,
                     "max": 10
+                },
+                "statIncreases": {
+                    "earned": 0,
+                    "hp": 0,
+                    "mp": 0
                 },
                 "exp": {
                     "value": 0,
@@ -93,6 +98,30 @@
                 "hurricane": 0,
                 "blizzard": 0
             },
+            "specialty": {
+                "grassland": false,
+                "wasteland": false,
+                "woods": false,
+                "highlands": false,
+                "rocky": false,
+                "forest": false,
+                "swamp": false,
+                "mountain": false,
+                "desert": false,
+                "jungle": false,
+                "alpine": false,
+                "rain": false,
+                "wind": false,
+                "fog": false,
+                "hot": false,
+                "cold": false,
+                "rain2": false,
+                "snow": false,
+                "fog2": false,
+                "dark": false,
+                "hurricane": false,
+                "blizzard": false
+            },
             "effects": {
                 "injury": 0,
                 "poison": 0,
@@ -100,6 +129,14 @@
                 "exhaustion": 0,
                 "muddled": 0,
                 "shock": 0
+            },
+            "immunity": {
+                "injury": false,
+                "poison": false,
+                "sickness": false,
+                "exhaustion": false,
+                "muddled": false,
+                "shock": false
             }
         }
     },
