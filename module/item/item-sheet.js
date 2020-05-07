@@ -1,6 +1,6 @@
 import {
     RYUU
-} from '../config.js';
+} from "../config.js";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -59,35 +59,113 @@ export class RyuutamaItemSheet extends ItemSheet {
         // Try to extract the data
         let data;
         try {
-            data = JSON.parse(event.dataTransfer.getData('text/plain'));
+            data = JSON.parse(event.dataTransfer.getData("text/plain"));
             if (data.type !== "Item") return;
         } catch (err) {
             return false;
         }
 
         const parentItem = this;
+
         // Case 1 - Import from a Compendium pack
         if (data.pack) {
             const pack = game.packs.find(p => p.collection === data.pack);
             pack.getEntity(data.id).then(item => {
-                if (!item || item.data.type !== "enchantment") return;
+                if (!item) return;
 
-                return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
+                if (item.data.type === "enchantment" && parentItem.data.type !== "container" && parentItem.data.type !== "animal") {
+                    // Enchant items that aren't containers or animals
+                    return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
+                } else if (parentItem.item.type === "container" || parentItem.item.type === "animal") {
+                    // Add items to container or animal
+                    return parentItem.addRemoveItem(false, item.data._id, item.name);
+                }
+
             });
         }
 
         // Case 2 - Data explicitly provided
         else if (data.data) {
             console.log("Data explicitly provided");
+            console.log(data);
+            const actor = game.actors.get(data.actorId);
+            const item = actor.items.find(i => i.data._id === data.data._id);
+            if (!item || parentItem.item.options.actor.id !== actor.id) return;
+
+            if (parentItem.item.type === "container" || parentItem.item.type === "animal") {
+                // Add items to container or animal
+                await actor.updateEmbeddedEntity("OwnedItem", {
+                    _id: item._id,
+                    container: parentItem.item.id
+                });
+
+                // Get all items already in container and make sure we don't dupe
+                let holding = parentItem.item.data.data.holding;
+                holding = holding.slice();
+                const found = holding.find(i => i.id === item._id);
+                if (found !== undefined || parentItem.item.data.data.holdingSize + item.data.data.size > parentItem.item.data.data.canHold) return;
+
+                // Push the item to the container
+                holding.push({
+                    id: item._id,
+                    name: item.name
+                });
+                parentItem.item.update({
+                    "data.holding": holding
+                });
+            }
+            return;
         }
 
         // Case 3 - Import from World entity
         else {
             let item = game.items.get(data.id);
-            if (!item || item.data.type !== "enchantment") return;
+            if (!item) return;
 
-            return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
+            if (item.data.type === "enchantment" && parentItem.data.type !== "container" && parentItem.data.type !== "animal") {
+                // Enchant items that aren't containers or animals
+                return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
+            } else if (parentItem.item.type === "container" || parentItem.item.type === "animal") {
+                // Add items to container or animal
+                return parentItem.addRemoveItem(false, item.data);
+            }
         }
+    }
+
+    /* -------------------------------------------- */
+
+    addRemoveItem(remove, data) {
+        let id = data._id;
+        const item = this.object;
+        const actor = item.options.actor;
+        let holding = item.data.data.holding || [];
+        holding = holding.slice();
+
+        if (id !== undefined) {
+            if (remove) {
+                // Filter container contents
+                holding = holding.filter(i => i.id !== id);
+
+                // Remove the container id from the item in the actor's inventory
+                const actorItem = actor.items.find(i => i.data._id === data.id);
+
+                console.log(actorItem);
+
+            } else {
+                if (actor) {
+                    // Specify container id on item in actor's inventory
+                    data.data.container = item.data._id;
+
+                    // Create the item entity in the actor's inventory
+                    actor.createOwnedItem(data);
+                }
+            }
+        }
+
+        // Update item
+        item.update({
+            "data.holding": holding
+        });
     }
 
     /* -------------------------------------------- */
@@ -117,6 +195,9 @@ export class RyuutamaItemSheet extends ItemSheet {
         html.find('.item-delete').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
             this.addRemoveEnchantment(true, li.data("itemId"));
+            let item = this.object.data.data.holding.find(i => i.id === li.data("itemId"));
+            item._id = item.id;
+            this.addRemoveItem(true, item);
         });
     }
 

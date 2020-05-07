@@ -1,6 +1,6 @@
 import {
     RYUU
-} from '../config.js';
+} from "../config.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -43,11 +43,41 @@ export class RyuutamaActorSheet extends ActorSheet {
         */
 
         // Prepare items.
-        if (this.actor.data.type == 'character') {
+        if (this.actor.data.type == "character") {
             this._prepareCharacterItems(data);
         }
 
         return data;
+    }
+
+    /* -------------------------------------------- */
+
+    /** @override */
+    async _onDrop(event) {
+        event.preventDefault();
+
+        // Get dropped data
+        let data;
+        try {
+            data = JSON.parse(event.dataTransfer.getData("text/plain"));
+        } catch (err) {
+            return false;
+        }
+
+        // Handle dropping to another sheet
+        if (data) {
+            if (game.user.isGM && data.actorId !== undefined && data.actorId !== this.actor.id) {
+                // Retrieve original owner and remove the item from their inventory
+                const originalActor = game.actors.get(data.actorId);
+                originalActor.deleteOwnedItem(data.data._id);
+            } else if (game.user.isGM || this.actor.owner) {
+                console.log(event);
+                console.log(data);
+            }
+
+            // Call parent on drop logic
+            return super._onDrop(event);
+        }
     }
 
     /* -------------------------------------------- */
@@ -127,30 +157,60 @@ export class RyuutamaActorSheet extends ActorSheet {
         if (!this.options.editable) return;
 
         // Add Inventory Item
-        html.find('.item-create').click(this._onItemCreate.bind(this));
+        html.find(".item-create").click(this._onItemCreate.bind(this));
 
         // Item summaries
-        html.find('.item .item-name h4').click(event => this._onItemSummary(event));
+        html.find(".item .item-name h4").click(event => this._onItemSummary(event));
 
         // Update Inventory Item
-        html.find('.item-edit').click(ev => {
+        html.find(".item-edit").click(ev => {
             const li = $(ev.currentTarget).parents(".item");
             const item = this.actor.getOwnedItem(li.data("itemId"));
             item.sheet.render(true);
         });
 
         // Delete Inventory Item
-        html.find('.item-delete').click(ev => {
+        html.find(".item-delete").click(ev => {
             const li = $(ev.currentTarget).parents(".item");
-            this.actor.deleteOwnedItem(li.data("itemId"));
+            const liId = li.data("itemId");
+
+            // Get item id and container id from actor before deleting
+            const item = this.actor.items.find(i => i.data._id === liId);
+            const containerId = item.data.data.container;
+            if (containerId !== undefined && containerId !== "") {
+                // Find the container and filter the items it holds
+                const container = this.actor.items.find(i => i.data._id === containerId);
+                if (container !== undefined) {
+                    let holding = container.data.data.holding.slice();
+                    holding = holding.filter(i => i.id !== liId);
+
+                    // Update container
+                    container.update({
+                        "data.holding": holding
+                    });
+                }
+            }
+
+            // Proceed with deleting the item from the actor
+            this.actor.deleteOwnedItem(liId);
             li.slideUp(200, () => this.render(false));
         });
 
         // Check Buttons
-        html.find('.rollable').click(this._onRollItem.bind(this));
+        html.find(".rollable").click(this._onRollItem.bind(this));
 
         // Item State Toggling
-        html.find('.item-toggle').click(this._onToggleItem.bind(this));
+        html.find(".item-toggle").click(this._onToggleItem.bind(this));
+
+        if (this.actor.owner) {
+            let handler = ev => this._onDragItemStart(ev);
+            html.find("li.item").each((i, li) => {
+                if (li.classList.contains("inventory-header")) return;
+                li.setAttribute("draggable", true);
+                li.addEventListener("dragstart", handler, false);
+            });
+        }
+
     }
 
     /* -------------------------------------------- */

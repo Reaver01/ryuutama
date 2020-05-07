@@ -1,6 +1,6 @@
 import {
     RYUU
-} from '../config.js';
+} from "../config.js";
 
 /**
  * Extend the base Actor entity by defining a custom roll data structure which is ideal for the Simple system.
@@ -19,7 +19,7 @@ export class RyuutamaActor extends Actor {
 
         // Make separate methods for each Actor type (character, npc, etc.) to keep
         // things organized.
-        if (actorData.type === 'character') this._prepareCharacterData(actorData);
+        if (actorData.type === "character") this._prepareCharacterData(actorData);
     }
 
     /**
@@ -72,14 +72,26 @@ export class RyuutamaActor extends Actor {
         }
 
         data.attributes.capacity.max = Number(str) + 2 + data.attributes.level.value;
-        const carried = items.filter(i => i.data.equipped === false && i.data.size !== undefined);
+        const carried = items.filter(i => !i.data.equipped && i.data.size !== undefined);
         const equipped = items.filter(i => i.data.equipped === true && i.data.size !== undefined);
+        const containers = items.filter(i => i.type === "container");
 
         let carriedWeight = 0;
         carried.forEach(item => {
             let weightless = item.data.enchantments.find(e => e.data.weightless)
             if (weightless === undefined) {
-                carriedWeight += Number(item.data.size);
+                let inContainer = false;
+
+                containers.forEach(container => {
+                    const found = container.data.holding.find(i => i.id === item._id);
+                    if (found !== undefined) {
+                        inContainer = true;
+                    }
+                });
+
+                if (!inContainer) {
+                    carriedWeight += Number(item.data.size);
+                }
             }
         });
         data.attributes.capacity.value = carriedWeight;

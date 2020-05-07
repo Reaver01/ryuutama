@@ -141,5 +141,7 @@
     "RYUU.face": "Face/Eyes",
     "RYUU.back": "Back",
     "RYUU.accessory": "Accessory",
-    "RYUU.staff": "Staff"
+    "RYUU.staff": "Staff",
+    "RYUU.holding": "Holding",
+    "RYUU.canHold": "Capacity"
 }
