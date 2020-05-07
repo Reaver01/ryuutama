@@ -137,6 +137,10 @@
                 "exhaustion": false,
                 "muddled": false,
                 "shock": false
+            },
+            "current": {
+                "terrain": "",
+                "weather": ""
             }
         }
     },

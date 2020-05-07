@@ -59,7 +59,7 @@
     "RYUU.travelgear": "Traveller's Gear",
     "RYUU.armorshield": "Armor/Shield",
     "RYUU.weapons": "Weapons",
-    "RYUU.capacity": "Capacity",
+    "RYUU.capacity": "Carry",
     "RYUU.gold": "Gold",
 
     "RYUU.hp.short": "HP",
@@ -112,6 +112,9 @@
     "RYUU.hurricane": "Hurricane",
     "RYUU.blizzard": "Blizzard",
 
+    "RYUU.journeypass": "\n<strong class='crit-roll'>SUCCESS</strong> against ",
+    "RYUU.journeyfail": "\n<strong class='fumble-roll'>FAILURE</strong> against ",
+
     "RYUU.injury": "Injured",
     "RYUU.poison": "Poisoned",
     "RYUU.sickness": "Sick",
@@ -125,6 +128,7 @@
     "RYUU.toomuchback": "You are already wearing a cape!",
     "RYUU.toomuchfeet": "You are already wearing boots!",
     "RYUU.toomuchhead": "You are already wearing a hat!",
+    "RYUU.toomuchstaff": "You are already using a staff!",
     "RYUU.toomuchface": "You are already wearing something on your face!",
     "RYUU.toomuchaccessory": "You are already wearing enough accessories!",
     "RYUU.toomuchtravel": "That would be far too much to travel with!",
@@ -136,5 +140,6 @@
     "RYUU.head": "Head",
     "RYUU.face": "Face/Eyes",
     "RYUU.back": "Back",
-    "RYUU.accessory": "Accessory"
+    "RYUU.accessory": "Accessory",
+    "RYUU.staff": "Staff"
 }
