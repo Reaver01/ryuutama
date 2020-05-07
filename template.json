@@ -145,7 +145,7 @@
         }
     },
     "Item": {
-        "types": ["item", "weapon", "armor", "shield", "class", "feature", "enchantment", "container", "traveling", "spell"],
+        "types": ["item", "weapon", "armor", "shield", "class", "feature", "enchantment", "container", "traveling", "spell", "animal"],
         "templates": {
             "item": {
                 "givenName": "",

@@ -72,9 +72,9 @@ export class RyuutamaActor extends Actor {
         }
 
         data.attributes.capacity.max = Number(str) + 2 + data.attributes.level.value;
-        const carried = items.filter(i => !i.data.equipped && i.data.size !== undefined);
+        const carried = items.filter(i => !i.data.equipped && i.data.size !== undefined && i.type !== "animal");
         const equipped = items.filter(i => i.data.equipped === true && i.data.size !== undefined);
-        const containers = items.filter(i => i.type === "container");
+        const containers = items.filter(i => i.type === "container" || i.type === "animal");
 
         let carriedWeight = 0;
         carried.forEach(item => {

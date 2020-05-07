@@ -96,6 +96,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         const gear = [];
         const equipment = [];
         const containers = [];
+        const animals = [];
         const features = [];
         const spells = {
             0: [],
@@ -127,6 +128,10 @@ export class RyuutamaActorSheet extends ActorSheet {
             if (i.type === "container") {
                 containers.push(i);
             }
+            // Append to container.
+            if (i.type === "animal") {
+                animals.push(i);
+            }
             // Append to features.
             else if (i.type === "feature") {
                 features.push(i);
@@ -143,6 +148,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         actorData.gear = gear;
         actorData.equipment = equipment;
         actorData.containers = containers;
+        actorData.animals = animals;
         actorData.features = features;
         actorData.spells = spells;
     }
