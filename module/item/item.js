@@ -14,7 +14,7 @@ export class RyuutamaItem extends Item {
         const actorData = this.actor ? this.actor.data : {};
         const data = itemData.data;
 
-        if (itemData.type === "container") this._prepareItemData(itemData, actorData);
+        if (itemData.type === "container" || itemData.type === "animal") this._prepareItemData(itemData, actorData);
     }
 
     /**
