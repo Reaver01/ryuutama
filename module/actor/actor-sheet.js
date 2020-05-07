@@ -165,7 +165,6 @@ export class RyuutamaActorSheet extends ActorSheet {
         const itemId = event.currentTarget.closest(".item").dataset.itemId;
         const item = this.actor.getOwnedItem(itemId);
         const attr = item.data.type === "spell" ? "data.preparation.prepared" : "data.equipped";
-
         if (item.data.type === "armor" || item.data.type === "shield" || item.data.type === "weapon" || item.data.type === "traveling") {
             const capacity = this.actor.data.data.attributes.capacity;
             const equippedItems = this.actor.items.filter(i => i.data.data.equipped === true);
@@ -176,6 +175,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             const head = equippedItems.filter(i => i.data.data.equip === "head").length;
             const face = equippedItems.filter(i => i.data.data.equip === "face").length;
             const back = equippedItems.filter(i => i.data.data.equip === "back").length;
+            const staff = equippedItems.filter(i => i.data.data.equip === "staff").length;
             const accessory = equippedItems.filter(i => i.data.data.equip === "accessory").length;
             const traveling = equippedItems.filter(i => i.data.type === "traveling").length;
             const hands = hand2 > 0 ? 2 : hand1
@@ -195,6 +195,8 @@ export class RyuutamaActorSheet extends ActorSheet {
                 ui.notifications.error(game.i18n.localize("RYUU.toomuchface"));
             } else if (!getProperty(item.data, attr) && (item.data.data.equip === "back" && back >= RYUU.MAX_BACK)) {
                 ui.notifications.error(game.i18n.localize("RYUU.toomuchback"));
+            } else if (!getProperty(item.data, attr) && (item.data.data.equip === "staff" && staff >= RYUU.MAX_STAFF)) {
+                ui.notifications.error(game.i18n.localize("RYUU.toomuchstaff"));
             } else if (!getProperty(item.data, attr) && (item.data.data.equip === "accessory" && accessory >= RYUU.MAX_ACCESSORY)) {
                 ui.notifications.error(game.i18n.localize("RYUU.toomuchaccessory"));
             } else if (!getProperty(item.data, attr) && (item.data.type === "traveling" && traveling >= RYUU.MAX_TRAVEL)) {
@@ -296,6 +298,16 @@ export class RyuutamaActorSheet extends ActorSheet {
         const hpUp = actor.data.data.attributes.statIncreases.hp;
         const mpUp = actor.data.data.attributes.statIncreases.mp;
         const upEarned = actor.data.data.attributes.statIncreases.earned;
+        const journeyDC = RYUU.TERRAIN[actor.data.data.current.terrain] + RYUU.WEATHER[actor.data.data.current.weather];
+        const terrainBonus = actor.data.data.traveling[actor.data.data.current.terrain];
+        const weatherBonus = actor.data.data.traveling[actor.data.data.current.weather];
+        let journeyBonus = 0;
+        if (actor.data.data.specialty[actor.data.data.current.terrain]) {
+            journeyBonus += 2;
+        }
+        if (actor.data.data.specialty[actor.data.data.current.weather]) {
+            journeyBonus += 2;
+        }
         if (weightPenalty !== 0) {
             modifiers.push(weightPenalty);
         }
@@ -332,16 +344,42 @@ export class RyuutamaActorSheet extends ActorSheet {
             });
             currentModifiers.slice(0, -1);
         }
-
         switch (event.target.id) {
             case "roll-travel":
-                rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`, modifiers);
+                if (journeyBonus > 0) {
+                    modifiers.push(journeyBonus);
+                }
+                if (terrainBonus > 0) {
+                    modifiers.push(terrainBonus);
+                }
+                if (weatherBonus > 0) {
+                    modifiers.push(weatherBonus);
+                }
+                rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`, modifiers, journeyDC);
                 break;
             case "roll-direction":
-                rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`, modifiers);
+                if (journeyBonus > 0) {
+                    modifiers.push(journeyBonus);
+                }
+                if (terrainBonus > 0) {
+                    modifiers.push(terrainBonus);
+                }
+                if (weatherBonus > 0) {
+                    modifiers.push(weatherBonus);
+                }
+                rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`, modifiers, journeyDC);
                 break;
             case "roll-camp":
-                rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`, modifiers);
+                if (journeyBonus > 0) {
+                    modifiers.push(journeyBonus);
+                }
+                if (terrainBonus > 0) {
+                    modifiers.push(terrainBonus);
+                }
+                if (weatherBonus > 0) {
+                    modifiers.push(weatherBonus);
+                }
+                rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`, modifiers, journeyDC);
                 break;
             case "roll-condition":
                 if (conditionPenalty !== 0) {
@@ -351,7 +389,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                 const effects = actor.data.data.effects;
                 for (const name in effects) {
                     if (effects.hasOwnProperty(name) && condition.roll >= effects[name]) {
-                        let attr = `data.effects.${name}`;
+                        let attr = `data.data.effects.${name}`;
                         actor.update({
                             [attr]: 0
                         });
@@ -413,8 +451,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                 break;
         }
 
-        function rollCheck(formula, flavor, modifiers) {
-            console.log(formula);
+        function rollCheck(formula, flavor, modifiers, journeyDC) {
             if (modifiers !== undefined && modifiers.length > 0) {
                 modifiers.forEach(mod => {
                     formula += ` + ${mod}`;
@@ -441,6 +478,11 @@ export class RyuutamaActorSheet extends ActorSheet {
             if (dice.length > 1 && fumbleRolls.length === dice.length) {
                 fumble = true;
                 flavor += game.i18n.localize("RYUU.rollfumble");
+            }
+            if (journeyDC !== undefined && roll._total >= journeyDC) {
+                flavor += game.i18n.localize("RYUU.journeypass") + journeyDC;
+            } else if (journeyDC !== undefined && roll._total < journeyDC) {
+                flavor += game.i18n.localize("RYUU.journeyfail") + journeyDC;
             }
             roll.toMessage({
                 flavor: flavor

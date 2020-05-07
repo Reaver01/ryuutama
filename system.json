@@ -43,6 +43,13 @@
             "system": "ryuutama",
             "path": "./packs/enchantments.db",
             "entity": "Item"
+        },
+        {
+            "name": "containers",
+            "label": "Containers (Ryuutama)",
+            "system": "ryuutama",
+            "path": "./packs/containers.db",
+            "entity": "Item"
         }
     ],
     "languages": [{
