@@ -9,6 +9,7 @@
     "RYUU.abilities": "Abilities",
     "RYUU.dodge": "Dodge Value",
     "RYUU.enchantments": "Enchantments",
+    "RYUU.spells": "Spells",
 
     "RYUU.rollcrit": "<br /><strong class='crit-roll'>CRITICAL SUCCESS!</strong>",
     "RYUU.rollfumble": "<br /><strong class='fumble-roll'>FUMBLE!</strong>",
@@ -17,8 +18,11 @@
     "RYUU.size": "Size",
     "RYUU.durability": "Durability",
     "RYUU.equip": "Equip",
+    "RYUU.equipped": "Equipped",
+    "RYUU.equipment": "Equipment",
     "RYUU.dp": "Defense Points",
     "RYUU.penalty": "Penalty",
+    "RYUU.penalties": "Penalties",
     "RYUU.accuracy": "Accuracy",
     "RYUU.accuracybonus": "Bonus",
     "RYUU.damage": "Damage",
@@ -52,6 +56,12 @@
     "RYUU.experience.short": "Exp",
     "RYUU.experience.long": "Experience",
 
+    "RYUU.travelgear": "Traveller's Gear",
+    "RYUU.armorshield": "Armor/Shield",
+    "RYUU.weapons": "Weapons",
+    "RYUU.capacity": "Capacity",
+    "RYUU.gold": "Gold",
+
     "RYUU.hp.short": "HP",
     "RYUU.hp.long": "Health Points",
     "RYUU.mp.short": "MP",
@@ -74,7 +84,9 @@
     "RYUU.check.dex": "rolled a dexterity check",
     "RYUU.check.int": "rolled a intelligence check",
     "RYUU.check.spi": "rolled a spirit check",
+    "RYUU.check.modifiers": "has the following modifiers to all checks",
 
+    "RYUU.terrain": "Terrain",
     "RYUU.grassland": "Grassland",
     "RYUU.wasteland": "Wasteland",
     "RYUU.woods": "Woods",
@@ -87,6 +99,7 @@
     "RYUU.jungle": "Jungle",
     "RYUU.alpine": "Alpine",
 
+    "RYUU.weather": "Weather",
     "RYUU.rain": "Rain",
     "RYUU.wind": "Strong Wind",
     "RYUU.fog": "Fog",
@@ -98,6 +111,13 @@
     "RYUU.dark": "Dark",
     "RYUU.hurricane": "Hurricane",
     "RYUU.blizzard": "Blizzard",
+
+    "RYUU.injury": "Injured",
+    "RYUU.poison": "Poisoned",
+    "RYUU.sickness": "Sick",
+    "RYUU.exhaustion": "Exhausted",
+    "RYUU.muddled": "Muddled",
+    "RYUU.shock": "Shocked",
 
     "RYUU.toomuch": "You physically can't put anymore equipment on!",
     "RYUU.toomuchhands": "You are already holding so much!",
