@@ -152,7 +152,8 @@
                 "price": 0,
                 "size": 1,
                 "durability": 1,
-                "enchantments": []
+                "enchantments": [],
+                "container": ""
             },
             "equipment": {
                 "equip": "",
@@ -199,6 +200,11 @@
                 "dark": false,
                 "hurricane": false,
                 "blizzard": false
+            },
+            "container": {
+                "canHold": 0,
+                "holding": [],
+                "holdingSize": 0
             }
         },
         "item": {
@@ -215,6 +221,12 @@
         },
         "traveling": {
             "templates": ["item", "equipment", "traveling"]
+        },
+        "container": {
+            "templates": ["item", "container"]
+        },
+        "animal": {
+            "templates": ["item", "container", "traveling"]
         },
         "enchantment": {
             "description": "",

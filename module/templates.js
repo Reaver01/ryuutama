@@ -10,7 +10,9 @@ export const preloadHandlebarsTemplates = async function () {
 
     // Item Sheet Partials
     "systems/ryuutama/templates/item/parts/item-header.html",
-    "systems/ryuutama/templates/item/parts/item-navigation.html"
+    "systems/ryuutama/templates/item/parts/item-navigation.html",
+    "systems/ryuutama/templates/item/parts/item-container-navigation.html",
+    "systems/ryuutama/templates/item/parts/item-traveling.html"
   ];
 
   // Load the template parts
