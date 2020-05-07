@@ -112,8 +112,8 @@
     "RYUU.hurricane": "Hurricane",
     "RYUU.blizzard": "Blizzard",
 
-    "RYUU.journeypass": "\n<strong class='crit-roll'>SUCCESS</strong> against ",
-    "RYUU.journeyfail": "\n<strong class='fumble-roll'>FAILURE</strong> against ",
+    "RYUU.journeypass": "<br /><strong class='crit-roll'>SUCCESS</strong> against ",
+    "RYUU.journeyfail": "<br /><strong class='fumble-roll'>FAILURE</strong> against ",
 
     "RYUU.injury": "Injured",
     "RYUU.poison": "Poisoned",
