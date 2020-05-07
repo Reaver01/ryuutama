@@ -18,6 +18,11 @@
       margin-right: 5px;
     }
 
+    .terrain-checkbox {
+      flex: 0 0 7px;
+      margin-right: 5px;
+    }
+
     img {
       display: block;
     }
@@ -25,6 +30,18 @@
 
   .item-name {
     margin: 0;
+  }
+
+  .terrain-name {
+    flex: 0 0 90px;
+  }
+
+  .terrain-check {
+    flex: 0 0 25px;
+  }
+
+  .terrain-input {
+    flex: 0 0 50px;
   }
 
   .item-size {
