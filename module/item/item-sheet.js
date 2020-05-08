@@ -72,9 +72,6 @@ export class RyuutamaItemSheet extends ItemSheet {
             const pack = game.packs.find(p => p.collection === data.pack);
             pack.getEntity(data.id).then(item => {
                 if (!item) return;
-
-                console.log(item.data);
-                console.log(parentItem.item.type);
                 if (item.type === "enchantment" && parentItem.item.type !== "container" && parentItem.item.type !== "animal") {
                     // Enchant items that aren't containers or animals
                     return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
@@ -92,16 +89,11 @@ export class RyuutamaItemSheet extends ItemSheet {
 
         // Case 2 - Data explicitly provided
         else if (data.data) {
-            console.log("Data explicitly provided");
-            console.log(data);
             const actor = game.actors.get(data.actorId);
             const item = actor.items.find(i => i.data._id === data.data._id);
             if (!item || parentItem.item.options.actor.id !== actor.id) return;
+            if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal") && item.data._id !== parentItem.item.id) {
 
-            console.log(item.data.type);
-            if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
-
-                console.log(parentItem);
                 // Check if container is inside a container
                 if (parentItem.item.data.data.container !== undefined && parentItem.item.data.data.container !== "") {
                     return
@@ -110,8 +102,6 @@ export class RyuutamaItemSheet extends ItemSheet {
                 // Check if container being dropped has any items in it
                 if (item.data.type === "container") {
                     const droppedHolding = actor.items.filter(i => i.data.data.container === item.data._id);
-
-                    console.log(droppedHolding);
 
                     // If the container does have items in it, dump items in and delete container.
                     if (droppedHolding.length > 0) {
