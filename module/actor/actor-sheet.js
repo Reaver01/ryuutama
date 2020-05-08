@@ -17,7 +17,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
-                initial: "equipment"
+                initial: "items"
             }]
         });
     }
@@ -69,14 +69,96 @@ export class RyuutamaActorSheet extends ActorSheet {
             if (game.user.isGM && data.actorId !== undefined && data.actorId !== this.actor.id) {
                 // Retrieve original owner and remove the item from their inventory
                 const originalActor = game.actors.get(data.actorId);
-                originalActor.deleteOwnedItem(data.data._id);
-            } else if (game.user.isGM || this.actor.owner) {
+                await originalActor.deleteEmbeddedEntity("OwnedItem", data.data._id);
+            } else if (this.actor.owner && data.actorId !== undefined && data.data) {
 
                 // -------------------------------------------------------------------------------------------------------------------
                 //                      DROPPING ITEMS IN CONTAINERS IN THE INVENTORY LIST WILL GO HERE
                 // -------------------------------------------------------------------------------------------------------------------
-                console.log(event);
+
                 console.log(data);
+
+                if (event.toElement.parentNode.dataset.itemId !== undefined) {
+                    const actor = game.actors.get(data.actorId);
+                    const container = actor.items.find(i => i.data._id === event.toElement.parentNode.dataset.itemId);
+                    const item = actor.items.find(i => i.data._id === data.data._id);
+                    if (container !== undefined && container.data.data.canHold !== undefined && container.data.data.holdingSize !== undefined) {
+                        if (!item || item.data.data.container === container.id) return;
+                        if (item.type !== "enchantment" && item.data.type !== "animal" && (container.type === "container" || container.type === "animal") && item.data._id !== container.id) {
+
+                            // Check if container is inside a container
+                            if (container.data.data.container !== undefined && container.data.data.container !== "") {
+                                return
+                            }
+
+                            // Check if container being dropped has any items in it
+                            if (item.data.type === "container") {
+                                const droppedHolding = actor.items.filter(i => i.data.data.container === item.data._id);
+
+                                // If the container does have items in it, dump items in and delete container.
+                                if (droppedHolding.length > 0) {
+                                    let holding = container.data.data.holding;
+                                    holding = holding.slice();
+
+                                    let updates = [];
+                                    droppedHolding.forEach(i => {
+                                        updates.push({
+                                            _id: i._id,
+                                            "data.container": container.id
+                                        });
+                                        holding.push({
+                                            id: i._id,
+                                            name: i.name
+                                        });
+                                    });
+
+                                    container.update({
+                                        "data.holding": holding
+                                    });
+
+                                    await actor.updateEmbeddedEntity("OwnedItem", updates);
+                                    await actor.deleteEmbeddedEntity("OwnedItem", item.data._id);
+                                    return;
+                                }
+                            }
+
+                            // If item already resides in a container, remove it from the original
+                            if (item.data.data.container !== undefined && item.data.data.container !== "") {
+                                const originalContainer = actor.items.find(i => i.id === item.data.data.container);
+                                if (originalContainer !== undefined) {
+                                    let originalHolding = originalContainer.data.data.holding;
+                                    originalHolding = originalHolding.filter(i => i.id !== item.id);
+
+                                    originalContainer.update({
+                                        "data.holding": originalHolding
+                                    });
+                                }
+                            }
+
+                            // Get all items already in container and make sure we don't dupe
+                            let holding = container.data.data.holding;
+                            holding = holding.slice();
+                            const found = holding.find(i => i.id === item._id);
+                            if (found !== undefined || container.data.data.holdingSize + item.data.data.size > container.data.data.canHold) return;
+
+                            // Add items to container or animal
+                            await actor.updateEmbeddedEntity("OwnedItem", {
+                                _id: item._id,
+                                "data.container": container.id
+                            });
+
+                            // Push the item to the container
+                            holding.push({
+                                id: item._id,
+                                name: item.name
+                            });
+                            container.update({
+                                "data.holding": holding
+                            });
+                        }
+                    }
+
+                }
             }
 
             // Call parent on drop logic
@@ -201,9 +283,51 @@ export class RyuutamaActorSheet extends ActorSheet {
                 }
             }
 
+            // If item is a container, remove container reference from all items it contains
+            let holding = item.data.data.holding;
+            let updates = [];
+            if (holding !== undefined) {
+                holding.forEach(stored => {
+                    updates.push({
+                        _id: stored.id,
+                        "data.container": ""
+                    });
+                });
+
+                this.actor.updateEmbeddedEntity("OwnedItem", updates);
+            }
+
             // Proceed with deleting the item from the actor
-            this.actor.deleteOwnedItem(liId);
+            this.actor.deleteEmbeddedEntity("OwnedItem", liId);
             li.slideUp(200, () => this.render(false));
+        });
+
+        // Remove from container
+        html.find(".item-store").click(ev => {
+            const li = $(ev.currentTarget).parents(".item");
+            const liId = li.data("itemId");
+
+            // Get item id and container id from actor
+            const item = this.actor.items.find(i => i.data._id === liId);
+            const containerId = item.data.data.container;
+            if (containerId !== undefined && containerId !== "") {
+                // Find the container and filter the items it holds
+                const container = this.actor.items.find(i => i.data._id === containerId);
+                if (container !== undefined) {
+                    let holding = container.data.data.holding.slice();
+                    holding = holding.filter(i => i.id !== liId);
+
+                    // Update container
+                    container.update({
+                        "data.holding": holding
+                    });
+                }
+            }
+
+            this.actor.updateEmbeddedEntity("OwnedItem", {
+                _id: liId,
+                "data.container": ""
+            });
         });
 
         // Check Buttons
@@ -591,7 +715,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         delete itemData.data["type"];
 
         // Finally, create the item!
-        return this.actor.createOwnedItem(itemData);
+        return this.actor.createEmbeddedEntity("OwnedItem", itemData);
     }
 
     /* -------------------------------------------- */
@@ -614,7 +738,7 @@ export class RyuutamaActorSheet extends ActorSheet {
     _onItemSummary(event) {
         event.preventDefault();
         let li = $(event.currentTarget).parents(".item"),
-            item = this.actor.getOwnedItem(li.data("item-id"));
+            item = this.actor.getEmbeddedEntity("OwnedItem", li.data("item-id"));
         //chatData = item.getChatData({
         //    secrets: this.actor.owner
         //});

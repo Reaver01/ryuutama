@@ -91,7 +91,7 @@ export class RyuutamaItemSheet extends ItemSheet {
         else if (data.data) {
             const actor = game.actors.get(data.actorId);
             const item = actor.items.find(i => i.data._id === data.data._id);
-            if (!item || parentItem.item.options.actor.id !== actor.id) return;
+            if (!item || parentItem.item.options.actor.id !== actor.id || item.data.data.container === parentItem.item.id) return;
             if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal") && item.data._id !== parentItem.item.id) {
 
                 // Check if container is inside a container
@@ -130,17 +130,30 @@ export class RyuutamaItemSheet extends ItemSheet {
                     }
                 }
 
-                // Add items to container or animal
-                await actor.updateEmbeddedEntity("OwnedItem", {
-                    _id: item._id,
-                    "data.container": parentItem.item.id
-                });
+                // If item already resides in a container, remove it from the original
+                if (item.data.data.container !== undefined && item.data.data.container !== "") {
+                    const originalContainer = actor.items.find(i => i.id === item.data.data.container);
+                    if (originalContainer !== undefined) {
+                        let originalHolding = originalContainer.data.data.holding;
+                        originalHolding = originalHolding.filter(i => i.id !== item.id);
+
+                        originalContainer.update({
+                            "data.holding": originalHolding
+                        });
+                    }
+                }
 
                 // Get all items already in container and make sure we don't dupe
                 let holding = parentItem.item.data.data.holding;
                 holding = holding.slice();
                 const found = holding.find(i => i.id === item._id);
                 if (found !== undefined || parentItem.item.data.data.holdingSize + item.data.data.size > parentItem.item.data.data.canHold) return;
+
+                // Add items to container or animal
+                await actor.updateEmbeddedEntity("OwnedItem", {
+                    _id: item._id,
+                    "data.container": parentItem.item.id
+                });
 
                 // Push the item to the container
                 holding.push({
@@ -200,7 +213,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                     data.data.container = item.data._id;
 
                     // Create the item entity in the actor's inventory
-                    actor.createOwnedItem(data);
+                    actor.createEmbeddedEntity("OwnedItem", data);
                 }
             }
         }
@@ -244,6 +257,34 @@ export class RyuutamaItemSheet extends ItemSheet {
             }
             this.addRemoveItem(true, item);
         });
+
+        if (this.item.owner) {
+            let handler = ev => this._onDragItemStart(ev);
+            html.find("li.item").each((i, li) => {
+                if (li.classList.contains("inventory-header")) return;
+                li.setAttribute("draggable", true);
+                li.addEventListener("dragstart", handler, false);
+            });
+        }
+    }
+
+    /* -------------------------------------------- */
+
+    /**
+     * Default handler for beginning a drag-drop workflow of an Owned Item on an Actor Sheet
+     * @param event
+     * @private
+     */
+    _onDragItemStart(event) {
+        const li = event.currentTarget;
+        const item = this.actor.getOwnedItem(li.dataset.itemId);
+        const dragData = {
+            type: "Item",
+            actorId: this.actor.id,
+            data: item.data
+        };
+        if (this.actor.isToken) dragData.tokenId = this.actor.token.id;
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
     }
 
     /* -------------------------------------------- */
