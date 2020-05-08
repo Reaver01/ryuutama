@@ -74,7 +74,10 @@ export class RyuutamaActorSheet extends ActorSheet {
 
                 if (event.toElement.parentNode.dataset.itemId !== undefined) {
                     const actor = game.actors.get(data.actorId);
-                    const container = actor.items.find(i => i.data._id === event.toElement.parentNode.dataset.itemId);
+                    let container = actor.items.find(i => i.data._id === event.toElement.parentNode.dataset.itemId);
+                    if (event.toElement.parentNode.dataset.parentId !== undefined) {
+                        container = actor.items.find(i => i.data._id === event.toElement.parentNode.dataset.parentId);
+                    }
                     const item = actor.items.find(i => i.data._id === data.data._id);
                     if (container !== undefined && container.data.data.canHold !== undefined && container.data.data.holdingSize !== undefined) {
                         if (!item || item.data.data.container === container.id) return;
@@ -102,7 +105,11 @@ export class RyuutamaActorSheet extends ActorSheet {
                                         });
                                         holding.push({
                                             id: i._id,
-                                            name: i.name
+                                            name: i.name,
+                                            equippable: (i.data.type === "weapon" || i.data.type === "armor" || i.data.type === "shield" || i.data.type === "traveling"),
+                                            equip: item.data.data.equip,
+                                            img: i.img,
+                                            size: i.data.data.size
                                         });
                                     });
 
@@ -138,20 +145,42 @@ export class RyuutamaActorSheet extends ActorSheet {
                             // Add items to container or animal
                             await actor.updateEmbeddedEntity("OwnedItem", {
                                 _id: item._id,
-                                "data.container": container.id
+                                "data.container": container.id,
+                                "data.equipped": false
                             });
 
                             // Push the item to the container
                             holding.push({
                                 id: item._id,
-                                name: item.name
+                                name: item.name,
+                                equippable: (item.data.type === "weapon" || item.data.type === "armor" || item.data.type === "shield" || item.data.type === "traveling"),
+                                equip: item.data.data.equip,
+                                img: item.img,
+                                size: item.data.data.size
                             });
                             container.update({
                                 "data.holding": holding
                             });
                         }
                     }
+                } else {
+                    // Remove item from container if it's dropped somewhere else outside the container
+                    const actor = game.actors.get(data.actorId);
+                    const item = actor.items.find(i => i.data._id === data.data._id);
+                    if (!item) return
+                    const container = actor.items.find(i => i.data._id === item.data.data.container);
+                    if (!container) return;
+                    let holding = container.data.data.holding || [];
+                    holding = holding.filter(i => i.id !== item.data._id);
 
+                    container.update({
+                        "data.holding": holding
+                    });
+
+                    actor.updateEmbeddedEntity("OwnedItem", {
+                        _id: item.data._id,
+                        "data.container": ""
+                    });
                 }
             }
 
@@ -197,15 +226,15 @@ export class RyuutamaActorSheet extends ActorSheet {
             let item = i.data;
             i.img = i.img || DEFAULT_TOKEN;
             // Append to gear.
-            if (i.type === "item") {
+            if (i.type === "item" && (i.data.container === undefined || i.data.container === "")) {
                 gear.push(i);
             }
             // Append to equipment.
-            if (i.type === "weapon" || i.type === "armor" || i.type === "shield" || i.type === "traveling") {
+            if ((i.type === "weapon" || i.type === "armor" || i.type === "shield" || i.type === "traveling") && (i.data.container === undefined || i.data.container === "")) {
                 equipment.push(i);
             }
             // Append to container.
-            if (i.type === "container") {
+            if (i.type === "container" && (i.data.container === undefined || i.data.container === "")) {
                 containers.push(i);
             }
             // Append to container.
@@ -246,7 +275,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         html.find(".item-create").click(this._onItemCreate.bind(this));
 
         // Item summaries
-        html.find(".item .item-name h4").click(event => this._onItemSummary(event));
+        html.find(".item-name").click(event => this._onItemSummary(event));
 
         // Update Inventory Item
         html.find(".item-edit").click(ev => {
@@ -733,23 +762,8 @@ export class RyuutamaActorSheet extends ActorSheet {
         event.preventDefault();
         let li = $(event.currentTarget).parents(".item"),
             item = this.actor.getEmbeddedEntity("OwnedItem", li.data("item-id"));
-        //chatData = item.getChatData({
-        //    secrets: this.actor.owner
-        //});
 
-        // Toggle summary
-        if (li.hasClass("expanded")) {
-            let summary = li.children(".item-summary");
-            summary.slideUp(200, () => summary.remove());
-        } else {
-            let div = $(`<div class="item-summary">${item.data.data.description}</div>`);
-            let props = $(`<div class="item-properties"></div>`);
-            //chatData.properties.forEach(p => props.append(`<span class="tag">${p}</span>`));
-            div.append(props);
-            li.append(div.hide());
-            div.slideDown(200);
-        }
-        li.toggleClass("expanded");
+        console.log(event);
     }
 
     /* -------------------------------------------- */
