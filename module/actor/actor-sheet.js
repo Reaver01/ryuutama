@@ -84,9 +84,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                         if (item.type !== "enchantment" && item.data.type !== "animal" && (container.type === "container" || container.type === "animal") && item.data._id !== container.id) {
 
                             // Check if container is inside a container
-                            if (container.data.data.container !== undefined && container.data.data.container !== "") {
-                                return
-                            }
+                            if (container.data.data.container !== undefined && container.data.data.container !== "") return;
 
                             // Check if container being dropped has any items in it
                             if (item.data.type === "container") {
@@ -94,23 +92,34 @@ export class RyuutamaActorSheet extends ActorSheet {
 
                                 // If the container does have items in it, dump items in and delete container.
                                 if (droppedHolding.length > 0) {
+                                    let availableSpace = container.data.data.canHold - container.data.data.holdingSize;
                                     let holding = container.data.data.holding;
                                     holding = holding.slice();
+                                    console.log(container.data.data.holdingSize);
+                                    console.log(container.data.data.canHold);
 
                                     let updates = [];
                                     droppedHolding.forEach(i => {
-                                        updates.push({
-                                            _id: i._id,
-                                            "data.container": container.id
-                                        });
-                                        holding.push({
-                                            id: i._id,
-                                            name: i.name,
-                                            equippable: (i.data.type === "weapon" || i.data.type === "armor" || i.data.type === "shield" || i.data.type === "traveling"),
-                                            equip: item.data.data.equip,
-                                            img: i.img,
-                                            size: i.data.data.size
-                                        });
+                                        if (i.data.data.size <= availableSpace) {
+                                            updates.push({
+                                                _id: i._id,
+                                                "data.container": container.id
+                                            });
+                                            holding.push({
+                                                id: i._id,
+                                                name: i.name,
+                                                equippable: (i.data.type === "weapon" || i.data.type === "armor" || i.data.type === "shield" || i.data.type === "traveling"),
+                                                equip: i.data.data.equip,
+                                                img: i.img,
+                                                size: i.data.data.size
+                                            });
+                                            availableSpace -= i.data.data.size;
+                                        } else {
+                                            updates.push({
+                                                _id: i._id,
+                                                "data.container": ""
+                                            });
+                                        }
                                     });
 
                                     container.update({
@@ -301,9 +310,6 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Add Inventory Item
         html.find(".item-create").click(this._onItemCreate.bind(this));
-
-        // Item summaries
-        html.find(".item-name").click(event => this._onItemSummary(event));
 
         // Update Inventory Item
         html.find(".item-edit").click(ev => {
