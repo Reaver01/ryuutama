@@ -71,6 +71,10 @@ export class RyuutamaActorSheet extends ActorSheet {
                 const originalActor = game.actors.get(data.actorId);
                 originalActor.deleteOwnedItem(data.data._id);
             } else if (game.user.isGM || this.actor.owner) {
+
+                // -------------------------------------------------------------------------------------------------------------------
+                //                      DROPPING ITEMS IN CONTAINERS IN THE INVENTORY LIST WILL GO HERE
+                // -------------------------------------------------------------------------------------------------------------------
                 console.log(event);
                 console.log(data);
             }
@@ -609,7 +613,6 @@ export class RyuutamaActorSheet extends ActorSheet {
      */
     _onItemSummary(event) {
         event.preventDefault();
-        console.log(event);
         let li = $(event.currentTarget).parents(".item"),
             item = this.actor.getOwnedItem(li.data("item-id"));
         //chatData = item.getChatData({

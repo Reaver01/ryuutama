@@ -93,10 +93,8 @@ Hooks.once("ready", async function () {
     // Create owned item hook to put items in containers belonging to the actor.
     Hooks.on("createOwnedItem", (actor, item, temp) => {
         if (item.data.container !== undefined && item.data.container !== "") {
-            console.log(actor.items);
             const container = actor.items.find(i => i.data._id === item.data.container);
             if (container !== undefined) {
-                console.log(container);
                 let holding = container.data.data.holding || [];
                 holding = holding.slice();
 
