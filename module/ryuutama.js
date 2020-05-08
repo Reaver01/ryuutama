@@ -90,25 +90,38 @@ Hooks.once("ready", async function () {
     // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
     Hooks.on("hotbarDrop", (bar, data, slot) => console.log(data));
 
-    // Create owned item hook to put items in containers belonging to the actor.
-    Hooks.on("createOwnedItem", (actor, item, temp) => {
+
+    Hooks.on("preCreateOwnedItem", (actor, item, id) => {
         if (item.data.container !== undefined && item.data.container !== "") {
             const container = actor.items.find(i => i.data._id === item.data.container);
             if (container !== undefined) {
                 let holding = container.data.data.holding || [];
                 holding = holding.slice();
 
-                if (container.data.data.holdingSize + item.data.size > container.data.data.canHold) return;
+                // Check container size before putting item in it
+                if (container.data.data.holdingSize + item.data.size > container.data.data.canHold) {
+                    item.data.container = "";
+                }
+            }
+        }
+    });
+
+    // Create owned item hook to put items in containers belonging to the actor.
+    Hooks.on("createOwnedItem", (actor, item, id) => {
+        if (item.data.container !== undefined && item.data.container !== "") {
+            const container = actor.items.find(i => i.data._id === item.data.container);
+            if (container !== undefined) {
+                let holding = container.data.data.holding || [];
+                holding = holding.slice();
 
                 holding.push({
                     id: item._id,
                     name: item.name
                 });
-
                 container.update({
                     "data.holding": holding
                 });
             }
         }
-    })
+    });
 });
