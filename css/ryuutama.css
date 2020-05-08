@@ -381,6 +381,7 @@
 .ryuutama .items-list .item .item-image {
   flex: 0 0 24px;
   margin-right: 5px;
+  border: none;
 }
 
 .ryuutama .items-list .item .terrain-checkbox {

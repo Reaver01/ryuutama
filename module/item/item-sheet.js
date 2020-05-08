@@ -73,12 +73,18 @@ export class RyuutamaItemSheet extends ItemSheet {
             pack.getEntity(data.id).then(item => {
                 if (!item) return;
 
-                if (item.data.type === "enchantment" && parentItem.data.type !== "container" && parentItem.data.type !== "animal") {
+                console.log(item.data);
+                console.log(parentItem.item.type);
+                if (item.type === "enchantment" && parentItem.item.type !== "container" && parentItem.item.type !== "animal") {
                     // Enchant items that aren't containers or animals
                     return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
-                } else if (parentItem.item.type === "container" || parentItem.item.type === "animal") {
+                } else if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
+                    // Check if container is inside a container
+                    if (parentItem.item.data.data.container !== undefined && parentItem.item.data.data.container !== "") {
+                        return
+                    }
                     // Add items to container or animal
-                    return parentItem.addRemoveItem(false, item.data._id, item.name);
+                    return parentItem.addRemoveItem(false, item.data);
                 }
 
             });
@@ -92,11 +98,52 @@ export class RyuutamaItemSheet extends ItemSheet {
             const item = actor.items.find(i => i.data._id === data.data._id);
             if (!item || parentItem.item.options.actor.id !== actor.id) return;
 
-            if (parentItem.item.type === "container" || parentItem.item.type === "animal") {
+            console.log(item.data.type);
+            if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
+
+                console.log(parentItem);
+                // Check if container is inside a container
+                if (parentItem.item.data.data.container !== undefined && parentItem.item.data.data.container !== "") {
+                    return
+                }
+
+                // Check if container being dropped has any items in it
+                if (item.data.type === "container") {
+                    const droppedHolding = actor.items.filter(i => i.data.data.container === item.data._id);
+
+                    console.log(droppedHolding);
+
+                    // If the container does have items in it, dump items in and delete container.
+                    if (droppedHolding.length > 0) {
+                        let holding = parentItem.item.data.data.holding;
+                        holding = holding.slice();
+
+                        let updates = [];
+                        droppedHolding.forEach(i => {
+                            updates.push({
+                                _id: i._id,
+                                "data.container": parentItem.item.id
+                            });
+                            holding.push({
+                                id: i._id,
+                                name: i.name
+                            });
+                        });
+
+                        parentItem.item.update({
+                            "data.holding": holding
+                        });
+
+                        await actor.updateEmbeddedEntity("OwnedItem", updates);
+                        await actor.deleteEmbeddedEntity("OwnedItem", item.data._id);
+                        return;
+                    }
+                }
+
                 // Add items to container or animal
                 await actor.updateEmbeddedEntity("OwnedItem", {
                     _id: item._id,
-                    container: parentItem.item.id
+                    "data.container": parentItem.item.id
                 });
 
                 // Get all items already in container and make sure we don't dupe
@@ -114,7 +161,6 @@ export class RyuutamaItemSheet extends ItemSheet {
                     "data.holding": holding
                 });
             }
-            return;
         }
 
         // Case 3 - Import from World entity
@@ -122,10 +168,14 @@ export class RyuutamaItemSheet extends ItemSheet {
             let item = game.items.get(data.id);
             if (!item) return;
 
-            if (item.data.type === "enchantment" && parentItem.data.type !== "container" && parentItem.data.type !== "animal") {
+            if (item.type === "enchantment" && parentItem.item.type !== "container" && parentItem.item.type !== "animal") {
                 // Enchant items that aren't containers or animals
                 return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
-            } else if (parentItem.item.type === "container" || parentItem.item.type === "animal") {
+            } else if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
+                // Check if container is inside a container
+                if (parentItem.item.data.data.container !== undefined && parentItem.item.data.data.container !== "") {
+                    return
+                }
                 // Add items to container or animal
                 return parentItem.addRemoveItem(false, item.data);
             }
@@ -149,7 +199,10 @@ export class RyuutamaItemSheet extends ItemSheet {
                 // Remove the container id from the item in the actor's inventory
                 const actorItem = actor.items.find(i => i.data._id === data.id);
 
-                console.log(actorItem);
+                actor.updateEmbeddedEntity("OwnedItem", {
+                    _id: actorItem.data._id,
+                    "data.container": ""
+                });
 
             } else {
                 if (actor) {
@@ -196,7 +249,9 @@ export class RyuutamaItemSheet extends ItemSheet {
             const li = $(ev.currentTarget).parents(".item");
             this.addRemoveEnchantment(true, li.data("itemId"));
             let item = this.object.data.data.holding.find(i => i.id === li.data("itemId"));
-            item._id = item.id;
+            if (item.id !== undefined) {
+                item._id = item.id;
+            }
             this.addRemoveItem(true, item);
         });
     }
