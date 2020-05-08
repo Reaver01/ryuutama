@@ -87,10 +87,7 @@ Hooks.on("renderChatMessage", (message, html, data) => {
 });
 
 Hooks.once("ready", async function () {
-    // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-    Hooks.on("hotbarDrop", (bar, data, slot) => console.log(data));
-
-
+    // Pre create OwnedItem hook
     Hooks.on("preCreateOwnedItem", (actor, item, id) => {
         if (item.data.container !== undefined && item.data.container !== "") {
             const container = actor.items.find(i => i.data._id === item.data.container);
@@ -106,7 +103,7 @@ Hooks.once("ready", async function () {
         }
     });
 
-    // Create owned item hook to put items in containers belonging to the actor.
+    // Create OwnedItem hook
     Hooks.on("createOwnedItem", (actor, item, id) => {
         if (item.data.container !== undefined && item.data.container !== "") {
             const container = actor.items.find(i => i.data._id === item.data.container);
