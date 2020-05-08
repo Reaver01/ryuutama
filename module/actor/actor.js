@@ -27,7 +27,10 @@ export class RyuutamaActor extends Actor {
      */
     _prepareCharacterData(actorData) {
         const data = actorData.data;
-        const items = actorData.items;
+        const items = actorData.items.filter(i => i.type !== "enchantment");
+        const enchantments = actorData.items.filter(i => i.type === "enchantment");
+        const deleteions = enchantments.map(i => i._id);
+        this.deleteEmbeddedEntity("OwnedItem", deleteions);
 
         // Level
         data.attributes.level.value = RYUU.CHARACTER_EXP_LEVELS.findIndex(i => i > Number(data.attributes.exp.value));

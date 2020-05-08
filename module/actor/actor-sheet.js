@@ -70,7 +70,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                 // Retrieve original owner and remove the item from their inventory
                 const originalActor = game.actors.get(data.actorId);
                 await originalActor.deleteEmbeddedEntity("OwnedItem", data.data._id);
-            } else if (this.actor.owner && data.actorId !== undefined && data.data) {
+            } else if (this.actor.owner && data.actorId !== undefined && data.data !== undefined) {
 
                 if (event.toElement.parentNode.dataset.itemId !== undefined) {
                     const actor = game.actors.get(data.actorId);
@@ -123,6 +123,8 @@ export class RyuutamaActorSheet extends ActorSheet {
                                 }
                             }
 
+                            let updates = [];
+
                             // If item already resides in a container, remove it from the original
                             if (item.data.data.container !== undefined && item.data.data.container !== "") {
                                 const originalContainer = actor.items.find(i => i.id === item.data.data.container);
@@ -130,7 +132,8 @@ export class RyuutamaActorSheet extends ActorSheet {
                                     let originalHolding = originalContainer.data.data.holding;
                                     originalHolding = originalHolding.filter(i => i.id !== item.id);
 
-                                    originalContainer.update({
+                                    updates.push({
+                                        _id: originalContainer.data._id,
                                         "data.holding": originalHolding
                                     });
                                 }
@@ -143,7 +146,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                             if (found !== undefined || container.data.data.holdingSize + item.data.data.size > container.data.data.canHold) return;
 
                             // Add items to container or animal
-                            await actor.updateEmbeddedEntity("OwnedItem", {
+                            updates.push({
                                 _id: item._id,
                                 "data.container": container.id,
                                 "data.equipped": false
@@ -158,10 +161,33 @@ export class RyuutamaActorSheet extends ActorSheet {
                                 img: item.img,
                                 size: item.data.data.size
                             });
-                            container.update({
+                            updates.push({
+                                _id: container.id,
                                 "data.holding": holding
-                            });
+                            })
+
+                            await actor.updateEmbeddedEntity("OwnedItem", updates);
                         }
+                    } else {
+                        // Remove item from container if it's dropped somewhere else outside the container
+                        const actor = game.actors.get(data.actorId);
+                        const item = actor.items.find(i => i.data._id === data.data._id);
+                        if (!item) return
+                        const container = actor.items.find(i => i.data._id === item.data.data.container);
+                        if (!container) return;
+                        let holding = container.data.data.holding || [];
+                        holding = holding.filter(i => i.id !== item.data._id);
+                        let updates = [{
+                                _id: container.data._id,
+                                "data.holding": holding
+                            },
+                            {
+                                _id: item.data._id,
+                                "data.container": ""
+                            }
+                        ];
+
+                        await actor.updateEmbeddedEntity("OwnedItem", updates);
                     }
                 } else {
                     // Remove item from container if it's dropped somewhere else outside the container
@@ -172,15 +198,17 @@ export class RyuutamaActorSheet extends ActorSheet {
                     if (!container) return;
                     let holding = container.data.data.holding || [];
                     holding = holding.filter(i => i.id !== item.data._id);
+                    let updates = [{
+                            _id: container.data._id,
+                            "data.holding": holding
+                        },
+                        {
+                            _id: item.data._id,
+                            "data.container": ""
+                        }
+                    ];
 
-                    container.update({
-                        "data.holding": holding
-                    });
-
-                    actor.updateEmbeddedEntity("OwnedItem", {
-                        _id: item.data._id,
-                        "data.container": ""
-                    });
+                    await actor.updateEmbeddedEntity("OwnedItem", updates);
                 }
             }
 
@@ -288,6 +316,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         html.find(".item-delete").click(ev => {
             const li = $(ev.currentTarget).parents(".item");
             const liId = li.data("itemId");
+            let updates = [];
 
             // Get item id and container id from actor before deleting
             const item = this.actor.items.find(i => i.data._id === liId);
@@ -299,8 +328,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                     let holding = container.data.data.holding.slice();
                     holding = holding.filter(i => i.id !== liId);
 
-                    // Update container
-                    container.update({
+                    // Container update
+                    updates.push({
+                        _id: container.data._id,
                         "data.holding": holding
                     });
                 }
@@ -308,7 +338,6 @@ export class RyuutamaActorSheet extends ActorSheet {
 
             // If item is a container, remove container reference from all items it contains
             let holding = item.data.data.holding;
-            let updates = [];
             if (holding !== undefined) {
                 holding.forEach(stored => {
                     updates.push({
@@ -316,11 +345,10 @@ export class RyuutamaActorSheet extends ActorSheet {
                         "data.container": ""
                     });
                 });
-
-                this.actor.updateEmbeddedEntity("OwnedItem", updates);
             }
 
-            // Proceed with deleting the item from the actor
+            // Update/Delete Items
+            this.actor.updateEmbeddedEntity("OwnedItem", updates);
             this.actor.deleteEmbeddedEntity("OwnedItem", liId);
             li.slideUp(200, () => this.render(false));
         });
@@ -340,17 +368,18 @@ export class RyuutamaActorSheet extends ActorSheet {
                     let holding = container.data.data.holding.slice();
                     holding = holding.filter(i => i.id !== liId);
 
-                    // Update container
-                    container.update({
-                        "data.holding": holding
-                    });
+                    const updates = [{
+                            _id: container.data._id,
+                            "data.holding": holding
+                        },
+                        {
+                            _id: item.data._id,
+                            "data.container": ""
+                        }
+                    ];
+                    this.actor.updateEmbeddedEntity("OwnedItem", updates);
                 }
             }
-
-            this.actor.updateEmbeddedEntity("OwnedItem", {
-                _id: liId,
-                "data.container": ""
-            });
         });
 
         // Check Buttons
@@ -750,20 +779,6 @@ export class RyuutamaActorSheet extends ActorSheet {
         const bodyHeight = position.height - 192;
         sheetBody.css("height", bodyHeight);
         return position;
-    }
-
-    /* -------------------------------------------- */
-
-    /**
-     * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
-     * @private
-     */
-    _onItemSummary(event) {
-        event.preventDefault();
-        let li = $(event.currentTarget).parents(".item"),
-            item = this.actor.getEmbeddedEntity("OwnedItem", li.data("item-id"));
-
-        console.log(event);
     }
 
     /* -------------------------------------------- */
