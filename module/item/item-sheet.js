@@ -105,23 +105,32 @@ export class RyuutamaItemSheet extends ItemSheet {
 
                     // If the container does have items in it, dump items in and delete container.
                     if (droppedHolding.length > 0) {
+                        let availableSpace = parentItem.item.data.data.canHold - parentItem.item.data.data.holdingSize;
                         let holding = parentItem.item.data.data.holding;
                         holding = holding.slice();
 
                         let updates = [];
                         droppedHolding.forEach(i => {
-                            updates.push({
-                                _id: i._id,
-                                "data.container": parentItem.item.id
-                            });
-                            holding.push({
-                                id: i._id,
-                                name: i.name,
-                                equippable: (i.data.type === "weapon" || i.data.type === "armor" || i.data.type === "shield" || i.data.type === "traveling"),
-                                equip: item.data.data.equip,
-                                img: i.img,
-                                size: i.data.data.size
-                            });
+                            if (i.data.data.size <= availableSpace) {
+                                updates.push({
+                                    _id: i._id,
+                                    "data.container": parentItem.item.id
+                                });
+                                holding.push({
+                                    id: i._id,
+                                    name: i.name,
+                                    equippable: (i.data.type === "weapon" || i.data.type === "armor" || i.data.type === "shield" || i.data.type === "traveling"),
+                                    equip: i.data.data.equip,
+                                    img: i.img,
+                                    size: i.data.data.size
+                                });
+                                availableSpace -= i.data.data.size;
+                            } else {
+                                updates.push({
+                                    _id: i._id,
+                                    "data.container": ""
+                                });
+                            }
                         });
 
                         parentItem.item.update({
@@ -164,7 +173,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                     id: item._id,
                     name: item.name,
                     equippable: (item.data.type === "weapon" || item.data.type === "armor" || item.data.type === "shield" || item.data.type === "traveling"),
-                    equip: item.data.data.equip,
+                    equip: i.data.data.equip,
                     img: item.img,
                     size: item.data.data.size
                 });
