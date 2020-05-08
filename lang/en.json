@@ -61,6 +61,9 @@
     "RYUU.weapons": "Weapons",
     "RYUU.capacity": "Carry",
     "RYUU.gold": "Gold",
+    "RYUU.gear": "Gear",
+    "RYUU.containers": "Containers",
+    "RYUU.animals": "Animals",
 
     "RYUU.hp.short": "HP",
     "RYUU.hp.long": "Health Points",
