@@ -116,7 +116,11 @@ Hooks.once("ready", async function () {
 
                 holding.push({
                     id: item._id,
-                    name: item.name
+                    name: item.name,
+                    equippable: (item.data.type === "weapon" || item.data.type === "armor" || item.data.type === "shield" || item.data.type === "traveling"),
+                    equip: item.data.data.equip,
+                    img: item.img,
+                    size: item.data.data.size
                 });
                 container.update({
                     "data.holding": holding

@@ -371,6 +371,10 @@
   font-weight: bold;
 }
 
+.ryuutama .items-list .held-hidden {
+  display: none;
+}
+
 .ryuutama .items-list .item {
   height: 30px;
   line-height: 24px;

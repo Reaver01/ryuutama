@@ -116,7 +116,11 @@ export class RyuutamaItemSheet extends ItemSheet {
                             });
                             holding.push({
                                 id: i._id,
-                                name: i.name
+                                name: i.name,
+                                equippable: (i.data.type === "weapon" || i.data.type === "armor" || i.data.type === "shield" || i.data.type === "traveling"),
+                                equip: item.data.data.equip,
+                                img: i.img,
+                                size: i.data.data.size
                             });
                         });
 
@@ -158,7 +162,11 @@ export class RyuutamaItemSheet extends ItemSheet {
                 // Push the item to the container
                 holding.push({
                     id: item._id,
-                    name: item.name
+                    name: item.name,
+                    equippable: (item.data.type === "weapon" || item.data.type === "armor" || item.data.type === "shield" || item.data.type === "traveling"),
+                    equip: item.data.data.equip,
+                    img: item.img,
+                    size: item.data.data.size
                 });
                 parentItem.item.update({
                     "data.holding": holding
