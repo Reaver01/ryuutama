@@ -72,12 +72,6 @@ export class RyuutamaActorSheet extends ActorSheet {
                 await originalActor.deleteEmbeddedEntity("OwnedItem", data.data._id);
             } else if (this.actor.owner && data.actorId !== undefined && data.data) {
 
-                // -------------------------------------------------------------------------------------------------------------------
-                //                      DROPPING ITEMS IN CONTAINERS IN THE INVENTORY LIST WILL GO HERE
-                // -------------------------------------------------------------------------------------------------------------------
-
-                console.log(data);
-
                 if (event.toElement.parentNode.dataset.itemId !== undefined) {
                     const actor = game.actors.get(data.actorId);
                     const container = actor.items.find(i => i.data._id === event.toElement.parentNode.dataset.itemId);
