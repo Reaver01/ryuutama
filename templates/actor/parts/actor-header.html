@@ -1,0 +1,196 @@
+<header class="sheet-header">
+    <div class="header-fields">
+        <div class="grid grid-6col">
+            <div class="row1-6">
+                <div>
+                    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
+                </div>
+                <div class="left-panel">
+                    <label for="data.attributes.condition.value" class="resource-label">{{ localize "RYUU.condition" }}</label>
+                    <br />
+                    <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
+                    <input class="resource-input" readonly type="text" name="data.attributes.condition.value" value="{{data.attributes.condition.value}}" data-dtype="Number" />
+                </div>
+                <div class="left-panel">
+                    <label for="data.attributes.fumble.value" class="resource-label">{{ localize "RYUU.fumble" }}</label>
+                    <br />
+                    <img class="resource-image" src="/systems/ryuutama/img/sheet/fumble.svg" id="roll-fumble" title="{{ localize 'RYUU.fumble' }}" />
+                    <input class="resource-input" type="text" name="data.attributes.fumble.value" value="{{data.attributes.fumble.value}}" data-dtype="Number" />
+                </div>
+                <div class="left-panel">
+                    <label for="data.attributes.initiative.value" class="resource-label">{{ localize "RYUU.initiative" }}</label>
+                    <br />
+                    <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/dice.svg" id="roll-initiative" title="{{ localize 'RYUU.initiative' }}" />
+                    <input class="resource-input" type="text" name="data.attributes.initiative.value" value="{{data.attributes.initiative.value}}" data-dtype="Number" />
+                </div>
+            </div>
+            <div class="col2-5">
+                <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
+            </div>
+            <div>
+                <div class="grid grid-2col level">
+                    <div>
+                        <label class="resource-label">{{ localize "RYUU.level" }}</label>
+                    </div>
+                    <div>
+                        <input readonly type="text" name="data.attributes.level.value" value="{{data.attributes.level.value}}" data-dtype="Number" />
+                    </div>
+                </div>
+                <div class="grid grid-2col level">
+                    <div>
+                        <label class="resource-label">{{ localize "RYUU.experience.short" }}</label>
+                    </div>
+                    <div>
+                        <input type="text" name="data.attributes.exp.value" value="{{data.attributes.exp.value}}" data-dtype="Number" />
+                    </div>
+                </div>
+            </div>
+            <div class="col2-6">
+                <div class="resources grid grid-4col">
+                    <div class="attribute flex-group-center">
+                        <div class="flexrow">
+                            <div>
+                                <label for="data.attributes.str.value" class="attribute-label">{{ localize "RYUU.str.short" }}</label>
+                                <input class="attribute-bonus" type="checkbox" name="data.attributes.str.bonus" {{checked data.attributes.str.bonus}} />
+                                <br />
+                                <select class="attribute-select" name="data.attributes.str.value">
+                                    {{#select data.attributes.str.value}}
+                                    <option value="4">d4</option>
+                                    <option value="6">d6</option>
+                                    <option value="8">d8</option>
+                                    <option value="10">d10</option>
+                                    <option value="12">d12</option>
+                                    {{/select}}
+                                </select>
+                            </div>
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/str.svg" id="roll-strength" title="{{ localize 'RYUU.str.short' }}" />
+                        </div>
+                    </div>
+                    <div class="attribute flex-group-center">
+                        <div class="flexrow">
+                            <div>
+                                <label for="data.attributes.dex.value" class="attribute-label">{{ localize "RYUU.dex.short" }}</label>
+                                <input class="attribute-bonus" type="checkbox" name="data.attributes.dex.bonus" {{checked data.attributes.dex.bonus}} />
+                                <br />
+                                <select class="attribute-select" name="data.attributes.dex.value">
+                                    {{#select data.attributes.dex.value}}
+                                    <option value="4">d4</option>
+                                    <option value="6">d6</option>
+                                    <option value="8">d8</option>
+                                    <option value="10">d10</option>
+                                    <option value="12">d12</option>
+                                    {{/select}}
+                                </select>
+                            </div>
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/dex.svg" id="roll-dexterity" title="{{ localize 'RYUU.dex.long' }}" />
+                        </div>
+                    </div>
+                    <div class="attribute flex-group-center">
+                        <div class="flexrow">
+                            <div>
+                                <label for="data.attributes.int.value" class="attribute-label">{{ localize "RYUU.int.short" }}</label>
+                                <input class="attribute-bonus" type="checkbox" name="data.attributes.int.bonus" {{checked data.attributes.int.bonus}} />
+                                <br />
+                                <select class="attribute-select" name="data.attributes.int.value">
+                                    {{#select data.attributes.int.value}}
+                                    <option value="4">d4</option>
+                                    <option value="6">d6</option>
+                                    <option value="8">d8</option>
+                                    <option value="10">d10</option>
+                                    <option value="12">d12</option>
+                                    {{/select}}
+                                </select>
+                            </div>
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/int.svg" id="roll-intelligence" title="{{ localize 'RYUU.int.long' }}" />
+                        </div>
+                    </div>
+                    <div class="attribute flex-group-center">
+                        <div class="flexrow">
+                            <div>
+                                <label for="data.attributes.spi.value" class="attribute-label">{{ localize "RYUU.spi.short" }}</label>
+                                <input class="attribute-bonus" type="checkbox" name="data.attributes.spi.bonus" {{checked data.attributes.spi.bonus}} />
+                                <br />
+                                <select class="attribute-select" name="data.attributes.spi.value">
+                                    {{#select data.attributes.spi.value}}
+                                    <option value="4">d4</option>
+                                    <option value="6">d6</option>
+                                    <option value="8">d8</option>
+                                    <option value="10">d10</option>
+                                    <option value="12">d12</option>
+                                    {{/select}}
+                                </select>
+                            </div>
+                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/spi.svg" id="roll-spirit" title="{{ localize 'RYUU.spi.long' }}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col2-6">
+                <div class="resources grid grid-2col">
+                    <div class="resource flex-group-center">
+                        <div class="resource-content flexrow flex-center flex-between">
+                            <label for="data.hp.value" class="resource-label">{{ localize "RYUU.hp.short" }}</label>
+                            <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/hp.svg" id="set-max-hp" title="{{ localize 'RYUU.hp.long' }}" height="30" width="30" />
+                            <input class="resource-input" type="text" name="data.hp.value" value="{{data.hp.value}}" data-dtype="Number" />
+                            <span> / </span>
+                            <input readonly class="resource-input" type="text" name="data.hp.max" value="{{data.hp.max}}" data-dtype="Number" />
+                        </div>
+                    </div>
+                    <div class="resource flex-group-center">
+                        <div class="resource-content flexrow flex-center flex-between">
+                            <label for="data.mp.value" class="resource-label">{{ localize "RYUU.mp.short" }}</label>
+                            <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/mp.svg" id="set-max-mp" title="{{ localize 'RYUU.mp.long' }}" height="30" width="30" />
+                            <input class="resource-input" type="text" name="data.mp.value" value="{{data.mp.value}}" data-dtype="Number" />
+                            <span> / </span>
+                            <input readonly class="resource-input" type="text" name="data.mp.max" value="{{data.mp.max}}" data-dtype="Number" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col2-6">
+                <div class="flexrow">
+                    <label class="journey resource-label">{{ localize "RYUU.travel" }}</label>
+                    <img class="check-image rollable" src="/systems/ryuutama/img/sheet/map.svg" id="roll-travel" title="{{ localize 'RYUU.travel' }}" height="30" width="30" />
+                    <div class="spacer"></div>
+                    <input class="status-checkbox" type="checkbox" name="data.immunity.injury" {{checked data.immunity.injury}} />
+                    <img class="status-image" src="/systems/ryuutama/img/sheet/injury.svg" title="{{ localize 'RYUU.injury' }}" height="30" width="30" />
+                    <input class="status-input" type="text" name="data.effects.injury" value="{{data.effects.injury}}" data-dtype="Number" />
+                    <div class="spacer-half"></div>
+                    <input class="status-checkbox" type="checkbox" name="data.immunity.exhaustion" {{checked data.immunity.exhaustion}} />
+                    <img class="status-image" src="/systems/ryuutama/img/sheet/exhaustion.svg" title="{{ localize 'RYUU.exhaustion' }}" height="30" width="30" />
+                    <input class="status-input" type="text" name="data.effects.exhaustion" value="{{data.effects.exhaustion}}" data-dtype="Number" />
+                    <div class="spacer"></div>
+                    <div class="gold-label">{{ localize "RYUU.gold" }}: <input class="gold-input" type="text" name="data.attributes.gold" value="{{data.attributes.gold}}" data-dtype="Number" /></div>
+                </div>
+                <div class="flexrow">
+                    <label class="journey resource-label">{{ localize "RYUU.direction" }}</label>
+                    <img class="check-image rollable" src="/systems/ryuutama/img/sheet/compass.svg" id="roll-direction" title="{{ localize 'RYUU.direction' }}" height="30" width="30" />
+                    <div class="spacer"></div>
+                    <input class="status-checkbox" type="checkbox" name="data.immunity.poison" {{checked data.immunity.poison}} />
+                    <img class="status-image" src="/systems/ryuutama/img/sheet/poison.svg" title="{{ localize 'RYUU.poison' }}" height="30" width="30" />
+                    <input class="status-input" type="text" name="data.effects.poison" value="{{data.effects.poison}}" data-dtype="Number" />
+                    <div class="spacer-half"></div>
+                    <input class="status-checkbox" type="checkbox" name="data.immunity.muddled" {{checked data.immunity.muddled}} />
+                    <img class="status-image" src="/systems/ryuutama/img/sheet/muddled.svg" title="{{ localize 'RYUU.muddled' }}" height="30" width="30" />
+                    <input class="status-input" type="text" name="data.effects.muddled" value="{{data.effects.muddled}}" data-dtype="Number" />
+                    <div class="spacer"></div>
+                    <div class="equipment-label">{{ localize "RYUU.equip" }}: {{data.attributes.capacity.equipped}}/{{data.attributes.capacity.max}}</div>
+                </div>
+                <div class="flexrow">
+                    <label class="journey resource-label">{{ localize "RYUU.camp" }}</label>
+                    <img class="check-image rollable" src="/systems/ryuutama/img/sheet/camp.svg" id="roll-camp" title="{{ localize 'RYUU.camp' }}" height="30" width="30" />
+                    <div class="spacer"></div>
+                    <input class="status-checkbox" type="checkbox" name="data.immunity.sickness" {{checked data.immunity.sickness}} />
+                    <img class="status-image" src="/systems/ryuutama/img/sheet/sickness.svg" title="{{ localize 'RYUU.sickness' }}" height="30" width="30" />
+                    <input class="status-input" type="text" name="data.effects.sickness" value="{{data.effects.sickness}}" data-dtype="Number" />
+                    <div class="spacer-half"></div>
+                    <input class="status-checkbox" type="checkbox" name="data.immunity.shock" {{checked data.immunity.shock}} />
+                    <img class="status-image" src="/systems/ryuutama/img/sheet/shock.svg" title="{{ localize 'RYUU.shock' }}" height="30" width="30" />
+                    <input class="status-input" type="text" name="data.effects.shock" value="{{data.effects.shock}}" data-dtype="Number" />
+                    <div class="spacer"></div>
+                    <div class="equipment-label">{{ localize "RYUU.capacity" }}: {{data.attributes.capacity.value}}/{{data.attributes.capacity.max}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,70 @@
+<div class="tab equipment" data-group="primary" data-tab="equipment">
+    <ol class="items-list">
+        <li class="item flexrow item-header">
+            <div class="item-name">{{ localize "RYUU.weapons" }}</div>
+        </li>
+        {{#each actor.equipment as |item id|}}
+        {{#if item.data.equipped}}
+        {{#if item.data.isWeapon}}
+        <li class="item flexrow" data-item-id="{{item._id}}">
+            <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
+            <h4 class="item-name">{{item.name}}</h4>
+            <div class="item-accuracy rollable accuracy">{{item.data.accuracy}} + {{item.data.accuracyBonus}}</div>
+            <div class="item-damage rollable damage">{{item.data.damage}} + {{item.data.damageBonus}}</div>
+            <div class="item-size">{{item.data.size}}</div>
+            <div class="item-controls">
+                <a class="item-control item-toggle {{#if item.data.equipped}}active{{/if}}" title='{{#if item.data.equipped}}un{{/if}}equip'><i class="fas fa-shield-alt"></i></a>
+                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            </div>
+        </li>
+        {{/if}}
+        {{/if}}
+        {{/each}}
+    </ol>
+    <ol class="items-list">
+        <li class="item flexrow item-header">
+            <div class="item-name">{{ localize "RYUU.armorshield" }}</div>
+        </li>
+        {{#each actor.equipment as |item id|}}
+        {{#if item.data.equipped}}
+        {{#if item.data.isArmor}}
+        <li class="item flexrow" data-item-id="{{item._id}}">
+            <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
+            <h4 class="item-name">{{item.name}}</h4>
+            <div class="item-size">{{item.data.size}}</div>
+            <div class="item-controls">
+                <a class="item-control item-toggle {{#if item.data.equipped}}active{{/if}}" title='{{#if item.data.equipped}}un{{/if}}equip'><i class="fas fa-shield-alt"></i></a>
+                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            </div>
+        </li>
+        {{/if}}
+        {{/if}}
+        {{/each}}
+    </ol>
+    <ol class="items-list">
+        <li class="item flexrow item-header">
+            <div class="item-name">{{ localize "RYUU.travelgear" }}</div>
+        </li>
+        {{#each actor.equipment as |item id|}}
+        {{#if item.data.equipped}}
+        {{#if item.data.isTraveling}}
+        <li class="item flexrow" data-item-id="{{item._id}}">
+            <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
+            <h4 class="item-name">{{item.name}}</h4>
+            <div class="item-size">{{item.data.size}}</div>
+            <div class="item-controls">
+                <a class="item-control item-toggle {{#if item.data.equipped}}active{{/if}}" title='{{#if item.data.equipped}}un{{/if}}equip'><i class="fas fa-shield-alt"></i></a>
+                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            </div>
+        </li>
+        {{/if}}
+        {{/if}}
+        {{/each}}
+    </ol>
+
+    {{!-- Travel Info --}}
+    {{> "systems/ryuutama/templates/actor/parts/actor-travel.html"}}
+</div>
