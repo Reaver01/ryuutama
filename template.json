@@ -141,6 +141,74 @@
             "current": {
                 "terrain": "",
                 "weather": ""
+            },
+            "levels": {
+                "1": {},
+                "2": {
+                    "points": {
+                        "used": 0,
+                        "max": 3
+                    },
+                    "stat": ""
+                },
+                "3": {
+                    "points": {
+                        "used": 0,
+                        "max": 3
+                    },
+                    "specialty": ""
+                },
+                "4": {
+                    "points": {
+                        "used": 0,
+                        "max": 3
+                    },
+                    "stat": "",
+                    "immunity": ""
+                },
+                "5": {
+                    "points": {
+                        "used": 0,
+                        "max": 3
+                    },
+                    "class": ""
+                },
+                "6": {
+                    "points": {
+                        "used": 0,
+                        "max": 3
+                    },
+                    "stat": "",
+                    "type": ""
+                },
+                "7": {
+                    "points": {
+                        "used": 0,
+                        "max": 3
+                    },
+                    "specialty": ""
+                },
+                "8": {
+                    "points": {
+                        "used": 0,
+                        "max": 3
+                    },
+                    "stat": ""
+                },
+                "9": {
+                    "points": {
+                        "used": 0,
+                        "max": 3
+                    },
+                    "season": ""
+                },
+                "10": {
+                    "points": {
+                        "used": 0,
+                        "max": 3
+                    },
+                    "stat": ""
+                }
             }
         }
     },
