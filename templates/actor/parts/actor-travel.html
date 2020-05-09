@@ -1,0 +1,185 @@
+<div class="flexrow">
+    <ol class="items-list">
+        <li class="item flexrow item-header">
+            <div class="terrain-name">{{ localize "RYUU.terrain" }}</div>
+            <select class="terrain-select" name="data.current.terrain">
+                {{#select data.current.terrain}}
+                <option value=""></option>
+                <option value="grassland">{{ localize "RYUU.grassland" }}</option>
+                <option value="wasteland">{{ localize "RYUU.wasteland" }}</option>
+                <option value="woods">{{ localize "RYUU.woods" }}</option>
+                <option value="highlands">{{ localize "RYUU.highlands" }}</option>
+                <option value="rocky">{{ localize "RYUU.rocky" }}</option>
+                <option value="forest">{{ localize "RYUU.forest" }}</option>
+                <option value="swamp">{{ localize "RYUU.swamp" }}</option>
+                <option value="mountain">{{ localize "RYUU.mountain" }}</option>
+                <option value="desert">{{ localize "RYUU.desert" }}</option>
+                <option value="jungle">{{ localize "RYUU.jungle" }}</option>
+                <option value="alpine">{{ localize "RYUU.alpine" }}</option>
+                {{/select}}
+            </select>
+            <div></div>
+        </li>
+        <li class="item flexrow item-header">
+            <div class="terrain-name">{{ localize "RYUU.level" }} 1</div>
+            <div class="terrain-check">6</div>
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.grassland" {{checked data.specialty.grassland}} />
+            <h4 class="terrain-name">{{ localize "RYUU.grassland" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.grassland" value="{{data.traveling.grassland}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.wasteland" {{checked data.specialty.wasteland}} />
+            <h4 class="terrain-name">{{ localize "RYUU.wasteland" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.wasteland" value="{{data.traveling.wasteland}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow item-header">
+            <div class="terrain-name">{{ localize "RYUU.level" }} 2</div>
+            <div class="terrain-check">8</div>
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.woods" {{checked data.specialty.woods}} />
+            <h4 class="terrain-name">{{ localize "RYUU.woods" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.woods" value="{{data.traveling.woods}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.highlands" {{checked data.specialty.highlands}} />
+            <h4 class="terrain-name">{{ localize "RYUU.highlands" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.highlands" value="{{data.traveling.highlands}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.rocky" {{checked data.specialty.rocky}} />
+            <h4 class="terrain-name">{{ localize "RYUU.rocky" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.rocky" value="{{data.traveling.rocky}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow item-header">
+            <div class="terrain-name">{{ localize "RYUU.level" }} 3</div>
+            <div class="terrain-check">10</div>
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.forest" {{checked data.specialty.forest}} />
+            <h4 class="terrain-name">{{ localize "RYUU.forest" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.forest" value="{{data.traveling.forest}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.swamp" {{checked data.specialty.swamp}} />
+            <h4 class="terrain-name">{{ localize "RYUU.swamp" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.swamp" value="{{data.traveling.swamp}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.mountain" {{checked data.specialty.mountain}} />
+            <h4 class="terrain-name">{{ localize "RYUU.mountain" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.mountain" value="{{data.traveling.mountain}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow item-header">
+            <div class="terrain-name">{{ localize "RYUU.level" }} 4</div>
+            <div class="terrain-check">12</div>
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.desert" {{checked data.specialty.desert}} />
+            <h4 class="terrain-name">{{ localize "RYUU.desert" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.desert" value="{{data.traveling.desert}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.jungle" {{checked data.specialty.jungle}} />
+            <h4 class="terrain-name">{{ localize "RYUU.jungle" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.jungle" value="{{data.traveling.jungle}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow item-header">
+            <div class="terrain-name">{{ localize "RYUU.level" }} 5</div>
+            <div class="terrain-check">14</div>
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.alpine" {{checked data.specialty.alpine}} />
+            <h4 class="terrain-name">{{ localize "RYUU.alpine" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.alpine" value="{{data.traveling.alpine}}" data-dtype="Number" />
+        </li>
+    </ol>
+    <ol class="items-list">
+        <li class="item flexrow item-header">
+            <div class="terrain-name">{{ localize "RYUU.weather" }}</div>
+            <select class="weather-select" name="data.current.weather">
+                {{#select data.current.weather}}
+                <option value=""></option>
+                <option value="rain">{{ localize "RYUU.rain" }}</option>
+                <option value="wind">{{ localize "RYUU.wind" }}</option>
+                <option value="fog">{{ localize "RYUU.fog" }}</option>
+                <option value="hot">{{ localize "RYUU.hot" }}</option>
+                <option value="cold">{{ localize "RYUU.cold" }}</option>
+                <option value="rain2">{{ localize "RYUU.rain2" }}</option>
+                <option value="snow">{{ localize "RYUU.snow" }}</option>
+                <option value="fog2">{{ localize "RYUU.fog2" }}</option>
+                <option value="dark">{{ localize "RYUU.dark" }}</option>
+                <option value="hurricane">{{ localize "RYUU.hurricane" }}</option>
+                <option value="blizzard">{{ localize "RYUU.blizzard" }}</option>
+                {{/select}}
+            </select>
+            <div></div>
+        </li>
+        <li class="item flexrow item-header">
+            <div class="terrain-name">{{ localize "RYUU.weather" }} +1</div>
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.rain" {{checked data.specialty.rain}} />
+            <h4 class="terrain-name">{{ localize "RYUU.rain" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.rain" value="{{data.traveling.rain}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.wind" {{checked data.specialty.wind}} />
+            <h4 class="terrain-name">{{ localize "RYUU.wind" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.wind" value="{{data.traveling.wind}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.fog" {{checked data.specialty.fog}} />
+            <h4 class="terrain-name">{{ localize "RYUU.fog" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.fog" value="{{data.traveling.fog}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.hot" {{checked data.specialty.hot}} />
+            <h4 class="terrain-name">{{ localize "RYUU.hot" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.hot" value="{{data.traveling.hot}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.cold" {{checked data.specialty.cold}} />
+            <h4 class="terrain-name">{{ localize "RYUU.cold" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.cold" value="{{data.traveling.cold}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow item-header">
+            <div class="terrain-name">{{ localize "RYUU.weather" }} +3</div>
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.rain2" {{checked data.specialty.rain2}} />
+            <h4 class="terrain-name">{{ localize "RYUU.rain2" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.rain2" value="{{data.traveling.rain2}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.snow" {{checked data.specialty.snow}} />
+            <h4 class="terrain-name">{{ localize "RYUU.snow" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.snow" value="{{data.traveling.snow}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.fog2" {{checked data.specialty.fog2}} />
+            <h4 class="terrain-name">{{ localize "RYUU.fog2" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.fog2" value="{{data.traveling.fog2}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.dark" {{checked data.specialty.dark}} />
+            <h4 class="terrain-name">{{ localize "RYUU.dark" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.dark" value="{{data.traveling.dark}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow item-header">
+            <div class="terrain-name">{{ localize "RYUU.weather" }} +5</div>
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.hurricane" {{checked data.specialty.hurricane}} />
+            <h4 class="terrain-name">{{ localize "RYUU.hurricane" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.hurricane" value="{{data.traveling.hurricane}}" data-dtype="Number" />
+        </li>
+        <li class="item flexrow">
+            <input class="terrain-checkbox" type="checkbox" name="data.specialty.blizzard" {{checked data.specialty.blizzard}} />
+            <h4 class="terrain-name">{{ localize "RYUU.blizzard" }}</h4>
+            <input class="terrain-input" type="text" name="data.traveling.blizzard" value="{{data.traveling.blizzard}}" data-dtype="Number" />
+        </li>
+    </ol>
+</div>

@@ -8,10 +8,18 @@ export const preloadHandlebarsTemplates = async function () {
   // Define template paths to load
   const templatePaths = [
 
+    // Actor Sheet Partials
+    "systems/ryuutama/templates/actor/parts/actor-equipped.html",
+    "systems/ryuutama/templates/actor/parts/actor-features.html",
+    "systems/ryuutama/templates/actor/parts/actor-header.html",
+    "systems/ryuutama/templates/actor/parts/actor-items.html",
+    "systems/ryuutama/templates/actor/parts/actor-spells.html",
+    "systems/ryuutama/templates/actor/parts/actor-travel.html",
+
     // Item Sheet Partials
+    "systems/ryuutama/templates/item/parts/item-container-navigation.html",
     "systems/ryuutama/templates/item/parts/item-header.html",
     "systems/ryuutama/templates/item/parts/item-navigation.html",
-    "systems/ryuutama/templates/item/parts/item-container-navigation.html",
     "systems/ryuutama/templates/item/parts/item-traveling.html"
   ];
 
