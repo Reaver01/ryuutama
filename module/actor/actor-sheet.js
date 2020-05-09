@@ -479,57 +479,57 @@ export class RyuutamaActorSheet extends ActorSheet {
         let modifiers = [];
 
         // Attribute bonuses
-        if (actor.data.data.attributes.str.bonus && str < 12) {
+        if (actor.data.data.attributes.str.bonus && str < actor.data.data.attributes.str.max) {
             str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) + 1];
         }
-        if (actor.data.data.attributes.dex.bonus && dex < 12) {
+        if (actor.data.data.attributes.dex.bonus && dex < actor.data.data.attributes.dex.max) {
             dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) + 1];
         }
-        if (actor.data.data.attributes.int.bonus && int < 12) {
+        if (actor.data.data.attributes.int.bonus && int < actor.data.data.attributes.int.max) {
             int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) + 1];
         }
-        if (actor.data.data.attributes.spi.bonus && spi < 12) {
+        if (actor.data.data.attributes.spi.bonus && spi < actor.data.data.attributes.spi.max) {
             int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1];
         }
 
         // Status effect decreases
-        if (actor.data.data.effects.injury > 0 && dex > 4) {
+        if (actor.data.data.effects.injury > 0 && dex > actor.data.data.attributes.dex.min) {
             dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) - 1];
         }
-        if (actor.data.data.effects.poison > 0 && str > 4) {
+        if (actor.data.data.effects.poison > 0 && str > actor.data.data.attributes.str.min) {
             str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) - 1];
         }
         if (actor.data.data.effects.sickness > 0) {
-            if (dex > 4) {
+            if (dex > actor.data.data.attributes.dex.min) {
                 dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) - 1];
             }
-            if (str > 4) {
+            if (str > actor.data.data.attributes.str.min) {
                 str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) - 1];
             }
-            if (spi > 4) {
+            if (spi > actor.data.data.attributes.spi.min) {
                 spi = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) - 1];
             }
-            if (int > 4) {
+            if (int > actor.data.data.attributes.int.min) {
                 int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) - 1];
             }
         }
-        if (actor.data.data.effects.exhaustion > 0 && spi > 4) {
+        if (actor.data.data.effects.exhaustion > 0 && spi > actor.data.data.attributes.spi.min) {
             spi = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) - 1];
         }
-        if (actor.data.data.effects.muddled > 0 && int > 4) {
+        if (actor.data.data.effects.muddled > 0 && int > actor.data.data.attributes.int.min) {
             int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) - 1];
         }
         if (actor.data.data.effects.shock > 0) {
-            if (dex > 4) {
+            if (dex > actor.data.data.attributes.dex.min) {
                 dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) - 1];
             }
-            if (str > 4) {
+            if (str > actor.data.data.attributes.str.min) {
                 str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) - 1];
             }
-            if (spi > 4) {
+            if (spi > actor.data.data.attributes.spi.min) {
                 spi = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) - 1];
             }
-            if (int > 4) {
+            if (int > actor.data.data.attributes.int.min) {
                 int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) - 1];
             }
         }

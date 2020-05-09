@@ -70,7 +70,7 @@ export class RyuutamaActor extends Actor {
 
         // Carrying capacity
         let str = Number(data.attributes.str.value);
-        if (data.attributes.str.bonus) {
+        if (data.attributes.str.bonus && str < data.attributes.str.max) {
             str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) + 1];
         }
 
