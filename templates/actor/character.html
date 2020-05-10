@@ -7,9 +7,12 @@
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="equipment">{{ localize "RYUU.equipped" }}</a>
         <a class="item" data-tab="items">{{ localize "RYUU.items" }}</a>
+        <!--
         <a class="item" data-tab="features">{{ localize "RYUU.features" }}</a>
         <a class="item" data-tab="spells">{{ localize "RYUU.spells" }}</a>
         <a class="item" data-tab="description">{{ localize "RYUU.description" }}</a>
+        -->
+        <a class="item" data-tab="level">{{ localize "RYUU.level" }}</a>
     </nav>
 
     {{!-- Sheet Body --}}
@@ -31,5 +34,8 @@
 
         {{!-- Owned Spells Tab --}}
         {{> "systems/ryuutama/templates/actor/parts/actor-spells.html"}}
+
+        {{!-- Owned Spells Tab --}}
+        {{> "systems/ryuutama/templates/actor/parts/actor-level.html"}}
     </section>
 </form>

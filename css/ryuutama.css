@@ -252,7 +252,7 @@
 .ryuutama .sheet-header .resource-input {
   vertical-align: middle;
   width: 50px;
-  height: 30px;
+  height: 25px;
 }
 
 .ryuutama .sheet-header .journey {
@@ -375,25 +375,29 @@
   display: none;
 }
 
-.ryuutama .items-list .item {
+.ryuutama .items-list .item,
+.ryuutama .items-list .level {
   height: 30px;
   line-height: 24px;
   padding: 3px 0;
   border-bottom: 1px solid #BBB;
 }
 
-.ryuutama .items-list .item .item-image {
+.ryuutama .items-list .item .item-image,
+.ryuutama .items-list .level .item-image {
   flex: 0 0 24px;
   margin-right: 5px;
   border: none;
 }
 
-.ryuutama .items-list .item .terrain-checkbox {
+.ryuutama .items-list .item .terrain-checkbox,
+.ryuutama .items-list .level .terrain-checkbox {
   flex: 0 0 7px;
   margin-right: 5px;
 }
 
-.ryuutama .items-list .item img {
+.ryuutama .items-list .item img,
+.ryuutama .items-list .level img {
   display: block;
 }
 
@@ -411,6 +415,10 @@
 
 .ryuutama .items-list .terrain-input {
   flex: 0 0 50px;
+}
+
+.ryuutama .items-list .level-points {
+  width: 30px;
 }
 
 .ryuutama .items-list .item-size {

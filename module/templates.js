@@ -13,6 +13,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/ryuutama/templates/actor/parts/actor-features.html",
     "systems/ryuutama/templates/actor/parts/actor-header.html",
     "systems/ryuutama/templates/actor/parts/actor-items.html",
+    "systems/ryuutama/templates/actor/parts/actor-level.html",
     "systems/ryuutama/templates/actor/parts/actor-spells.html",
     "systems/ryuutama/templates/actor/parts/actor-travel.html",
 
