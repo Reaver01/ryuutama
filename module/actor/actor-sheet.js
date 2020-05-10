@@ -17,7 +17,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
-                initial: "items"
+                initial: "level"
             }]
         });
     }
@@ -472,67 +472,77 @@ export class RyuutamaActorSheet extends ActorSheet {
      */
     _onRollItem(event) {
         const actor = this.actor;
-        let str = Number(actor.data.data.attributes.str.value);
-        let dex = Number(actor.data.data.attributes.dex.value);
-        let int = Number(actor.data.data.attributes.int.value);
-        let spi = Number(actor.data.data.attributes.spi.value);
+        const levels = actor.data.data.levels;
+        const attr = actor.data.data.attributes;
+        let str = Number(attr.str.value);
+        let dex = Number(attr.dex.value);
+        let int = Number(attr.int.value);
+        let spi = Number(attr.spi.value);
         let modifiers = [];
 
+        // Level up choices
+        for (const key in levels) {
+            if (levels.hasOwnProperty(key) && levels[key].hasOwnProperty("points") && attr.level >= levels[key].level) {
+                if (levels[key].hasOwnProperty("stat")) {
+                    console.log(levels[key].stat);
+                    if (levels[key].stat === "str") {
+                        str += RYUU.DICE_STEP;
+                    } else if (levels[key].stat === "dex") {
+                        dex += RYUU.DICE_STEP;
+                    } else if (levels[key].stat === "int") {
+                        int += RYUU.DICE_STEP;
+                    } else if (levels[key].stat === "spi") {
+                        spi += RYUU.DICE_STEP;
+                    }
+                }
+            }
+        }
+
         // Attribute bonuses
-        if (actor.data.data.attributes.str.bonus && str < actor.data.data.attributes.str.max) {
-            str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) + 1];
+        if (attr.str.bonus) {
+            str += RYUU.DICE_STEP;
         }
-        if (actor.data.data.attributes.dex.bonus && dex < actor.data.data.attributes.dex.max) {
-            dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) + 1];
+        if (attr.dex.bonus) {
+            dex += RYUU.DICE_STEP;
         }
-        if (actor.data.data.attributes.int.bonus && int < actor.data.data.attributes.int.max) {
-            int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) + 1];
+        if (attr.int.bonus) {
+            int += RYUU.DICE_STEP;
         }
-        if (actor.data.data.attributes.spi.bonus && spi < actor.data.data.attributes.spi.max) {
-            int = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) + 1];
+        if (attr.spi.bonus) {
+            int += RYUU.DICE_STEP;
         }
 
         // Status effect decreases
-        if (actor.data.data.effects.injury > 0 && dex > actor.data.data.attributes.dex.min) {
-            dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) - 1];
+        if (actor.data.data.effects.injury > 0) {
+            dex -= RYUU.DICE_STEP;
         }
-        if (actor.data.data.effects.poison > 0 && str > actor.data.data.attributes.str.min) {
-            str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) - 1];
+        if (actor.data.data.effects.poison > 0) {
+            str -= RYUU.DICE_STEP;
         }
         if (actor.data.data.effects.sickness > 0) {
-            if (dex > actor.data.data.attributes.dex.min) {
-                dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) - 1];
-            }
-            if (str > actor.data.data.attributes.str.min) {
-                str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) - 1];
-            }
-            if (spi > actor.data.data.attributes.spi.min) {
-                spi = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) - 1];
-            }
-            if (int > actor.data.data.attributes.int.min) {
-                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) - 1];
-            }
+            dex -= RYUU.DICE_STEP;
+            str -= RYUU.DICE_STEP;
+            spi -= RYUU.DICE_STEP;
+            int -= RYUU.DICE_STEP;
         }
-        if (actor.data.data.effects.exhaustion > 0 && spi > actor.data.data.attributes.spi.min) {
-            spi = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) - 1];
+        if (actor.data.data.effects.exhaustion > 0) {
+            spi -= RYUU.DICE_STEP;
         }
-        if (actor.data.data.effects.muddled > 0 && int > actor.data.data.attributes.int.min) {
-            int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) - 1];
+        if (actor.data.data.effects.muddled > 0) {
+            int -= RYUU.DICE_STEP;
         }
         if (actor.data.data.effects.shock > 0) {
-            if (dex > actor.data.data.attributes.dex.min) {
-                dex = RYUU.DICE[RYUU.DICE.findIndex(i => i === dex) - 1];
-            }
-            if (str > actor.data.data.attributes.str.min) {
-                str = RYUU.DICE[RYUU.DICE.findIndex(i => i === str) - 1];
-            }
-            if (spi > actor.data.data.attributes.spi.min) {
-                spi = RYUU.DICE[RYUU.DICE.findIndex(i => i === spi) - 1];
-            }
-            if (int > actor.data.data.attributes.int.min) {
-                int = RYUU.DICE[RYUU.DICE.findIndex(i => i === int) - 1];
-            }
+            dex -= RYUU.DICE_STEP;
+            str -= RYUU.DICE_STEP;
+            spi -= RYUU.DICE_STEP;
+            int -= RYUU.DICE_STEP;
         }
+
+        // Constrain stats
+        str = Math.clamped(str, RYUU.DICE_MIN, RYUU.DICE_MAX);
+        dex = Math.clamped(dex, RYUU.DICE_MIN, RYUU.DICE_MAX);
+        int = Math.clamped(int, RYUU.DICE_MIN, RYUU.DICE_MAX);
+        spi = Math.clamped(spi, RYUU.DICE_MIN, RYUU.DICE_MAX);
 
         const li = $(event.currentTarget).parents(".item");
         const items = this.actor.items
@@ -544,12 +554,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                 conditionPenalty += enchantment.data.conditionPenalty;
             });
         });
-        const maxCapacity = actor.data.data.attributes.capacity.max;
-        const currentCarried = actor.data.data.attributes.capacity.value;
+        const maxCapacity = attr.capacity.max;
+        const currentCarried = attr.capacity.value;
         let weightPenalty = currentCarried > maxCapacity ? maxCapacity - currentCarried : 0;
-        const hpUp = actor.data.data.attributes.statIncreases.hp;
-        const mpUp = actor.data.data.attributes.statIncreases.mp;
-        const upEarned = actor.data.data.attributes.statIncreases.earned;
         const journeyDC = RYUU.TERRAIN[actor.data.data.current.terrain] + RYUU.WEATHER[actor.data.data.current.weather];
         const terrainBonus = actor.data.data.traveling[actor.data.data.current.terrain];
         const weatherBonus = actor.data.data.traveling[actor.data.data.current.weather];
@@ -654,7 +661,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             case "roll-initiative":
                 const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`, modifiers);
                 actor.update({
-                    "data.attributes.initiative.value": initiative.roll
+                    "data.attributes.initiative": initiative.roll
                 })
                 break;
             case "roll-strength":
@@ -670,34 +677,15 @@ export class RyuutamaActorSheet extends ActorSheet {
                 rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.spi")} [SPI]${currentModifiers}`);
                 break;
             case "set-max-hp":
-                if (event.shiftKey && hpUp + mpUp < upEarned) {
-                    actor.update({
-                        "data.attributes.statIncreases.hp": hpUp + 1
-                    });
-                } else if (event.altKey) {
-                    actor.update({
-                        "data.attributes.statIncreases.hp": hpUp - 1
-                    });
-                } else {
-                    actor.update({
-                        "data.hp.value": actor.data.data.hp.max
-                    });
-                }
+                actor.update({
+                    "data.hp.value": actor.data.data.hp.max
+                });
                 break;
             case "set-max-mp":
-                if (event.shiftKey && hpUp + mpUp < upEarned) {
-                    actor.update({
-                        "data.attributes.statIncreases.mp": mpUp + 1
-                    });
-                } else if (event.altKey) {
-                    actor.update({
-                        "data.attributes.statIncreases.mp": mpUp - 1
-                    });
-                } else {
-                    actor.update({
-                        "data.mp.value": actor.data.data.mp.max
-                    });
-                }
+
+                actor.update({
+                    "data.mp.value": actor.data.data.mp.max
+                });
                 break;
             default:
                 break;

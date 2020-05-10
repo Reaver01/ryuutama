@@ -16,26 +16,18 @@
             "attributes": {
                 "str": {
                     "value": 4,
-                    "min": 4,
-                    "max": 12,
                     "bonus": false
                 },
                 "dex": {
                     "value": 4,
-                    "min": 4,
-                    "max": 12,
                     "bonus": false
                 },
                 "int": {
                     "value": 4,
-                    "min": 4,
-                    "max": 12,
                     "bonus": false
                 },
                 "spi": {
                     "value": 4,
-                    "min": 4,
-                    "max": 12,
                     "bonus": false
                 },
                 "condition": {
@@ -43,33 +35,15 @@
                     "min": 2,
                     "max": 20
                 },
-                "fumble": {
-                    "value": 0
-                },
-                "initiative": {
-                    "value": 0
-                },
-                "level": {
-                    "value": 1,
-                    "min": 1,
-                    "max": 10
-                },
-                "statIncreases": {
-                    "earned": 0,
-                    "hp": 0,
-                    "mp": 0
-                },
-                "exp": {
-                    "value": 0,
-                    "min": 0,
-                    "max": 10000
-                },
+                "fumble": 0,
+                "initiative": 0,
+                "level": 1,
+                "experience": 0,
                 "gender": "",
                 "age": 20,
                 "capacity": {
                     "max": 0,
                     "value": 0,
-                    "container": 0,
                     "equipped": 0
                 },
                 "gold": 0
@@ -143,71 +117,84 @@
                 "weather": ""
             },
             "levels": {
-                "1": {},
+                "1": {
+                    "level": 1
+                },
                 "2": {
+                    "level": 2,
                     "points": {
-                        "used": 0,
-                        "max": 3
+                        "mp": 0,
+                        "hp": 0
                     },
-                    "stat": ""
+                    "stat": "none",
+                    "actions": true
                 },
                 "3": {
+                    "level": 3,
                     "points": {
-                        "used": 0,
-                        "max": 3
+                        "mp": 0,
+                        "hp": 0
                     },
-                    "specialty": ""
+                    "specialty": "none"
                 },
                 "4": {
+                    "level": 4,
                     "points": {
-                        "used": 0,
-                        "max": 3
+                        "mp": 0,
+                        "hp": 0
                     },
-                    "stat": "",
-                    "immunity": ""
+                    "stat": "none",
+                    "immunity": "none"
                 },
                 "5": {
+                    "level": 5,
                     "points": {
-                        "used": 0,
-                        "max": 3
+                        "mp": 0,
+                        "hp": 0
                     },
-                    "class": ""
+                    "class": true
                 },
                 "6": {
+                    "level": 6,
                     "points": {
-                        "used": 0,
-                        "max": 3
+                        "mp": 0,
+                        "hp": 0
                     },
-                    "stat": "",
-                    "type": ""
+                    "stat": "none",
+                    "type": "none"
                 },
                 "7": {
+                    "level": 7,
                     "points": {
-                        "used": 0,
-                        "max": 3
+                        "mp": 0,
+                        "hp": 0
                     },
-                    "specialty": ""
+                    "specialty": "none"
                 },
                 "8": {
+                    "level": 8,
                     "points": {
-                        "used": 0,
-                        "max": 3
+                        "mp": 0,
+                        "hp": 0
                     },
-                    "stat": ""
+                    "stat": "none"
                 },
                 "9": {
+                    "level": 9,
                     "points": {
-                        "used": 0,
-                        "max": 3
+                        "mp": 0,
+                        "hp": 0
                     },
-                    "season": ""
+                    "season": "none"
                 },
                 "10": {
+                    "level": 10,
                     "points": {
-                        "used": 0,
-                        "max": 3
+                        "mp": 0,
+                        "hp": 0
                     },
-                    "stat": ""
+                    "stat": "none",
+                    "legendary": true
                 }
             }
         }

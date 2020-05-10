@@ -12,7 +12,8 @@
   }
 
 
-  .item {
+  .item,
+  .level {
     height: 30px;
     line-height: 24px;
     padding: 3px 0;
@@ -48,6 +49,10 @@
 
   .terrain-input {
     flex: 0 0 50px;
+  }
+
+  .level-points {
+    width: 30px;
   }
 
   .item-size {

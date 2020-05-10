@@ -46,6 +46,8 @@
     "RYUU.weightless": "Weightless",
     "RYUU.terrainBonus": "Bonus to Terrain or Weather",
 
+    "RYUU.statincrease": "Stat Increase",
+
     "RYUU.travel": "Travel",
     "RYUU.direction": "Direction",
     "RYUU.camp": "Camp",
@@ -118,12 +120,28 @@
     "RYUU.journeypass": "<br /><strong class='crit-roll'>SUCCESS</strong> against ",
     "RYUU.journeyfail": "<br /><strong class='fumble-roll'>FAILURE</strong> against ",
 
+    "RYUU.immunity": "Immunity",
     "RYUU.injury": "Injured",
     "RYUU.poison": "Poisoned",
     "RYUU.sickness": "Sick",
     "RYUU.exhaustion": "Exhausted",
     "RYUU.muddled": "Muddled",
     "RYUU.shock": "Shocked",
+
+    "RYUU.attack": "Attack",
+    "RYUU.technical": "Technical",
+    "RYUU.magic": "Magic",
+    "RYUU.class": "Extra Class",
+    "RYUU.actions": "Feint and Search",
+    "RYUU.type": "Extra Type",
+    "RYUU.specialty": "Specialty",
+
+    "RYUU.season": "Season of Favor",
+    "RYUU.spring": "Spring",
+    "RYUU.summer": "Summer",
+    "RYUU.fall": "Fall",
+    "RYUU.winter": "Winter",
+    "RYUU.legendary": "Legendary Journey",
 
     "RYUU.toomuch": "You physically can't put anymore equipment on!",
     "RYUU.toomuchhands": "You are already holding so much!",
