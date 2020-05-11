@@ -208,7 +208,8 @@
                 "size": 1,
                 "durability": 1,
                 "enchantments": [],
-                "container": ""
+                "container": "",
+                "owner": ""
             },
             "equipment": {
                 "equip": "",
