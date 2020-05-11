@@ -18,6 +18,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/ryuutama/templates/actor/parts/actor-travel.html",
 
     // Item Sheet Partials
+    "systems/ryuutama/templates/item/parts/class-header.html",
     "systems/ryuutama/templates/item/parts/item-container-navigation.html",
     "systems/ryuutama/templates/item/parts/item-header.html",
     "systems/ryuutama/templates/item/parts/item-navigation.html",

@@ -69,7 +69,7 @@ export class RyuutamaItemSheet extends ItemSheet {
             const pack = game.packs.find(p => p.collection === data.pack);
             pack.getEntity(data.id).then(item => {
                 if (!item) return;
-                if (item.type === "enchantment" && parentItem.item.type !== "container" && parentItem.item.type !== "animal") {
+                if (item.type === "enchantment" && parentItem.item.type !== "container" && parentItem.item.type !== "animal" && parentItem.item.type !== "class" && parentItem.item.type !== "feature") {
                     // Enchant items that aren't containers or animals
                     return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
                 } else if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
@@ -185,7 +185,7 @@ export class RyuutamaItemSheet extends ItemSheet {
             let item = game.items.get(data.id);
             if (!item) return;
 
-            if (item.type === "enchantment" && parentItem.item.type !== "container" && parentItem.item.type !== "animal") {
+            if (item.type === "enchantment" && parentItem.item.type !== "container" && parentItem.item.type !== "animal" && parentItem.item.type !== "class" && parentItem.item.type !== "feature") {
                 // Enchant items that aren't containers or animals
                 return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
             } else if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
