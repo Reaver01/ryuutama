@@ -267,6 +267,13 @@
                 "canHold": 0,
                 "holding": [],
                 "holdingSize": 0
+            },
+            "feature": {
+                "journey": false,
+                "condition": false,
+                "capacity": 0,
+                "stat": "",
+                "mastered": ""
             }
         },
         "item": {
@@ -309,11 +316,15 @@
             "plusOne": false
         },
         "feature": {
-            "templates": ["item"]
+            "templates": ["item", "feature"]
         },
         "spell": {
             "templates": ["item"],
             "spellLevel": 1
+        },
+        "class": {
+            "templates": ["item"],
+            "features": []
         }
     }
 }
