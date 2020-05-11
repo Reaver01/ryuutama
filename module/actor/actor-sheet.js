@@ -465,76 +465,12 @@ export class RyuutamaActorSheet extends ActorSheet {
      */
     _onRollItem(event) {
         const actor = this.actor;
-        const levels = actor.data.data.levels;
         const attr = actor.data.data.attributes;
         let str = Number(attr.str.value);
         let dex = Number(attr.dex.value);
         let int = Number(attr.int.value);
         let spi = Number(attr.spi.value);
         let modifiers = [];
-
-        // Level up choices
-        for (const key in levels) {
-            if (levels.hasOwnProperty(key) && levels[key].hasOwnProperty("points") && attr.level >= levels[key].level) {
-                if (levels[key].hasOwnProperty("stat")) {
-                    if (levels[key].stat === "str") {
-                        str += RYUU.DICE_STEP;
-                    } else if (levels[key].stat === "dex") {
-                        dex += RYUU.DICE_STEP;
-                    } else if (levels[key].stat === "int") {
-                        int += RYUU.DICE_STEP;
-                    } else if (levels[key].stat === "spi") {
-                        spi += RYUU.DICE_STEP;
-                    }
-                }
-            }
-        }
-
-        // Attribute bonuses
-        if (attr.str.bonus) {
-            str += RYUU.DICE_STEP;
-        }
-        if (attr.dex.bonus) {
-            dex += RYUU.DICE_STEP;
-        }
-        if (attr.int.bonus) {
-            int += RYUU.DICE_STEP;
-        }
-        if (attr.spi.bonus) {
-            int += RYUU.DICE_STEP;
-        }
-
-        // Status effect decreases
-        if (actor.data.data.effects.injury > 0) {
-            dex -= RYUU.DICE_STEP;
-        }
-        if (actor.data.data.effects.poison > 0) {
-            str -= RYUU.DICE_STEP;
-        }
-        if (actor.data.data.effects.sickness > 0) {
-            dex -= RYUU.DICE_STEP;
-            str -= RYUU.DICE_STEP;
-            spi -= RYUU.DICE_STEP;
-            int -= RYUU.DICE_STEP;
-        }
-        if (actor.data.data.effects.exhaustion > 0) {
-            spi -= RYUU.DICE_STEP;
-        }
-        if (actor.data.data.effects.muddled > 0) {
-            int -= RYUU.DICE_STEP;
-        }
-        if (actor.data.data.effects.shock > 0) {
-            dex -= RYUU.DICE_STEP;
-            str -= RYUU.DICE_STEP;
-            spi -= RYUU.DICE_STEP;
-            int -= RYUU.DICE_STEP;
-        }
-
-        // Constrain stats
-        str = Math.clamped(str, RYUU.DICE_MIN, RYUU.DICE_MAX);
-        dex = Math.clamped(dex, RYUU.DICE_MIN, RYUU.DICE_MAX);
-        int = Math.clamped(int, RYUU.DICE_MIN, RYUU.DICE_MAX);
-        spi = Math.clamped(spi, RYUU.DICE_MIN, RYUU.DICE_MAX);
 
         const li = $(event.currentTarget).parents(".item");
         const items = this.actor.items

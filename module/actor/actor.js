@@ -31,14 +31,17 @@ export class RyuutamaActor extends Actor {
         const enchantments = actorData.items.filter(i => i.type === "enchantment");
         const deletions = enchantments.map(i => i._id);
         this.deleteEmbeddedEntity("OwnedItem", deletions);
+        let str = Number(data.attributes.str.base);
+        let dex = Number(data.attributes.dex.base);
+        let int = Number(data.attributes.int.base);
+        let spi = Number(data.attributes.spi.base);
+        let addHp = 0;
+        let addMp = 0;
 
         // Level
         data.attributes.level = RYUU.CHARACTER_EXP_LEVELS.findIndex(i => i > Number(data.attributes.experience));
 
         // Level choices
-        let addHp = 0;
-        let addMp = 0;
-        let addStr = 0;
         for (const key in data.levels) {
             if (data.levels.hasOwnProperty(key) && data.levels[key].hasOwnProperty("points")) {
                 data.levels[key].points.hp = Math.clamped(data.levels[key].points.hp, 0, RYUU.POINT_MAX);
@@ -47,7 +50,16 @@ export class RyuutamaActor extends Actor {
                     addHp += data.levels[key].points.hp;
                     addMp += data.levels[key].points.mp;
                     if (data.levels[key].hasOwnProperty("stat") && data.levels[key].stat === "str") {
-                        addStr += RYUU.DICE_STEP;
+                        str += RYUU.DICE_STEP;
+                    }
+                    if (data.levels[key].hasOwnProperty("stat") && data.levels[key].stat === "dex") {
+                        dex += RYUU.DICE_STEP;
+                    }
+                    if (data.levels[key].hasOwnProperty("stat") && data.levels[key].stat === "int") {
+                        int += RYUU.DICE_STEP;
+                    }
+                    if (data.levels[key].hasOwnProperty("stat") && data.levels[key].stat === "spi") {
+                        spi += RYUU.DICE_STEP;
                     }
                     if (data.levels[key].hasOwnProperty("specialty") && data.levels[key].specialty !== "none") {
                         data.specialty[data.levels[key].specialty] = true;
@@ -66,8 +78,48 @@ export class RyuutamaActor extends Actor {
             }
         }
 
+        // Attribute bonuses
+        if (data.attributes.str.bonus) {
+            str += RYUU.DICE_STEP;
+        }
+        if (data.attributes.dex.bonus) {
+            dex += RYUU.DICE_STEP;
+        }
+        if (data.attributes.int.bonus) {
+            int += RYUU.DICE_STEP;
+        }
+        if (data.attributes.spi.bonus) {
+            spi += RYUU.DICE_STEP;
+        }
+
+        // Status effect decreases
+        if (data.effects.injury > 0) {
+            dex -= RYUU.DICE_STEP;
+        }
+        if (data.effects.poison > 0) {
+            str -= RYUU.DICE_STEP;
+        }
+        if (data.effects.sickness > 0) {
+            dex -= RYUU.DICE_STEP;
+            str -= RYUU.DICE_STEP;
+            spi -= RYUU.DICE_STEP;
+            int -= RYUU.DICE_STEP;
+        }
+        if (data.effects.exhaustion > 0) {
+            spi -= RYUU.DICE_STEP;
+        }
+        if (data.effects.muddled > 0) {
+            int -= RYUU.DICE_STEP;
+        }
+        if (data.effects.shock > 0) {
+            dex -= RYUU.DICE_STEP;
+            str -= RYUU.DICE_STEP;
+            spi -= RYUU.DICE_STEP;
+            int -= RYUU.DICE_STEP;
+        }
+
         // Health Points
-        data.hp.max = (data.attributes.str.value * 2) + addHp;
+        data.hp.max = (data.attributes.str.base * 2) + addHp;
         const hpItems = items.filter(i => i.data.enchantments.find(e => e.data.hpMod !== 0) !== undefined && i.data.equipped);
         hpItems.forEach(item => {
             let hpEnchantments = item.data.enchantments.filter(e => e.data.hpMod !== 0);
@@ -77,7 +129,7 @@ export class RyuutamaActor extends Actor {
         });
 
         // Mental Points
-        data.mp.max = (data.attributes.spi.value * 2) + addMp;
+        data.mp.max = (data.attributes.spi.base * 2) + addMp;
         const mpItems = items.filter(i => i.data.enchantments.find(e => e.data.mpMod !== 0) !== undefined && i.data.equipped);
         mpItems.forEach(item => {
             let mpEnchantments = item.data.enchantments.filter(e => e.data.mpMod !== 0);
@@ -91,14 +143,14 @@ export class RyuutamaActor extends Actor {
         data.mp.value = Math.clamped(data.mp.value, 0, data.mp.max);
         data.attributes.experience = Math.clamped(Number(data.attributes.experience), RYUU.EXP_MIN, RYUU.EXP_MAX)
         data.attributes.condition.value = Math.clamped(data.attributes.condition.value, 0, data.attributes.condition.max);
+        data.attributes.str.value = Math.clamped(str, RYUU.DICE_MIN, RYUU.DICE_MAX);
+        data.attributes.dex.value = Math.clamped(dex, RYUU.DICE_MIN, RYUU.DICE_MAX);
+        data.attributes.int.value = Math.clamped(int, RYUU.DICE_MIN, RYUU.DICE_MAX);
+        data.attributes.spi.value = Math.clamped(spi, RYUU.DICE_MIN, RYUU.DICE_MAX);
 
         // Carrying capacity
-        let str = Number(data.attributes.str.value);
-        if (data.attributes.str.bonus && str < RYUU.DICE_MAX) {
-            str += RYUU.DICE_STEP;
-        }
 
-        data.attributes.capacity.max = str + 2 + data.attributes.level + addStr;
+        data.attributes.capacity.max = data.attributes.str.value + 2 + data.attributes.level;
         const carried = items.filter(i => !i.data.equipped && i.data.size !== undefined && i.type !== "animal");
         const equipped = items.filter(i => i.data.equipped === true && i.data.size !== undefined);
         const containers = items.filter(i => i.type === "container" || i.type === "animal");
