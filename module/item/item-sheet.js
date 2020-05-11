@@ -74,7 +74,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                     return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
                 } else if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
                     // Check if container is inside a container
-                    if (parentItem.item.data.data.container && parentItem.item.data.data.container !== "") {
+                    if (parentItem.item.data.data.container) {
                         return
                     }
                     // Add items to container or animal
@@ -92,7 +92,7 @@ export class RyuutamaItemSheet extends ItemSheet {
             if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal") && item.data._id !== parentItem.item.id) {
 
                 // Check if container is inside a container
-                if (parentItem.item.data.data.container && parentItem.item.data.data.container !== "") {
+                if (parentItem.item.data.data.container) {
                     return
                 }
 
@@ -141,7 +141,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                 }
 
                 // If item already resides in a container, remove it from the original
-                if (item.data.data.container && item.data.data.container !== "") {
+                if (item.data.data.container) {
                     const originalContainer = actor.items.find(i => i.id === item.data.data.container);
                     if (originalContainer) {
                         let originalHolding = originalContainer.data.data.holding;
@@ -190,7 +190,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                 return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
             } else if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
                 // Check if container is inside a container
-                if (parentItem.item.data.data.container && parentItem.item.data.data.container !== "") {
+                if (parentItem.item.data.data.container) {
                     return
                 }
                 // Add items to container or animal
