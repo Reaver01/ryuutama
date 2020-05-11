@@ -66,21 +66,21 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Handle dropping to another sheet
         if (data) {
-            if (this.actor.owner && data.actorId !== undefined && data.actorId === this.actor.id && data.data !== undefined) {
+            if (this.actor.owner && data.actorId && data.actorId === this.actor.id && data.data) {
 
-                if (event.toElement.parentNode.dataset.itemId !== undefined) {
+                if (event.toElement.parentNode.dataset.itemId) {
                     const actor = game.actors.get(data.actorId);
                     let container = actor.items.find(i => i.data._id === event.toElement.parentNode.dataset.itemId);
-                    if (event.toElement.parentNode.dataset.parentId !== undefined) {
+                    if (event.toElement.parentNode.dataset.parentId) {
                         container = actor.items.find(i => i.data._id === event.toElement.parentNode.dataset.parentId);
                     }
                     const item = actor.items.find(i => i.data._id === data.data._id);
-                    if (container !== undefined && container.data.data.canHold !== undefined && container.data.data.holdingSize !== undefined) {
+                    if (container && container.data.data.canHold && container.data.data.holdingSize) {
                         if (!item || item.data.data.container === container.id) return;
                         if (item.type !== "enchantment" && item.data.type !== "animal" && (container.type === "container" || container.type === "animal") && item.data._id !== container.id) {
 
                             // Check if container is inside a container
-                            if (container.data.data.container !== undefined && container.data.data.container !== "") return;
+                            if (container.data.data.container && container.data.data.container !== "") return;
 
                             // Check if container being dropped has any items in it
                             if (item.data.type === "container") {
@@ -128,9 +128,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                             let updates = [];
 
                             // If item already resides in a container, remove it from the original
-                            if (item.data.data.container !== undefined && item.data.data.container !== "") {
+                            if (item.data.data.container && item.data.data.container !== "") {
                                 const originalContainer = actor.items.find(i => i.id === item.data.data.container);
-                                if (originalContainer !== undefined) {
+                                if (originalContainer) {
                                     let originalHolding = originalContainer.data.data.holding;
                                     originalHolding = originalHolding.filter(i => i.id !== item.id);
 
@@ -145,7 +145,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                             let holding = container.data.data.holding;
                             holding = holding.slice();
                             const found = holding.find(i => i.id === item._id);
-                            if (found !== undefined || container.data.data.holdingSize + item.data.data.size > container.data.data.canHold) return;
+                            if (found || container.data.data.holdingSize + item.data.data.size > container.data.data.canHold) return;
 
                             // Add items to container or animal
                             updates.push({
@@ -320,10 +320,10 @@ export class RyuutamaActorSheet extends ActorSheet {
             // Get item id and container id from actor before deleting
             const item = this.actor.items.find(i => i.data._id === liId);
             const containerId = item.data.data.container;
-            if (containerId !== undefined && containerId !== "") {
+            if (containerId && containerId !== "") {
                 // Find the container and filter the items it holds
                 const container = this.actor.items.find(i => i.data._id === containerId);
-                if (container !== undefined) {
+                if (container) {
                     let holding = container.data.data.holding.slice();
                     holding = holding.filter(i => i.id !== liId);
 
@@ -337,7 +337,7 @@ export class RyuutamaActorSheet extends ActorSheet {
 
             // If item is a container, remove container reference from all items it contains
             let holding = item.data.data.holding;
-            if (holding !== undefined) {
+            if (holding) {
                 holding.forEach(stored => {
                     updates.push({
                         _id: stored.id,
@@ -360,10 +360,10 @@ export class RyuutamaActorSheet extends ActorSheet {
             // Get item id and container id from actor
             const item = this.actor.items.find(i => i.data._id === liId);
             const containerId = item.data.data.container;
-            if (containerId !== undefined && containerId !== "") {
+            if (containerId && containerId !== "") {
                 // Find the container and filter the items it holds
                 const container = this.actor.items.find(i => i.data._id === containerId);
-                if (container !== undefined) {
+                if (container) {
                     let holding = container.data.data.holding.slice();
                     holding = holding.filter(i => i.id !== liId);
 
@@ -475,7 +475,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         const li = $(event.currentTarget).parents(".item");
         const items = this.actor.items
         const item = items.find(i => i.id === li.data("itemId"));
-        const cursedItems = items.filter(i => i.data.data.enchantments.find(e => e.data.conditionPenalty !== 0) !== undefined && i.data.data.equipped);
+        const cursedItems = items.filter(i => i.data.data.enchantments.find(e => e.data.conditionPenalty !== 0) && i.data.data.equipped);
         let conditionPenalty = 0;
         cursedItems.forEach(cursed => {
             cursed.data.data.enchantments.forEach(enchantment => {
@@ -498,7 +498,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         if (weightPenalty !== 0) {
             modifiers.push(weightPenalty);
         }
-        if (item !== undefined) {
+        if (item) {
             switch (item.data.type) {
                 case "weapon":
                     let accuracy = item.data.data.accuracy.replace("[STR]", "1d@str").replace("[DEX]", "1d@dex").replace("[INT]", "1d@int").replace("[SPI]", "1d@spi");
@@ -510,10 +510,10 @@ export class RyuutamaActorSheet extends ActorSheet {
                         }
                     }
                     if (event.currentTarget.classList.contains("damage")) {
-                        if ((event.altKey && event.shiftKey) || (!event.altKey && !event.shiftKey && accuracyRoll !== undefined && accuracyRoll.crit)) {
+                        if ((event.altKey && event.shiftKey) || (!event.altKey && !event.shiftKey && accuracyRoll && accuracyRoll.crit)) {
                             damage = damage += ` + ${damage}`;
                             rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} CRITICAL damage:`);
-                        } else if ((event.altKey && !event.shiftKey) || (!event.altKey && !event.shiftKey && !(accuracyRoll !== undefined && accuracyRoll.fumble))) {
+                        } else if ((event.altKey && !event.shiftKey) || (!event.altKey && !event.shiftKey && !(accuracyRoll && accuracyRoll.fumble))) {
                             rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} damage:`);
                         }
                     }
@@ -620,7 +620,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         }
 
         function rollCheck(formula, flavor, modifiers, journeyDC) {
-            if (modifiers !== undefined && modifiers.length > 0) {
+            if (modifiers && modifiers.length > 0) {
                 modifiers.forEach(mod => {
                     formula += ` + ${mod}`;
                 });
@@ -639,7 +639,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             const fumbleRolls = dice.filter(r => r.rolls[0].roll === 1);
             let crit = false;
             let fumble = false;
-            if (dice.length > 1 && ((smallDice !== undefined && maxRolls.length === dice.length) || (largeCrits.length === dice.length))) {
+            if (dice.length > 1 && ((smallDice && maxRolls.length === dice.length) || (largeCrits.length === dice.length))) {
                 crit = true;
                 flavor += game.i18n.localize("RYUU.rollcrit");
             }
@@ -647,9 +647,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                 fumble = true;
                 flavor += game.i18n.localize("RYUU.rollfumble");
             }
-            if (journeyDC !== undefined && roll._total >= journeyDC) {
+            if (journeyDC && roll._total >= journeyDC) {
                 flavor += game.i18n.localize("RYUU.journeypass") + journeyDC;
-            } else if (journeyDC !== undefined && roll._total < journeyDC) {
+            } else if (journeyDC && roll._total < journeyDC) {
                 flavor += game.i18n.localize("RYUU.journeyfail") + journeyDC;
             }
             roll.toMessage({

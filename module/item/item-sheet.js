@@ -74,7 +74,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                     return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
                 } else if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
                     // Check if container is inside a container
-                    if (parentItem.item.data.data.container !== undefined && parentItem.item.data.data.container !== "") {
+                    if (parentItem.item.data.data.container && parentItem.item.data.data.container !== "") {
                         return
                     }
                     // Add items to container or animal
@@ -92,7 +92,7 @@ export class RyuutamaItemSheet extends ItemSheet {
             if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal") && item.data._id !== parentItem.item.id) {
 
                 // Check if container is inside a container
-                if (parentItem.item.data.data.container !== undefined && parentItem.item.data.data.container !== "") {
+                if (parentItem.item.data.data.container && parentItem.item.data.data.container !== "") {
                     return
                 }
 
@@ -141,9 +141,9 @@ export class RyuutamaItemSheet extends ItemSheet {
                 }
 
                 // If item already resides in a container, remove it from the original
-                if (item.data.data.container !== undefined && item.data.data.container !== "") {
+                if (item.data.data.container && item.data.data.container !== "") {
                     const originalContainer = actor.items.find(i => i.id === item.data.data.container);
-                    if (originalContainer !== undefined) {
+                    if (originalContainer) {
                         let originalHolding = originalContainer.data.data.holding;
                         originalHolding = originalHolding.filter(i => i.id !== item.id);
 
@@ -157,7 +157,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                 let holding = parentItem.item.data.data.holding;
                 holding = holding.slice();
                 const found = holding.find(i => i.id === item._id);
-                if (found !== undefined || parentItem.item.data.data.holdingSize + item.data.data.size > parentItem.item.data.data.canHold) return;
+                if (found || parentItem.item.data.data.holdingSize + item.data.data.size > parentItem.item.data.data.canHold) return;
 
                 // Add items to container or animal
                 await actor.updateEmbeddedEntity("OwnedItem", {
@@ -190,7 +190,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                 return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
             } else if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
                 // Check if container is inside a container
-                if (parentItem.item.data.data.container !== undefined && parentItem.item.data.data.container !== "") {
+                if (parentItem.item.data.data.container && parentItem.item.data.data.container !== "") {
                     return
                 }
                 // Add items to container or animal
@@ -208,7 +208,7 @@ export class RyuutamaItemSheet extends ItemSheet {
         let holding = item.data.data.holding || [];
         holding = holding.slice();
 
-        if (id !== undefined) {
+        if (id) {
             if (remove) {
                 // Filter container contents
                 holding = holding.filter(i => i.id !== id);
@@ -265,9 +265,9 @@ export class RyuutamaItemSheet extends ItemSheet {
         html.find('.item-delete').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
             this.addRemoveEnchantment(true, li.data("itemId"));
-            if (this.object.data.data.holding !== undefined) {
+            if (this.object.data.data.holding) {
                 let item = this.object.data.data.holding.find(i => i.id === li.data("itemId"));
-                if (item.id !== undefined) {
+                if (item.id) {
                     item._id = item.id;
                 }
                 this.addRemoveItem(true, item);
@@ -309,7 +309,7 @@ export class RyuutamaItemSheet extends ItemSheet {
     _updateObject(event, formData) {
         // Update the Item
         let update = this.object.update(formData);
-        if (formData["data.givenName"] !== undefined) {
+        if (formData["data.givenName"]) {
             this.addRemoveEnchantment(false, undefined, undefined, formData["data.givenName"]);
         }
         return update;
@@ -396,13 +396,13 @@ export class RyuutamaItemSheet extends ItemSheet {
         /* Resolve Current Enchantment List */
         /* -------------------------------- */
 
-        if (remove && enchantmentName !== undefined) {
+        if (remove && enchantmentName) {
             // Filter enchantments
             enchantments = enchantments.filter(e => e.name !== enchantmentName);
-        } else if (enchantmentData !== undefined) {
+        } else if (enchantmentData) {
             // Disalow duplicate enchantments
             let existing = enchantments.find(e => e.name === enchantmentName);
-            if (existing !== undefined) return;
+            if (existing) return;
             // Push new enchantments to the array
             enchantments.push({
                 name: enchantmentName,
@@ -419,7 +419,7 @@ export class RyuutamaItemSheet extends ItemSheet {
         enchantments.forEach(enchantment => {
             name += `${enchantment.name} `;
         });
-        if (givenName !== undefined) {
+        if (givenName) {
             name += givenName;
         } else {
             name += item.data.data.givenName;
@@ -489,13 +489,13 @@ export class RyuutamaItemSheet extends ItemSheet {
 
         // Unbreakable
         unbreakable = enchantments.find(e => e.data.unbreakable === true);
-        if (unbreakable !== undefined) {
+        if (unbreakable) {
             newDurability = 9999;
         }
 
         // Broken
         broken = enchantments.find(e => e.data.unusable === true);
-        if (broken !== undefined) {
+        if (broken) {
             newDurability = 0;
         }
 
@@ -521,7 +521,7 @@ export class RyuutamaItemSheet extends ItemSheet {
 
         // Update data
         item.update(updateData);
-        if (enchantmentName !== undefined) {
+        if (enchantmentName) {
             // Render sheet
             item.render(true);
         }

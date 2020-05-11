@@ -120,7 +120,7 @@ export class RyuutamaActor extends Actor {
 
         // Health Points
         data.hp.max = (data.attributes.str.base * 2) + addHp;
-        const hpItems = items.filter(i => i.data.enchantments.find(e => e.data.hpMod !== 0) !== undefined && i.data.equipped);
+        const hpItems = items.filter(i => i.data.enchantments.find(e => e.data.hpMod !== 0) && i.data.equipped);
         hpItems.forEach(item => {
             let hpEnchantments = item.data.enchantments.filter(e => e.data.hpMod !== 0);
             hpEnchantments.forEach(enchantment => {
@@ -130,7 +130,7 @@ export class RyuutamaActor extends Actor {
 
         // Mental Points
         data.mp.max = (data.attributes.spi.base * 2) + addMp;
-        const mpItems = items.filter(i => i.data.enchantments.find(e => e.data.mpMod !== 0) !== undefined && i.data.equipped);
+        const mpItems = items.filter(i => i.data.enchantments.find(e => e.data.mpMod !== 0) && i.data.equipped);
         mpItems.forEach(item => {
             let mpEnchantments = item.data.enchantments.filter(e => e.data.mpMod !== 0);
             mpEnchantments.forEach(enchantment => {
@@ -151,8 +151,8 @@ export class RyuutamaActor extends Actor {
         // Carrying capacity
 
         data.attributes.capacity.max = data.attributes.str.value + 2 + data.attributes.level;
-        const carried = items.filter(i => !i.data.equipped && i.data.size !== undefined && i.type !== "animal");
-        const equipped = items.filter(i => i.data.equipped === true && i.data.size !== undefined);
+        const carried = items.filter(i => !i.data.equipped && i.data.size && i.type !== "animal");
+        const equipped = items.filter(i => i.data.equipped === true && i.data.size);
         const containers = items.filter(i => i.type === "container" || i.type === "animal");
 
         let carriedWeight = 0;
@@ -163,7 +163,7 @@ export class RyuutamaActor extends Actor {
 
                 containers.forEach(container => {
                     const found = container.data.holding.find(i => i.id === item._id);
-                    if (found !== undefined) {
+                    if (found) {
                         inContainer = true;
                     }
                 });

@@ -104,7 +104,7 @@ Hooks.on("renderChatMessage", (message, html, data) => {
     const maxRolls = dice.filter(r => r.rolls[0].roll === r.faces);
     const largeCrits = dice.filter(r => r.rolls[0].roll === r.faces || r.rolls[0].roll === 6);
     const fumbleRolls = dice.filter(r => r.rolls[0].roll === 1);
-    if (dice.length > 1 && ((smallDice !== undefined && maxRolls.length === dice.length) || (largeCrits.length === dice.length))) {
+    if (dice.length > 1 && ((smallDice && maxRolls.length === dice.length) || (largeCrits.length === dice.length))) {
         html.find(".dice-total").addClass("critical");
     }
     if (dice.length > 1 && fumbleRolls.length === dice.length) {
@@ -120,9 +120,9 @@ Hooks.once("ready", async function () {
 
     // Pre create OwnedItem hook
     Hooks.on("preCreateOwnedItem", (actor, item, id) => {
-        if (item.data.container !== undefined && item.data.container !== "") {
+        if (item.data.container && item.data.container !== "") {
             const container = actor.items.find(i => i.data._id === item.data.container);
-            if (container !== undefined) {
+            if (container) {
                 let holding = container.data.data.holding || [];
                 holding = holding.slice();
 
@@ -140,7 +140,7 @@ Hooks.once("ready", async function () {
     Hooks.on("createOwnedItem", async (actor, item, id) => {
         let holding = [];
         let updateId = "";
-        if (item.data.container !== undefined && item.data.container !== "") {
+        if (item.data.container && item.data.container !== "") {
             const container = actor.items.find(i => i.data._id === item.data.container);
             container.data.data.holding.forEach(held => {
                 holding.push(held);
@@ -154,7 +154,7 @@ Hooks.once("ready", async function () {
                 size: item.data.size
             });
             updateId = container.data._id;
-        } else if (item.data.holding !== undefined && item.data.holding.length > 0) {
+        } else if (item.data.holding && item.data.holding.length > 0) {
             let toCreate = [];
             const lastOwner = game.actors.get(item.data.owner);
             item.data.holding.forEach(held => {
