@@ -116,30 +116,56 @@ Hooks.once("ready", async function () {
                 if (container.data.data.holdingSize + item.data.size > container.data.data.canHold) {
                     item.data.container = "";
                 }
+            } else {
+                item.data.container = "";
             }
         }
     });
 
     // Create OwnedItem hook
-    Hooks.on("createOwnedItem", (actor, item, id) => {
+    Hooks.on("createOwnedItem", async (actor, item, id) => {
+        let holding = [];
+        let updateId = "";
         if (item.data.container !== undefined && item.data.container !== "") {
             const container = actor.items.find(i => i.data._id === item.data.container);
-            if (container !== undefined) {
-                let holding = container.data.data.holding || [];
-                holding = holding.slice();
-
+            container.data.data.holding.forEach(held => {
+                holding.push(held);
+            });
+            holding.push({
+                id: item._id,
+                name: item.name,
+                equippable: (item.type === "weapon" || item.type === "armor" || item.type === "shield" || item.type === "traveling"),
+                equip: item.data.equip,
+                img: item.img,
+                size: item.data.size
+            });
+            updateId = container.data._id;
+        } else if (item.data.holding !== undefined && item.data.holding.length > 0) {
+            let toCreate = [];
+            const lastOwner = game.actors.get(item.data.owner);
+            item.data.holding.forEach(held => {
+                let oldItem = lastOwner.getEmbeddedEntity("OwnedItem", held.id);
+                oldItem.data.container = item._id;
+                toCreate.push(oldItem);
+            });
+            let items = await actor.createEmbeddedEntity("OwnedItem", toCreate);
+            items.forEach(item => {
                 holding.push({
                     id: item._id,
                     name: item.name,
-                    equippable: (item.data.type === "weapon" || item.data.type === "armor" || item.data.type === "shield" || item.data.type === "traveling"),
-                    equip: item.data.data.equip,
+                    equippable: (item.type === "weapon" || item.type === "armor" || item.type === "shield" || item.type === "traveling"),
+                    equip: item.data.equip,
                     img: item.img,
-                    size: item.data.data.size
+                    size: item.data.size
                 });
-                container.update({
-                    "data.holding": holding
-                });
-            }
+            });
+            updateId = item._id;
+        }
+        if (holding.length > 0) {
+            actor.updateEmbeddedEntity("OwnedItem", {
+                _id: updateId,
+                "data.holding": holding
+            });
         }
     });
 });

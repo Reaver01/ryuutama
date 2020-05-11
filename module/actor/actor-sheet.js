@@ -17,7 +17,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
-                initial: "level"
+                initial: "items"
             }]
         });
     }
@@ -66,11 +66,7 @@ export class RyuutamaActorSheet extends ActorSheet {
 
         // Handle dropping to another sheet
         if (data) {
-            if (game.user.isGM && data.actorId !== undefined && data.actorId !== this.actor.id) {
-                // Retrieve original owner and remove the item from their inventory
-                const originalActor = game.actors.get(data.actorId);
-                await originalActor.deleteEmbeddedEntity("OwnedItem", data.data._id);
-            } else if (this.actor.owner && data.actorId !== undefined && data.data !== undefined) {
+            if (this.actor.owner && data.actorId !== undefined && data.actorId === this.actor.id && data.data !== undefined) {
 
                 if (event.toElement.parentNode.dataset.itemId !== undefined) {
                     const actor = game.actors.get(data.actorId);
@@ -95,9 +91,6 @@ export class RyuutamaActorSheet extends ActorSheet {
                                     let availableSpace = container.data.data.canHold - container.data.data.holdingSize;
                                     let holding = container.data.data.holding;
                                     holding = holding.slice();
-                                    console.log(container.data.data.holdingSize);
-                                    console.log(container.data.data.canHold);
-
                                     let updates = [];
                                     droppedHolding.forEach(i => {
                                         if (i.data.data.size <= availableSpace) {
@@ -484,7 +477,6 @@ export class RyuutamaActorSheet extends ActorSheet {
         for (const key in levels) {
             if (levels.hasOwnProperty(key) && levels[key].hasOwnProperty("points") && attr.level >= levels[key].level) {
                 if (levels[key].hasOwnProperty("stat")) {
-                    console.log(levels[key].stat);
                     if (levels[key].stat === "str") {
                         str += RYUU.DICE_STEP;
                     } else if (levels[key].stat === "dex") {
