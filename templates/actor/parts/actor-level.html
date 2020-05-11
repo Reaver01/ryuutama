@@ -2,10 +2,54 @@
     <ol class="items-list">
         {{#each data.levels as |level key|}}
         {{#if (gte @root.data.attributes.level level.level)}}
-        {{#if level.points}}
         <li class="level flexrow item-header">
             <div class="item-name">{{ localize "RYUU.level" }} {{level.level}}</div>
         </li>
+        {{#if level.stats}}
+        <li class="level flexrow">
+            <div class="item-image"></div>
+            <div>
+                {{ localize "RYUU.str.short" }}:
+                <select class="attribute-select" name="data.attributes.str.base">
+                    {{#select @root.data.attributes.str.base}}
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    {{/select}}
+                </select>
+            </div>
+            <div>
+                {{ localize "RYUU.dex.short" }}:
+                <select class="attribute-select" name="data.attributes.dex.base">
+                    {{#select @root.data.attributes.dex.base}}
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    {{/select}}
+                </select>
+            </div>
+            <div>
+                {{ localize "RYUU.int.short" }}:
+                <select class="attribute-select" name="data.attributes.int.base">
+                    {{#select @root.data.attributes.int.base}}
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    {{/select}}
+                </select>
+            </div>
+            <div>
+                {{ localize "RYUU.spi.short" }}:
+                <select class="attribute-select" name="data.attributes.spi.base">
+                    {{#select @root.data.attributes.spi.base}}
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    {{/select}}
+                </select>
+            </div>
+        </li>
+        {{/if}}
         <li class="level flexrow">
             <div class="item-image"></div>
             {{#if level.points}}
@@ -119,7 +163,6 @@
             </div>
             {{/if}}
         </li>
-        {{/if}}
         {{/if}}
         {{/each}}
     </ol>

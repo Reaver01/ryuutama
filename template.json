@@ -15,18 +15,22 @@
             },
             "attributes": {
                 "str": {
+                    "base": 4,
                     "value": 4,
                     "bonus": false
                 },
                 "dex": {
+                    "base": 4,
                     "value": 4,
                     "bonus": false
                 },
                 "int": {
+                    "base": 4,
                     "value": 4,
                     "bonus": false
                 },
                 "spi": {
+                    "base": 4,
                     "value": 4,
                     "bonus": false
                 },
@@ -118,7 +122,9 @@
             },
             "levels": {
                 "1": {
-                    "level": 1
+                    "level": 1,
+                    "stats": true,
+                    "class": true
                 },
                 "2": {
                     "level": 2,
