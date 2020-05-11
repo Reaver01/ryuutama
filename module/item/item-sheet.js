@@ -268,11 +268,13 @@ export class RyuutamaItemSheet extends ItemSheet {
         html.find('.item-delete').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
             this.addRemoveEnchantment(true, li.data("itemId"));
-            let item = this.object.data.data.holding.find(i => i.id === li.data("itemId"));
-            if (item.id !== undefined) {
-                item._id = item.id;
+            if (this.object.data.data.holding !== undefined) {
+                let item = this.object.data.data.holding.find(i => i.id === li.data("itemId"));
+                if (item.id !== undefined) {
+                    item._id = item.id;
+                }
+                this.addRemoveItem(true, item);
             }
-            this.addRemoveItem(true, item);
         });
 
         if (this.item.owner) {
