@@ -33,7 +33,7 @@ export class RyuutamaItem extends Item {
 
         holding.forEach(item => {
             const heldItem = actorData.items.find(i => i._id === item.id);
-            if (heldItem !== undefined) {
+            if (heldItem) {
                 holdingAmount += Number(heldItem.data.size);
             }
         });
