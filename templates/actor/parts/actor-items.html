@@ -8,7 +8,7 @@
         <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
             <div class="item-image"><img class="{{#if item.data.isWeapon}}rollable {{item.type}} accuracy damage{{/if}}" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
             <h4 class="item-name">{{item.name}}</h4>
-            <div class="item-equip">{{ localize (concat "RYUU." item.data.equip) }}</div>
+            <div class="item-equip">{{#if item.data.equip}}{{ localize (concat "RYUU." item.data.equip) }}{{/if}}</div>
             <div class="item-size">{{item.data.size}}</div>
             <div class="item-controls">
                 <a class="item-control item-toggle {{#if item.data.equipped}}active{{/if}}" title='{{#if item.data.equipped}}un{{/if}}equip'><i class="fas fa-shield-alt"></i></a>
@@ -55,7 +55,7 @@
             <div class="item-image"></div>
             <div class="item-image"><img src="{{held.img}}" title="{{held.name}}" width="24" height="24" /></div>
             <h4 class="item-name">{{held.name}}</h4>
-            {{#if held.equippable}}
+            {{#if (and held.equippable held.equip)}}
             <div class="item-equip">{{ localize (concat "RYUU." held.equip) }}</div>
             {{/if}}
             <div class="item-size">{{held.size}}</div>

@@ -16,7 +16,7 @@
             <li class="item flexrow" data-item-id="{{item.id}}">
                 <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
                 <h4 class="item-name">{{item.name}}</h4>
-                {{#if item.equippable}}
+                {{#if (and item.equippable item.equip)}}
                 <div class="item-equip">{{ localize (concat "RYUU." item.equip) }}</div>
                 {{/if}}
                 <div class="item-size">{{item.size}}</div>
