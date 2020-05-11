@@ -36,9 +36,6 @@ export class RyuutamaItemSheet extends ItemSheet {
     getData() {
         const data = super.getData();
         data.dtypes = ["String", "Number", "Boolean"];
-        if (data.data.givenName === "") {
-            data.data.givenName = data.item.name;
-        }
 
         return data;
     }

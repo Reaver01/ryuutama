@@ -114,6 +114,10 @@ Hooks.on("renderChatMessage", (message, html, data) => {
 });
 
 Hooks.once("ready", async function () {
+    Hooks.on("preCreateItem", (item, temp, id) => {
+        item["data.givenName"] = item.name;
+    });
+
     // Pre create OwnedItem hook
     Hooks.on("preCreateOwnedItem", (actor, item, id) => {
         if (item.data.container !== undefined && item.data.container !== "") {
