@@ -162,10 +162,14 @@ Hooks.once("ready", async function () {
             updateId = item._id;
         }
         if (holding.length > 0) {
-            actor.updateEmbeddedEntity("OwnedItem", {
+            await actor.updateEmbeddedEntity("OwnedItem", {
                 _id: updateId,
                 "data.holding": holding
             });
         }
+        await actor.updateEmbeddedEntity("OwnedItem", {
+            _id: item._id,
+            "data.owner": actor.data._id
+        });
     });
 });
