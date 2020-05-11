@@ -80,7 +80,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                         if (item.type !== "enchantment" && item.data.type !== "animal" && (container.type === "container" || container.type === "animal") && item.data._id !== container.id) {
 
                             // Check if container is inside a container
-                            if (container.data.data.container && container.data.data.container !== "") return;
+                            if (container.data.data.container) return;
 
                             // Check if container being dropped has any items in it
                             if (item.data.type === "container") {
@@ -128,7 +128,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                             let updates = [];
 
                             // If item already resides in a container, remove it from the original
-                            if (item.data.data.container && item.data.data.container !== "") {
+                            if (item.data.data.container) {
                                 const originalContainer = actor.items.find(i => i.id === item.data.data.container);
                                 if (originalContainer) {
                                     let originalHolding = originalContainer.data.data.holding;
@@ -320,7 +320,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             // Get item id and container id from actor before deleting
             const item = this.actor.items.find(i => i.data._id === liId);
             const containerId = item.data.data.container;
-            if (containerId && containerId !== "") {
+            if (containerId) {
                 // Find the container and filter the items it holds
                 const container = this.actor.items.find(i => i.data._id === containerId);
                 if (container) {
@@ -360,7 +360,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             // Get item id and container id from actor
             const item = this.actor.items.find(i => i.data._id === liId);
             const containerId = item.data.data.container;
-            if (containerId && containerId !== "") {
+            if (containerId) {
                 // Find the container and filter the items it holds
                 const container = this.actor.items.find(i => i.data._id === containerId);
                 if (container) {

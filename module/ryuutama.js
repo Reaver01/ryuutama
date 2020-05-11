@@ -120,7 +120,7 @@ Hooks.once("ready", async function () {
 
     // Pre create OwnedItem hook
     Hooks.on("preCreateOwnedItem", (actor, item, id) => {
-        if (item.data.container && item.data.container !== "") {
+        if (item.data.container) {
             const container = actor.items.find(i => i.data._id === item.data.container);
             if (container) {
                 let holding = container.data.data.holding || [];
@@ -140,7 +140,7 @@ Hooks.once("ready", async function () {
     Hooks.on("createOwnedItem", async (actor, item, id) => {
         let holding = [];
         let updateId = "";
-        if (item.data.container && item.data.container !== "") {
+        if (item.data.container) {
             const container = actor.items.find(i => i.data._id === item.data.container);
             container.data.data.holding.forEach(held => {
                 holding.push(held);
