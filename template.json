@@ -316,7 +316,8 @@
             "plusOne": false
         },
         "feature": {
-            "templates": ["item", "feature"]
+            "templates": ["item", "feature"],
+            "size": 0
         },
         "spell": {
             "templates": ["item"],
@@ -324,7 +325,8 @@
         },
         "class": {
             "templates": ["item"],
-            "features": []
+            "features": [],
+            "size": 0
         }
     }
 }

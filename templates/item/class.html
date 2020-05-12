@@ -1,9 +1,21 @@
 <form class="{{cssClass}}" autocomplete="off">
     {{> "systems/ryuutama/templates/item/parts/class-header.html"}}
 
-    <section>
+    <section class="body">
         <div>
-
+            <ol class="items-list">
+                <li class="item flexrow item-header">
+                    <div class="item-name">{{ localize "RYUU.features" }}</div>
+                </li>
+                {{#each item.data.features as |item id|}}
+                <li class="item flexrow" data-item-id="{{item.name}}">
+                    <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-controls">
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
+                </li>
+                {{/each}}
+            </ol>
         </div>
     </section>
 </form>
