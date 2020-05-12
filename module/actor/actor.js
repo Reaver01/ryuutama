@@ -42,6 +42,8 @@ export class RyuutamaActor extends Actor {
         data.attributes.level = RYUU.CHARACTER_EXP_LEVELS.findIndex(i => i > Number(data.attributes.experience));
 
         // Level choices
+        let specialties = [];
+        let immunities = [];
         for (const key in data.levels) {
             if (data.levels.hasOwnProperty(key) && data.levels[key].hasOwnProperty("points")) {
                 data.levels[key].points.hp = Math.clamped(data.levels[key].points.hp, 0, RYUU.POINT_MAX);
@@ -62,19 +64,36 @@ export class RyuutamaActor extends Actor {
                         spi += RYUU.DICE_STEP;
                     }
                     if (data.levels[key].hasOwnProperty("specialty") && data.levels[key].specialty !== "none") {
-                        data.specialty[data.levels[key].specialty] = true;
+                        specialties.push(data.levels[key].specialty);
                     }
                     if (data.levels[key].hasOwnProperty("immunity") && data.levels[key].immunity !== "none") {
-                        data.immunity[data.levels[key].immunity] = true;
-                    }
-                } else {
-                    if (data.levels[key].hasOwnProperty("specialty") && data.levels[key].specialty !== "none") {
-                        data.specialty[data.levels[key].specialty] = false;
-                    }
-                    if (data.levels[key].hasOwnProperty("immunity") && data.levels[key].immunity !== "none") {
-                        data.immunity[data.levels[key].immunity] = false;
+                        immunities.push(data.levels[key].immunity);
                     }
                 }
+            }
+        }
+
+        for (const key in data.specialty) {
+            if (data.specialty.hasOwnProperty(key)) {
+                data.specialty[key] = false;
+            }
+        }
+        specialties.forEach(specialty => {
+            data.specialty[specialty] = true;
+        });
+        for (const key in data.immunity) {
+            if (data.immunity.hasOwnProperty(key)) {
+                data.immunity[key] = false;
+            }
+        }
+        immunities.forEach(immunity => {
+            data.immunity[immunity] = true;
+        });
+
+        // Effects
+        for (const name in data.effects) {
+            if (data.effects.hasOwnProperty(name) && data.immunity[name]) {
+                data.effects[name] = 0;
             }
         }
 
@@ -189,13 +208,6 @@ export class RyuutamaActor extends Actor {
                 mod.forEach(item => {
                     data.traveling[name] += item.data.itemBonus;
                 });
-            }
-        }
-
-        // Effects
-        for (const name in data.effects) {
-            if (data.effects.hasOwnProperty(name) && data.immunity[name]) {
-                data.effects[name] = 0;
             }
         }
     }

@@ -236,6 +236,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         const equipment = [];
         const containers = [];
         const animals = [];
+        const classes = [];
         const features = [];
         const spells = {
             0: [],
@@ -256,20 +257,24 @@ export class RyuutamaActorSheet extends ActorSheet {
             let item = i.data;
             i.img = i.img || DEFAULT_TOKEN;
             // Append to gear.
-            if (i.type === "item" && (i.data.container === undefined || i.data.container === "")) {
+            if (i.type === "item" && (item.container === undefined || item.container === "")) {
                 gear.push(i);
             }
             // Append to equipment.
-            if ((i.type === "weapon" || i.type === "armor" || i.type === "shield" || i.type === "traveling") && (i.data.container === undefined || i.data.container === "")) {
+            if ((i.type === "weapon" || i.type === "armor" || i.type === "shield" || i.type === "traveling") && (item.container === undefined || item.container === "")) {
                 equipment.push(i);
             }
             // Append to container.
-            if (i.type === "container" && (i.data.container === undefined || i.data.container === "")) {
+            if (i.type === "container" && (item.container === undefined || item.container === "")) {
                 containers.push(i);
             }
             // Append to container.
             if (i.type === "animal") {
                 animals.push(i);
+            }
+            // Append to container.
+            if (i.type === "class") {
+                classes.push(i);
             }
             // Append to features.
             else if (i.type === "feature") {
@@ -277,8 +282,8 @@ export class RyuutamaActorSheet extends ActorSheet {
             }
             // Append to spells.
             else if (i.type === "spell") {
-                if (i.data.spellLevel != undefined) {
-                    spells[i.data.spellLevel].push(i);
+                if (item.spellLevel != undefined) {
+                    spells[item.spellLevel].push(i);
                 }
             }
         }
@@ -288,6 +293,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         actorData.equipment = equipment;
         actorData.containers = containers;
         actorData.animals = animals;
+        actorData.classes = classes;
         actorData.features = features;
         actorData.spells = spells;
     }

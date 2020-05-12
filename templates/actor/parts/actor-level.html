@@ -126,9 +126,16 @@
             </div>
             {{/if}}
             {{#if level.class}}
+            {{#if (gt level.level 1)}}
+            <div>
+                {{ localize "RYUU.extraclass" }}
+            </div>
+            {{/if}}
+            {{#if (eq level.level 1)}}
             <div>
                 {{ localize "RYUU.class" }}
             </div>
+            {{/if}}
             {{/if}}
             {{#if level.type}}
             <div>
