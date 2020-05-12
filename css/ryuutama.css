@@ -432,6 +432,11 @@
   font-weight: bold;
 }
 
+.ryuutama .items-list .item-info {
+  flex: 0 0 80px;
+  text-align: center;
+}
+
 .ryuutama .items-list .item-accuracy {
   flex: 0 0 120px;
   text-align: center;

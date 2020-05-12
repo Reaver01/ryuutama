@@ -148,7 +148,7 @@ Hooks.once("ready", async function () {
             holding.push({
                 id: item._id,
                 name: item.name,
-                equippable: (item.type === "weapon" || item.type === "armor" || item.type === "shield" || item.type === "traveling"),
+                equippable: RYUU.EQUIPPABLE.includes(item.type),
                 equip: item.data.equip,
                 img: item.img,
                 size: item.data.size
@@ -167,7 +167,7 @@ Hooks.once("ready", async function () {
                 holding.push({
                     id: item._id,
                     name: item.name,
-                    equippable: (item.type === "weapon" || item.type === "armor" || item.type === "shield" || item.type === "traveling"),
+                    equippable: RYUU.EQUIPPABLE.includes(item.type),
                     equip: item.data.equip,
                     img: item.img,
                     size: item.data.size

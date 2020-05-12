@@ -69,10 +69,10 @@ export class RyuutamaItemSheet extends ItemSheet {
             const pack = game.packs.find(p => p.collection === data.pack);
             pack.getEntity(data.id).then(item => {
                 if (!item) return;
-                if (item.type === "enchantment" && parentItem.item.type !== "container" && parentItem.item.type !== "animal" && parentItem.item.type !== "class" && parentItem.item.type !== "feature") {
+                if (item.type === "enchantment" && !RYUU.NO_ENCHANTS.includes(parentItem.item.type)) {
                     // Enchant items that aren't containers or animals
                     return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
-                } else if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
+                } else if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(parentItem.item.type)) {
                     // Check if container is inside a container
                     if (parentItem.item.data.data.container) {
                         return
@@ -89,7 +89,9 @@ export class RyuutamaItemSheet extends ItemSheet {
             const actor = game.actors.get(data.actorId);
             const item = actor.items.find(i => i.data._id === data.data._id);
             if (!item || parentItem.item.options.actor.id !== actor.id || item.data.data.container === parentItem.item.id) return;
-            if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal") && item.data._id !== parentItem.item.id) {
+
+            // Container/Animal
+            if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(parentItem.item.type) && item.data._id !== parentItem.item.id) {
 
                 // Check if container is inside a container
                 if (parentItem.item.data.data.container) {
@@ -116,7 +118,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                                 holding.push({
                                     id: i._id,
                                     name: i.name,
-                                    equippable: (i.data.type === "weapon" || i.data.type === "armor" || i.data.type === "shield" || i.data.type === "traveling"),
+                                    equippable: RYUU.EQUIPPABLE.includes(i.data.type),
                                     equip: i.data.data.equip,
                                     img: i.img,
                                     size: i.data.data.size
@@ -169,8 +171,8 @@ export class RyuutamaItemSheet extends ItemSheet {
                 holding.push({
                     id: item._id,
                     name: item.name,
-                    equippable: (item.data.type === "weapon" || item.data.type === "armor" || item.data.type === "shield" || item.data.type === "traveling"),
-                    equip: i.data.data.equip,
+                    equippable: RYUU.EQUIPPABLE.includes(item.data.type),
+                    equip: item.data.data.equip,
                     img: item.img,
                     size: item.data.data.size
                 });
@@ -185,18 +187,53 @@ export class RyuutamaItemSheet extends ItemSheet {
             let item = game.items.get(data.id);
             if (!item) return;
 
-            if (item.type === "enchantment" && parentItem.item.type !== "container" && parentItem.item.type !== "animal" && parentItem.item.type !== "class" && parentItem.item.type !== "feature") {
+            if (item.type === "enchantment" && !RYUU.NO_ENCHANTS.includes(parentItem.item.type)) {
                 // Enchant items that aren't containers or animals
                 return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
-            } else if (item.type !== "enchantment" && item.data.type !== "animal" && (parentItem.item.type === "container" || parentItem.item.type === "animal")) {
+            } else if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(parentItem.item.type)) {
                 // Check if container is inside a container
                 if (parentItem.item.data.data.container) {
                     return
                 }
                 // Add items to container or animal
                 return parentItem.addRemoveItem(false, item.data);
+            } else if (item.type === "feature" && parentItem.item.type === "class") {
+                // Add feature to class
+                parentItem.addRemoveFeature(false, item.data);
             }
         }
+    }
+
+    /* -------------------------------------------- */
+
+    addRemoveFeature(remove, feature) {
+        const item = this.object;
+        const actor = item.options.actor;
+        let features = item.data.data.features || [];
+        features = features.slice();
+        console.log(item);
+        console.log(feature);
+
+        if (remove) {
+            // Filter enchantments
+            features = features.filter(e => e.name !== feature);
+        } else if (feature.data) {
+            // Disalow duplicate enchantments
+            let existing = features.find(e => e.name === feature.name);
+            if (existing) return;
+            // Push new enchantments to the array
+            features.push({
+                name: feature.name,
+                data: feature.data
+            });
+        }
+
+        const updateData = {
+            "data.features": features
+        };
+
+        // Update data
+        item.update(updateData);
     }
 
     /* -------------------------------------------- */
@@ -265,6 +302,7 @@ export class RyuutamaItemSheet extends ItemSheet {
         html.find('.item-delete').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
             this.addRemoveEnchantment(true, li.data("itemId"));
+            this.addRemoveFeature(true, li.data("itemId"));
             if (this.object.data.data.holding) {
                 let item = this.object.data.data.holding.find(i => i.id === li.data("itemId"));
                 if (item.id) {
@@ -317,7 +355,6 @@ export class RyuutamaItemSheet extends ItemSheet {
 
     /* -------------------------------------------- */
 
-    /** @override */
     addRemoveEnchantment(remove, enchantmentName, enchantmentData, givenName) {
         // Initialize all variables
         const item = this.object;

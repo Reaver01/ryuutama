@@ -226,7 +226,8 @@
                 "accuracy": "",
                 "accuracyBonus": 0,
                 "damage": "",
-                "damageBonus": 0
+                "damageBonus": 0,
+                "class": "blade"
             },
             "armor": {
                 "isArmor": true,
@@ -269,11 +270,13 @@
                 "holdingSize": 0
             },
             "feature": {
-                "journey": false,
-                "condition": false,
+                "class": "",
+                "journey": 0,
+                "condition": 0,
                 "capacity": 0,
                 "stat": "",
-                "mastered": ""
+                "mastered": "none",
+                "farmer": false
             }
         },
         "item": {
@@ -325,6 +328,7 @@
         },
         "class": {
             "templates": ["item"],
+            "type": "none",
             "features": [],
             "size": 0
         }

@@ -1,11 +1,44 @@
 <form class="{{cssClass}}" autocomplete="off">
-    {{> "systems/ryuutama/templates/item/parts/item-header.html"}}
+    {{> "systems/ryuutama/templates/item/parts/feature-header.html"}}
 
-    <section>
-        <div>
-
+    <section class="body">
+        <div class="grid grid-2col">
+            <div class="resource">
+                <label for="data.journey" class="resource-label">{{ localize "RYUU.classJourney" }}</label>
+                <input type="text" name="data.journey" value="{{data.journey}}" data-dtype="Number" />
+            </div>
+            <div class="resource">
+                <label for="data.condition" class="resource-label">{{ localize "RYUU.conditionPenalty" }}</label>
+                <input type="text" name="data.condition" value="{{data.condition}}" data-dtype="Number" />
+            </div>
+        </div>
+        <div class="grid grid-2col">
+            <div class="resource">
+                <label for="data.capacity" class="resource-label">{{ localize "RYUU.classCapacity" }}</label>
+                <input type="text" name="data.capacity" value="{{data.capacity}}" data-dtype="Number" />
+            </div>
+            <div class="resource">
+                <label for="data.stat" class="resource-label">{{ localize "RYUU.statused" }}</label>
+                <input type="text" name="data.stat" value="{{data.stat}}" data-dtype="String" />
+            </div>
+        </div>
+        <div class="grid grid-2col">
+            <div class="resource">
+                <label for="data.mastered" class="resource-label">{{ localize "RYUU.classMastered" }}</label>
+                <select class="attribute-select" name="data.mastered">
+                    {{#select data.mastered}}
+                    <option value=""></option>
+                    <option value="blade">Blade</option>
+                    <option value="polearm">Polearm</option>
+                    <option value="bow">Bow</option>
+                    {{/select}}
+                </select>
+            </div>
+            <div class="resource">
+                <label for="data.farmer" class="resource-label">{{ localize "RYUU.farmer" }}</label>
+                <input type="checkbox" name="data.farmer" {{checked data.farmer}} />
+            </div>
         </div>
     </section>
 
-    {{> "systems/ryuutama/templates/item/parts/item-navigation.html"}}
 </form>

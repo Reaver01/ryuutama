@@ -7,5 +7,16 @@
             </div>
         </div>
         <div class="grid grid-3col">
+            <div class="resource">
+                <label for="data.type" class="resource-label">{{ localize "RYUU.type" }}</label>
+                <select class="attribute-select" name="data.type">
+                    {{#select data.type}}
+                    <option value="none"></option>
+                    <option value="attack">{{ localize "RYUU.attack" }}</option>
+                    <option value="technical">{{ localize "RYUU.technical" }}</option>
+                    <option value="magic">{{ localize "RYUU.magic" }}</option>
+                    {{/select}}
+                </select>
+            </div>
         </div>
 </header>

@@ -27,9 +27,10 @@ export class RyuutamaActor extends Actor {
      */
     _prepareCharacterData(actorData) {
         const data = actorData.data;
-        const items = actorData.items.filter(i => i.type !== "enchantment");
-        const enchantments = actorData.items.filter(i => i.type === "enchantment");
-        const deletions = enchantments.map(i => i._id);
+        const items = actorData.items.filter(i => i.type !== "enchantment" && i.type !== "class" && i.type !== "feature");
+        const toDelete = actorData.items.filter(i => i.type === "enchantment" || i.type === "feature");
+        const deletions = toDelete.map(i => i._id);
+        const classes = actorData.items.filter(i => i.type === "class");
         this.deleteEmbeddedEntity("OwnedItem", deletions);
         let str = Number(data.attributes.str.base);
         let dex = Number(data.attributes.dex.base);
@@ -37,6 +38,29 @@ export class RyuutamaActor extends Actor {
         let spi = Number(data.attributes.spi.base);
         let addHp = 0;
         let addMp = 0;
+        let addCarry = 0;
+
+        // Class
+        classes.forEach(c => {
+            switch (c.data.type) {
+                case "attack":
+                    addHp += 4;
+                    break;
+
+
+                case "technical":
+                    addCarry += 3;
+                    break;
+
+
+                case "magic":
+                    addMp += 4;
+                    break;
+
+                default:
+                    break;
+            }
+        });
 
         // Level
         data.attributes.level = RYUU.CHARACTER_EXP_LEVELS.findIndex(i => i > Number(data.attributes.experience));
@@ -169,7 +193,7 @@ export class RyuutamaActor extends Actor {
 
         // Carrying capacity
 
-        data.attributes.capacity.max = data.attributes.str.value + 2 + data.attributes.level;
+        data.attributes.capacity.max = data.attributes.str.value + 2 + data.attributes.level + addCarry;
         const carried = items.filter(i => !i.data.equipped && i.data.size && i.type !== "animal");
         const equipped = items.filter(i => i.data.equipped === true && i.data.size);
         const containers = items.filter(i => i.type === "container" || i.type === "animal");
