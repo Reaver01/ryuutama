@@ -2,6 +2,10 @@
     <ol class="items-list">
         <li class="item flexrow item-header">
             <div class="item-name">{{ localize "RYUU.weapons" }}</div>
+            <div class="item-accuracy">{{ localize "RYUU.accuracy" }}</div>
+            <div class="item-damage">{{ localize "RYUU.damage" }}</div>
+            <div class="item-size">{{ localize "RYUU.size" }}</div>
+            <div class="item-controls"></div>
         </li>
         {{#each actor.equipment as |item id|}}
         {{#if item.data.equipped}}
@@ -25,6 +29,11 @@
     <ol class="items-list">
         <li class="item flexrow item-header">
             <div class="item-name">{{ localize "RYUU.armorshield" }}</div>
+            <div class="item-info">{{ localize "RYUU.dpshort" }}</div>
+            <div class="item-info">{{ localize "RYUU.penalty" }}</div>
+            <div class="item-info">{{ localize "RYUU.dodgeshort" }}</div>
+            <div class="item-size">{{ localize "RYUU.size" }}</div>
+            <div class="item-controls"></div>
         </li>
         {{#each actor.equipment as |item id|}}
         {{#if item.data.equipped}}
@@ -32,6 +41,9 @@
         <li class="item flexrow" data-item-id="{{item._id}}">
             <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
             <h4 class="item-name">{{item.name}}</h4>
+            <div class="item-info">{{item.data.defense}}</div>
+            <div class="item-info">{{item.data.penalty}}</div>
+            <div class="item-info">{{item.data.dodge}}</div>
             <div class="item-size">{{item.data.size}}</div>
             <div class="item-controls">
                 <a class="item-control item-toggle {{#if item.data.equipped}}active{{/if}}" title='{{#if item.data.equipped}}un{{/if}}equip'><i class="fas fa-shield-alt"></i></a>
@@ -69,16 +81,26 @@
     <ol class="items-list">
         <li class="item flexrow item-header">
             <div class="item-name">{{ localize "RYUU.classes" }}</div>
+            <div class="item-info">{{ localize "RYUU.type" }}</div>
+            <div class="item-controls"></div>
         </li>
         {{#each actor.classes as |class id|}}
         <li class="item flexrow" data-item-id="{{class._id}}">
             <div class="item-image"><img class="{{class.type}}" src="{{class.img}}" title="{{class.name}}" width="24" height="24" /></div>
             <h4 class="item-name">{{class.name}}</h4>
+            <div class="item-info">{{ localize (concat "RYUU." class.data.type)}}</div>
             <div class="item-controls">
                 <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                 <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
             </div>
         </li>
+        {{#each class.data.features as |feature|}}
+        <li class="item flexrow">
+            <div class="item-image"></div>
+            <div class="item-image"></div>
+            <h4 class="item-name">{{feature.name}}</h4>
+        </li>
+        {{/each}}
         {{/each}}
     </ol>
 

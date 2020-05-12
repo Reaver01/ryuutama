@@ -54,3 +54,28 @@ RYUU.MAX_STAFF = 1;
 RYUU.MAX_ACCESSORY = 2;
 RYUU.MAX_FEET = 1;
 RYUU.MAX_TRAVEL = 4;
+
+RYUU.NO_ENCHANTS = [
+    "animal",
+    "class",
+    "container",
+    "feature"
+];
+
+RYUU.NO_STORE = [
+    "animal",
+    "class",
+    "feature"
+];
+
+RYUU.STORAGE = [
+    "animal",
+    "container"
+];
+
+RYUU.EQUIPPABLE = [
+    "armor",
+    "shield",
+    "traveling",
+    "weapon"
+];

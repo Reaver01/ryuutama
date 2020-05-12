@@ -8,6 +8,7 @@
     "RYUU.items": "Inventory",
     "RYUU.abilities": "Abilities",
     "RYUU.dodge": "Dodge Value",
+    "RYUU.dodgeshort": "Dodge",
     "RYUU.enchantments": "Enchantments",
     "RYUU.spells": "Spells",
 
@@ -21,6 +22,7 @@
     "RYUU.equipped": "Equipped",
     "RYUU.equipment": "Equipment",
     "RYUU.dp": "Defense Points",
+    "RYUU.dpshort": "Defense",
     "RYUU.penalty": "Penalty",
     "RYUU.penalties": "Penalties",
     "RYUU.accuracy": "Accuracy",
@@ -45,6 +47,12 @@
     "RYUU.emitsLight": "Emits Light",
     "RYUU.weightless": "Weightless",
     "RYUU.terrainBonus": "Bonus to Terrain or Weather",
+    "RYUU.classJourney": "Change to Journey Checks (+)",
+    "RYUU.classCapacity": "Change to Capacity (+)",
+    "RYUU.statused": "Stat Used",
+    "RYUU.weaponclass": "Weapon Class",
+    "RYUU.classMastered": "Mastered Weapon",
+    "RYUU.farmer": "Farmer",
 
     "RYUU.statincrease": "Stat Increase",
 
@@ -135,8 +143,10 @@
     "RYUU.extraclass": "Extra Class",
     "RYUU.classes": "Class Info",
     "RYUU.actions": "Feint and Search",
-    "RYUU.type": "Extra Type",
+    "RYUU.type": "Type",
+    "RYUU.extratype": "Extra Type",
     "RYUU.specialty": "Specialty",
+    "RYUU.none": " ",
 
     "RYUU.season": "Season of Favor",
     "RYUU.spring": "Spring",

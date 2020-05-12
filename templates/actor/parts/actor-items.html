@@ -1,7 +1,6 @@
 <div class="tab items" data-group="primary" data-tab="items">
     <ol class="items-list">
         <li class="item flexrow item-header">
-            <div class="item-image"></div>
             <div class="item-name">{{ localize "RYUU.equipment" }}</div>
             <div class="item-equip">{{ localize "RYUU.equip" }}</div>
             <div class="item-size">{{ localize "RYUU.size" }}</div>
@@ -23,8 +22,10 @@
     </ol>
     <ol class="items-list">
         <li class="item flexrow item-header">
-            <div class="item-image"></div>
             <div class="item-name">{{ localize "RYUU.gear" }}</div>
+            <div class="item-equip"></div>
+            <div class="item-size">{{ localize "RYUU.size" }}</div>
+            <div class="item-controls"></div>
         </li>
         {{#each actor.gear as |item id|}}
         <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
@@ -39,7 +40,6 @@
     </ol>
     <ol class="items-list">
         <li class="item flexrow item-header">
-            <div class="item-image"></div>
             <div class="item-name">{{ localize "RYUU.containers" }}</div>
             <div class="item-equip">{{ localize "RYUU.capacity" }}</div>
             <div class="item-size">{{ localize "RYUU.size" }}</div>
@@ -79,7 +79,6 @@
     </ol>
     <ol class="items-list">
         <li class="item flexrow item-header">
-            <div class="item-image"></div>
             <div class="item-name">{{ localize "RYUU.animals" }}</div>
             <div class="item-equip">{{ localize "RYUU.capacity" }}</div>
             <div class="item-size">{{ localize "RYUU.size" }}</div>

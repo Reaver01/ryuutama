@@ -20,6 +20,18 @@
                 <input type="text" name="data.damageBonus" value="{{data.damageBonus}}" data-dtype="Number" />
             </div>
         </div>
+        <div class="grid grid-4col">
+            <div class="resource">
+                <label for="data.class" class="resource-label">{{ localize "RYUU.weaponClass" }}</label>
+                <select class="attribute-select" name="data.class">
+                    {{#select data.class}}
+                    <option value="blade">Blade</option>
+                    <option value="polearm">Polearm</option>
+                    <option value="bow">Bow</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
     </section>
 
     {{> "systems/ryuutama/templates/item/parts/item-navigation.html"}}

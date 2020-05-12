@@ -17,7 +17,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
-                initial: "items"
+                initial: "equipped"
             }]
         });
     }
@@ -77,7 +77,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                     const item = actor.items.find(i => i.data._id === data.data._id);
                     if (container !== undefined && container.data.data.canHold !== undefined && container.data.data.holdingSize !== undefined) {
                         if (!item || item.data.data.container === container.id) return;
-                        if (item.type !== "enchantment" && item.data.type !== "animal" && (container.type === "container" || container.type === "animal") && item.data._id !== container.id) {
+                        if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(container.type) && item.data._id !== container.id) {
 
                             // Check if container is inside a container
                             if (container.data.data.container !== undefined && container.data.data.container !== "") return;
@@ -101,7 +101,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                                             holding.push({
                                                 id: i._id,
                                                 name: i.name,
-                                                equippable: (i.data.type === "weapon" || i.data.type === "armor" || i.data.type === "shield" || i.data.type === "traveling"),
+                                                equippable: RYUU.EQUIPPABLE.includes(i.data.type),
                                                 equip: i.data.data.equip,
                                                 img: i.img,
                                                 size: i.data.data.size
@@ -158,7 +158,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                             holding.push({
                                 id: item._id,
                                 name: item.name,
-                                equippable: (item.data.type === "weapon" || item.data.type === "armor" || item.data.type === "shield" || item.data.type === "traveling"),
+                                equippable: RYUU.EQUIPPABLE.includes(item.data.type),
                                 equip: item.data.data.equip,
                                 img: item.img,
                                 size: item.data.data.size
@@ -488,6 +488,11 @@ export class RyuutamaActorSheet extends ActorSheet {
                 conditionPenalty += enchantment.data.conditionPenalty;
             });
         });
+        const armors = items.filter(i => i.data.data.isArmor === true && i.data.data.equipped === true && i.data.data.hasOwnProperty("penalty") && i.data.data.penalty !== 0);
+        let armorPenalty = 0;
+        armors.forEach(armor => {
+            armorPenalty -= armor.data.data.penalty;
+        });
         const maxCapacity = attr.capacity.max;
         const currentCarried = attr.capacity.value;
         let weightPenalty = currentCarried > maxCapacity ? maxCapacity - currentCarried : 0;
@@ -548,6 +553,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                 if (weatherBonus > 0) {
                     modifiers.push(weatherBonus);
                 }
+                if (armorPenalty !== 0) {
+                    modifiers.push(armorPenalty);
+                }
                 rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`, modifiers, journeyDC);
                 break;
             case "roll-direction":
@@ -559,6 +567,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                 }
                 if (weatherBonus > 0) {
                     modifiers.push(weatherBonus);
+                }
+                if (armorPenalty !== 0) {
+                    modifiers.push(armorPenalty);
                 }
                 rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`, modifiers, journeyDC);
                 break;
@@ -572,11 +583,17 @@ export class RyuutamaActorSheet extends ActorSheet {
                 if (weatherBonus > 0) {
                     modifiers.push(weatherBonus);
                 }
+                if (armorPenalty !== 0) {
+                    modifiers.push(armorPenalty);
+                }
                 rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`, modifiers, journeyDC);
                 break;
             case "roll-condition":
                 if (conditionPenalty !== 0) {
                     modifiers.push(conditionPenalty);
+                }
+                if (armorPenalty !== 0) {
+                    modifiers.push(armorPenalty);
                 }
                 const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`, modifiers);
                 const effects = actor.data.data.effects;
@@ -593,6 +610,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                 })
                 break;
             case "roll-initiative":
+                if (armorPenalty !== 0) {
+                    modifiers.push(armorPenalty);
+                }
                 const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`, modifiers);
                 actor.update({
                     "data.attributes.initiative": initiative.roll
