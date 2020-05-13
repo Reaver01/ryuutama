@@ -1,194 +1,194 @@
 <div class="tab level" data-group="primary" data-tab="level">
     <ol class="items-list">
         {{#each data.levels as |level key|}}
-        {{#if (gte @root.data.attributes.level level.level)}}
-        <li class="level flexrow item-header">
-            <div class="item-name">{{ localize "RYUU.level" }} {{level.level}}</div>
-        </li>
-        {{#if level.stats}}
-        <li class="level flexrow">
-            <div class="item-image"></div>
-            <div>
-                {{ localize "RYUU.str.short" }}:
-                <select class="attribute-select" name="data.attributes.str.base">
-                    {{#select @root.data.attributes.str.base}}
-                    <option value="4">d4</option>
-                    <option value="6">d6</option>
-                    <option value="8">d8</option>
-                    {{/select}}
-                </select>
-            </div>
-            <div>
-                {{ localize "RYUU.dex.short" }}:
-                <select class="attribute-select" name="data.attributes.dex.base">
-                    {{#select @root.data.attributes.dex.base}}
-                    <option value="4">d4</option>
-                    <option value="6">d6</option>
-                    <option value="8">d8</option>
-                    {{/select}}
-                </select>
-            </div>
-            <div>
-                {{ localize "RYUU.int.short" }}:
-                <select class="attribute-select" name="data.attributes.int.base">
-                    {{#select @root.data.attributes.int.base}}
-                    <option value="4">d4</option>
-                    <option value="6">d6</option>
-                    <option value="8">d8</option>
-                    {{/select}}
-                </select>
-            </div>
-            <div>
-                {{ localize "RYUU.spi.short" }}:
-                <select class="attribute-select" name="data.attributes.spi.base">
-                    {{#select @root.data.attributes.spi.base}}
-                    <option value="4">d4</option>
-                    <option value="6">d6</option>
-                    <option value="8">d8</option>
-                    {{/select}}
-                </select>
-            </div>
-        </li>
-        {{/if}}
-        <li class="level flexrow">
-            <div class="item-image"></div>
-            {{#if level.points}}
-            <div>
-                {{ localize "RYUU.hp.short" }}: <input type="text" class="level-points" name="data.levels.{{key}}.points.hp" value="{{level.points.hp}}" data-dtype="Number" />
-                {{ localize "RYUU.mp.short" }}: <input type="text" class="level-points" name="data.levels.{{key}}.points.mp" value="{{level.points.mp}}" data-dtype="Number" />
-            </div>
+            {{#if (gte @root.data.attributes.level level.level)}}
+                <li class="level flexrow item-header">
+                    <div class="item-name">{{ localize "RYUU.level" }} {{level.level}}</div>
+                </li>
+                {{#if level.stats}}
+                    <li class="level flexrow">
+                        <div class="item-image"></div>
+                        <div>
+                            {{ localize "RYUU.str.short" }}:
+                            <select class="attribute-select" name="data.attributes.str.base">
+                                {{#select @root.data.attributes.str.base}}
+                                    <option value="4">d4</option>
+                                    <option value="6">d6</option>
+                                    <option value="8">d8</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div>
+                            {{ localize "RYUU.dex.short" }}:
+                            <select class="attribute-select" name="data.attributes.dex.base">
+                                {{#select @root.data.attributes.dex.base}}
+                                    <option value="4">d4</option>
+                                    <option value="6">d6</option>
+                                    <option value="8">d8</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div>
+                            {{ localize "RYUU.int.short" }}:
+                            <select class="attribute-select" name="data.attributes.int.base">
+                                {{#select @root.data.attributes.int.base}}
+                                    <option value="4">d4</option>
+                                    <option value="6">d6</option>
+                                    <option value="8">d8</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div>
+                            {{ localize "RYUU.spi.short" }}:
+                            <select class="attribute-select" name="data.attributes.spi.base">
+                                {{#select @root.data.attributes.spi.base}}
+                                    <option value="4">d4</option>
+                                    <option value="6">d6</option>
+                                    <option value="8">d8</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                    </li>
+                {{/if}}
+                <li class="level flexrow">
+                    <div class="item-image"></div>
+                    {{#if level.points}}
+                        <div>
+                            {{ localize "RYUU.hp.short" }}: <input type="text" class="level-points" name="data.levels.{{key}}.points.hp" value="{{level.points.hp}}" data-dtype="Number" />
+                            {{ localize "RYUU.mp.short" }}: <input type="text" class="level-points" name="data.levels.{{key}}.points.mp" value="{{level.points.mp}}" data-dtype="Number" />
+                        </div>
+                    {{/if}}
+                    {{#if level.stat}}
+                        <div>
+                            {{ localize "RYUU.statincrease" }}:
+                            <select class="attribute-select" name="data.levels.{{key}}.stat">
+                                {{#select level.stat}}
+                                    <option value="none"></option>
+                                    <option value="str">{{ localize "RYUU.str.short" }}</option>
+                                    <option value="dex">{{ localize "RYUU.dex.short" }}</option>
+                                    <option value="int">{{ localize "RYUU.int.short" }}</option>
+                                    <option value="spi">{{ localize "RYUU.spi.short" }}</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                    {{/if}}
+                    {{#if level.mastered}}
+                        <div>
+                            {{ localize "RYUU.mastered" }}:
+                            <select class="attribute-select" name="data.levels.{{key}}.mastered">
+                                {{#select level.mastered}}
+                                    <option value="lightblade">{{ localize "RYUU.lightblade" }}</option>
+                                    <option value="blade">{{ localize "RYUU.blade" }}</option>
+                                    <option value="polearm">{{ localize "RYUU.polearm" }}</option>
+                                    <option value="axe">{{ localize "RYUU.axe" }}</option>
+                                    <option value="bow">{{ localize "RYUU.bow" }}</option>
+                                    <option value="unarmed">{{ localize "RYUU.unarmed" }}</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                    {{/if}}
+                    {{#if level.attackMastered}}
+                        <div>
+                            {{ localize "RYUU.mastered" }}:
+                            <select class="attribute-select" name="data.levels.{{key}}.attackMastered">
+                                {{#select level.attackMastered}}
+                                    <option value="none"></option>
+                                    <option value="lightblade">{{ localize "RYUU.lightblade" }}</option>
+                                    <option value="blade">{{ localize "RYUU.blade" }}</option>
+                                    <option value="polearm">{{ localize "RYUU.polearm" }}</option>
+                                    <option value="axe">{{ localize "RYUU.axe" }}</option>
+                                    <option value="bow">{{ localize "RYUU.bow" }}</option>
+                                    <option value="unarmed">{{ localize "RYUU.unarmed" }}</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                    {{/if}}
+                    {{#if level.actions}}
+                        <div>
+                            {{ localize "RYUU.actions" }}
+                        </div>
+                    {{/if}}
+                    {{#if level.specialty}}
+                        <div>
+                            {{ localize "RYUU.favored" }}:
+                            <select class="attribute-select" name="data.levels.{{key}}.specialty">
+                                {{#select level.specialty}}
+                                    <option value="none"></option>
+                                    <option value="grassland">{{ localize "RYUU.grassland" }}</option>
+                                    <option value="wasteland">{{ localize "RYUU.wasteland" }}</option>
+                                    <option value="woods">{{ localize "RYUU.woods" }}</option>
+                                    <option value="highlands">{{ localize "RYUU.highlands" }}</option>
+                                    <option value="rocky">{{ localize "RYUU.rocky" }}</option>
+                                    <option value="forest">{{ localize "RYUU.forest" }}</option>
+                                    <option value="swamp">{{ localize "RYUU.swamp" }}</option>
+                                    <option value="mountain">{{ localize "RYUU.mountain" }}</option>
+                                    <option value="desert">{{ localize "RYUU.desert" }}</option>
+                                    <option value="jungle">{{ localize "RYUU.jungle" }}</option>
+                                    <option value="alpine">{{ localize "RYUU.alpine" }}</option>
+                                    <option value="rain">{{ localize "RYUU.rain" }}</option>
+                                    <option value="wind">{{ localize "RYUU.wind" }}</option>
+                                    <option value="fog">{{ localize "RYUU.fog" }}</option>
+                                    <option value="hot">{{ localize "RYUU.hot" }}</option>
+                                    <option value="cold">{{ localize "RYUU.cold" }}</option>
+                                    <option value="rain2">{{ localize "RYUU.rain2" }}</option>
+                                    <option value="snow">{{ localize "RYUU.snow" }}</option>
+                                    <option value="fog2">{{ localize "RYUU.fog2" }}</option>
+                                    <option value="dark">{{ localize "RYUU.dark" }}</option>
+                                    <option value="hurricane">{{ localize "RYUU.hurricane" }}</option>
+                                    <option value="blizzard">{{ localize "RYUU.blizzard" }}</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                    {{/if}}
+                    {{#if level.immunity}}
+                        <div>
+                            {{ localize "RYUU.immunity" }}:
+                            <select class="attribute-select" name="data.levels.{{key}}.immunity">
+                                {{#select level.immunity}}
+                                    <option value="none"></option>
+                                    <option value="injury">{{ localize "RYUU.injury" }}</option>
+                                    <option value="poison">{{ localize "RYUU.poison" }}</option>
+                                    <option value="sickness">{{ localize "RYUU.sickness" }}</option>
+                                    <option value="exhaustion">{{ localize "RYUU.exhaustion" }}</option>
+                                    <option value="muddled">{{ localize "RYUU.muddled" }}</option>
+                                    <option value="shock">{{ localize "RYUU.shock" }}</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                    {{/if}}
+                    {{#if level.class}}
+                        {{#if (gt level.level 1)}}
+                            <div>
+                                {{ localize "RYUU.extraclass" }}
+                            </div>
+                        {{/if}}
+                    {{/if}}
+                    {{#if level.type}}
+                        <div>
+                            {{ localize "RYUU.extratype" }}
+                        </div>
+                    {{/if}}
+                    {{#if level.season}}
+                        <div>
+                            {{ localize "RYUU.season" }}:
+                            <select class="attribute-select" name="data.levels.{{key}}.season">
+                                {{#select level.season}}
+                                    <option value="none"></option>
+                                    <option value="spring">{{ localize "RYUU.spring" }}</option>
+                                    <option value="summer">{{ localize "RYUU.summer" }}</option>
+                                    <option value="fall">{{ localize "RYUU.fall" }}</option>
+                                    <option value="winter">{{ localize "RYUU.winter" }}</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                    {{/if}}
+                    {{#if level.legendary}}
+                        <div>
+                            {{ localize "RYUU.legendary" }}
+                        </div>
+                    {{/if}}
+                </li>
             {{/if}}
-            {{#if level.stat}}
-            <div>
-                {{ localize "RYUU.statincrease" }}:
-                <select class="attribute-select" name="data.levels.{{key}}.stat">
-                    {{#select level.stat}}
-                    <option value="none"></option>
-                    <option value="str">{{ localize "RYUU.str.short" }}</option>
-                    <option value="dex">{{ localize "RYUU.dex.short" }}</option>
-                    <option value="int">{{ localize "RYUU.int.short" }}</option>
-                    <option value="spi">{{ localize "RYUU.spi.short" }}</option>
-                    {{/select}}
-                </select>
-            </div>
-            {{/if}}
-            {{#if level.mastered}}
-            <div>
-                {{ localize "RYUU.mastered" }}:
-                <select class="attribute-select" name="data.levels.{{key}}.mastered">
-                    {{#select level.mastered}}
-                    <option value="lightblade">{{ localize "RYUU.lightblade" }}</option>
-                    <option value="blade">{{ localize "RYUU.blade" }}</option>
-                    <option value="polearm">{{ localize "RYUU.polearm" }}</option>
-                    <option value="axe">{{ localize "RYUU.axe" }}</option>
-                    <option value="bow">{{ localize "RYUU.bow" }}</option>
-                    <option value="unarmed">{{ localize "RYUU.unarmed" }}</option>
-                    {{/select}}
-                </select>
-            </div>
-            {{/if}}
-            {{#if level.attackMastered}}
-            <div>
-                {{ localize "RYUU.mastered" }}:
-                <select class="attribute-select" name="data.levels.{{key}}.attackMastered">
-                    {{#select level.attackMastered}}
-                    <option value="none"></option>
-                    <option value="lightblade">{{ localize "RYUU.lightblade" }}</option>
-                    <option value="blade">{{ localize "RYUU.blade" }}</option>
-                    <option value="polearm">{{ localize "RYUU.polearm" }}</option>
-                    <option value="axe">{{ localize "RYUU.axe" }}</option>
-                    <option value="bow">{{ localize "RYUU.bow" }}</option>
-                    <option value="unarmed">{{ localize "RYUU.unarmed" }}</option>
-                    {{/select}}
-                </select>
-            </div>
-            {{/if}}
-            {{#if level.actions}}
-            <div>
-                {{ localize "RYUU.actions" }}
-            </div>
-            {{/if}}
-            {{#if level.specialty}}
-            <div>
-                {{ localize "RYUU.favored" }}:
-                <select class="attribute-select" name="data.levels.{{key}}.specialty">
-                    {{#select level.specialty}}
-                    <option value="none"></option>
-                    <option value="grassland">{{ localize "RYUU.grassland" }}</option>
-                    <option value="wasteland">{{ localize "RYUU.wasteland" }}</option>
-                    <option value="woods">{{ localize "RYUU.woods" }}</option>
-                    <option value="highlands">{{ localize "RYUU.highlands" }}</option>
-                    <option value="rocky">{{ localize "RYUU.rocky" }}</option>
-                    <option value="forest">{{ localize "RYUU.forest" }}</option>
-                    <option value="swamp">{{ localize "RYUU.swamp" }}</option>
-                    <option value="mountain">{{ localize "RYUU.mountain" }}</option>
-                    <option value="desert">{{ localize "RYUU.desert" }}</option>
-                    <option value="jungle">{{ localize "RYUU.jungle" }}</option>
-                    <option value="alpine">{{ localize "RYUU.alpine" }}</option>
-                    <option value="rain">{{ localize "RYUU.rain" }}</option>
-                    <option value="wind">{{ localize "RYUU.wind" }}</option>
-                    <option value="fog">{{ localize "RYUU.fog" }}</option>
-                    <option value="hot">{{ localize "RYUU.hot" }}</option>
-                    <option value="cold">{{ localize "RYUU.cold" }}</option>
-                    <option value="rain2">{{ localize "RYUU.rain2" }}</option>
-                    <option value="snow">{{ localize "RYUU.snow" }}</option>
-                    <option value="fog2">{{ localize "RYUU.fog2" }}</option>
-                    <option value="dark">{{ localize "RYUU.dark" }}</option>
-                    <option value="hurricane">{{ localize "RYUU.hurricane" }}</option>
-                    <option value="blizzard">{{ localize "RYUU.blizzard" }}</option>
-                    {{/select}}
-                </select>
-            </div>
-            {{/if}}
-            {{#if level.immunity}}
-            <div>
-                {{ localize "RYUU.immunity" }}:
-                <select class="attribute-select" name="data.levels.{{key}}.immunity">
-                    {{#select level.immunity}}
-                    <option value="none"></option>
-                    <option value="injury">{{ localize "RYUU.injury" }}</option>
-                    <option value="poison">{{ localize "RYUU.poison" }}</option>
-                    <option value="sickness">{{ localize "RYUU.sickness" }}</option>
-                    <option value="exhaustion">{{ localize "RYUU.exhaustion" }}</option>
-                    <option value="muddled">{{ localize "RYUU.muddled" }}</option>
-                    <option value="shock">{{ localize "RYUU.shock" }}</option>
-                    {{/select}}
-                </select>
-            </div>
-            {{/if}}
-            {{#if level.class}}
-            {{#if (gt level.level 1)}}
-            <div>
-                {{ localize "RYUU.extraclass" }}
-            </div>
-            {{/if}}
-            {{/if}}
-            {{#if level.type}}
-            <div>
-                {{ localize "RYUU.extratype" }}
-            </div>
-            {{/if}}
-            {{#if level.season}}
-            <div>
-                {{ localize "RYUU.season" }}:
-                <select class="attribute-select" name="data.levels.{{key}}.season">
-                    {{#select level.season}}
-                    <option value="none"></option>
-                    <option value="spring">{{ localize "RYUU.spring" }}</option>
-                    <option value="summer">{{ localize "RYUU.summer" }}</option>
-                    <option value="fall">{{ localize "RYUU.fall" }}</option>
-                    <option value="winter">{{ localize "RYUU.winter" }}</option>
-                    {{/select}}
-                </select>
-            </div>
-            {{/if}}
-            {{#if level.legendary}}
-            <div>
-                {{ localize "RYUU.legendary" }}
-            </div>
-            {{/if}}
-        </li>
-        {{/if}}
         {{/each}}
     </ol>
 </div>

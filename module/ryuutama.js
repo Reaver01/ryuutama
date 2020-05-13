@@ -28,7 +28,7 @@ import {
 /*  Foundry VTT Initialization                  */
 /* -------------------------------------------- */
 
-Hooks.once("init", async function () {
+Hooks.once("init", async function() {
     console.log(`Initializing Ryuutama System`);
 
     /**
@@ -83,7 +83,7 @@ Hooks.once("init", async function () {
         }
     });
 
-    Handlebars.registerHelper('concat', function () {
+    Handlebars.registerHelper('concat', function() {
         var outStr = '';
         for (var arg in arguments) {
             if (typeof arguments[arg] != 'object') {
@@ -95,7 +95,7 @@ Hooks.once("init", async function () {
 
 });
 
-Hooks.on("renderChatMessage", (message, html, data) => {
+Hooks.on("renderChatMessage", (message, html) => {
     if (!message.isRoll || !message.isRollVisible || !message.roll.parts.length) return;
 
     const roll = message.roll;
@@ -113,19 +113,16 @@ Hooks.on("renderChatMessage", (message, html, data) => {
 
 });
 
-Hooks.once("ready", async function () {
-    Hooks.on("preCreateItem", (item, temp, id) => {
+Hooks.once("ready", async function() {
+    Hooks.on("preCreateItem", (item) => {
         item["data.givenName"] = item.name;
     });
 
     // Pre create OwnedItem hook
-    Hooks.on("preCreateOwnedItem", (actor, item, id) => {
+    Hooks.on("preCreateOwnedItem", (actor, item) => {
         if (item.data.container) {
             const container = actor.items.find(i => i.data._id === item.data.container);
             if (container) {
-                let holding = container.data.data.holding || [];
-                holding = holding.slice();
-
                 // Check container size before putting item in it
                 if (container.data.data.holdingSize + item.data.size > container.data.data.canHold) {
                     item.data.container = "";
@@ -137,9 +134,9 @@ Hooks.once("ready", async function () {
     });
 
     // Create OwnedItem hook
-    Hooks.on("createOwnedItem", async (actor, item, id) => {
+    Hooks.on("createOwnedItem", async (actor, item) => {
         let holding = [];
-        let updateId = "";
+        let updateId = '';
         if (item.data.container) {
             const container = actor.items.find(i => i.data._id === item.data.container);
             container.data.data.holding.forEach(held => {

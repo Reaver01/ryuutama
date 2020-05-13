@@ -43,7 +43,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         */
 
         // Prepare items.
-        if (this.actor.data.type == "character") {
+        if (this.actor.data.type === "character") {
             this._prepareCharacterItems(data);
         }
 
@@ -166,7 +166,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                             updates.push({
                                 _id: container.id,
                                 "data.holding": holding
-                            })
+                            });
 
                             await actor.updateEmbeddedEntity("OwnedItem", updates);
                         }
@@ -174,7 +174,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                         // Remove item from container if it's dropped somewhere else outside the container
                         const actor = game.actors.get(data.actorId);
                         const item = actor.items.find(i => i.data._id === data.data._id);
-                        if (!item) return
+                        if (!item) return;
                         const container = actor.items.find(i => i.data._id === item.data.data.container);
                         if (!container) return;
                         let holding = container.data.data.holding || [];
@@ -195,7 +195,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                     // Remove item from container if it's dropped somewhere else outside the container
                     const actor = game.actors.get(data.actorId);
                     const item = actor.items.find(i => i.data._id === data.data._id);
-                    if (!item) return
+                    if (!item) return;
                     const container = actor.items.find(i => i.data._id === item.data.data.container);
                     if (!container) return;
                     let holding = container.data.data.holding || [];
@@ -429,7 +429,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             const staff = equippedItems.filter(i => i.data.data.equip === "staff").length;
             const accessory = equippedItems.filter(i => i.data.data.equip === "accessory").length;
             const traveling = equippedItems.filter(i => i.data.type === "traveling").length;
-            const hands = hand2 > 0 ? 2 : hand1
+            const hands = hand2 > 0 ? 2 : hand1;
             const itemHands = item.data.data.equip === "2hand" ? 2 : 1;
 
             if (!getProperty(item.data, attr) && (Number(capacity.equipped) + Number(item.data.data.size) > capacity.max)) {
@@ -481,7 +481,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         let modifiers = [];
 
         const li = $(event.currentTarget).parents(".item");
-        const items = this.actor.items
+        const items = this.actor.items;
         const item = items.find(i => i.id === li.data("itemId"));
 
         // Get all items with the cursed enchantment. Any equipped cursed items give a condition penalty
@@ -494,7 +494,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         });
 
         // Get all armors the actor is wearing and calculate armor penalty
-        const armors = items.filter(i => i.data.data.isArmor === true && i.data.data.equipped === true && i.data.data.hasOwnProperty("penalty") && i.data.data.penalty !== 0);
+        const armors = items.filter(i => i.data.data.isArmor === true && i.data.data.equipped === true && Object.prototype.hasOwnProperty.call(i.data.data, "penalty") && i.data.data.penalty !== 0);
         let armorPenalty = 0;
         armors.forEach(armor => {
             armorPenalty -= armor.data.data.penalty;
@@ -588,7 +588,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                 break;
 
                 // Condition Check
-            case "roll-condition":
+            case "roll-condition": {
                 if (conditionPenalty !== 0) {
                     modifiers.push(conditionPenalty);
                 }
@@ -598,7 +598,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                 const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkcondition")} [STR] + [SPI]`, modifiers);
                 const effects = actor.data.data.effects;
                 for (const name in effects) {
-                    if (effects.hasOwnProperty(name) && condition.roll >= effects[name]) {
+                    if (Object.prototype.hasOwnProperty.call(effects, name) && condition.roll >= effects[name]) {
                         let attr = `data.data.effects.${name}`;
                         actor.update({
                             [attr]: 0
@@ -607,21 +607,23 @@ export class RyuutamaActorSheet extends ActorSheet {
                 }
                 actor.update({
                     "data.attributes.condition.value": condition.roll
-                })
+                });
                 break;
+            }
 
-                // Initative roll
-            case "roll-initiative":
+            // Initative roll
+            case "roll-initiative": {
                 if (armorPenalty !== 0) {
                     modifiers.push(armorPenalty);
                 }
                 const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkinitiative")} [DEX] + [INT]`, modifiers);
                 actor.update({
                     "data.attributes.initiative": initiative.roll
-                })
+                });
                 break;
+            }
 
-                // Single Stat rolls
+            // Single Stat rolls
             case "roll-strength":
                 rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR]${currentModifiers}`);
                 break;
@@ -652,13 +654,13 @@ export class RyuutamaActorSheet extends ActorSheet {
             default:
                 if (item) {
                     switch (item.data.type) {
-                        case "weapon":
+                        case "weapon": {
                             let accuracy = item.data.data.accuracy.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
                             let damage = item.data.data.damage.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
                             let accuracyRoll;
                             if (event.currentTarget.classList.contains("accuracy")) {
                                 if ((!event.altKey && !event.shiftKey) || (!event.altKey && event.shiftKey)) {
-                                    accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.masteredBonus}`, `${actor.name} attacks with their ${item.name}${currentModifiers}`, modifiers)
+                                    accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.masteredBonus}`, `${actor.name} attacks with their ${item.name}${currentModifiers}`, modifiers);
                                 }
                             }
                             if (event.currentTarget.classList.contains("damage")) {
@@ -670,6 +672,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                                 }
                             }
                             break;
+                        }
 
                         default:
                             break;
@@ -677,9 +680,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                 } else {
                     let text = "";
                     if (event.target.previousSibling.previousSibling.innerText) {
-                        text = `${actor.name} ${game.i18n.localize("RYUU.check")} ${event.target.previousSibling.previousSibling.innerText} ${event.target.innerText}`
+                        text = `${actor.name} ${game.i18n.localize("RYUU.check")} ${event.target.previousSibling.previousSibling.innerText} ${event.target.innerText}`;
                     }
-                    rollCheck(event.target.innerText.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi"), text + currentModifiers, modifiers)
+                    rollCheck(event.target.innerText.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi"), text + currentModifiers, modifiers);
                 }
                 break;
         }

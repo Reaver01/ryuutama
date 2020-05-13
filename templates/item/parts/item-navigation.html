@@ -13,12 +13,12 @@
     <div class="tab enchantments" data-group="primary" data-tab="enchantments">
         <ol class="items-list">
             {{#each item.data.enchantments as |item id|}}
-            <li class="item flexrow" data-item-id="{{item.name}}">
-                <h4 class="item-name">{{item.name}}</h4>
-                <div class="item-controls">
-                    <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                </div>
-            </li>
+                <li class="item flexrow" data-item-id="{{item.name}}">
+                    <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-controls">
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
+                </li>
             {{/each}}
         </ol>
     </div>

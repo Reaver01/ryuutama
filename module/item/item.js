@@ -28,8 +28,8 @@ export class RyuutamaItem extends Item {
         if (RYUU.STORAGE.includes(itemData.type)) {
             if (actorData._id === undefined) {
                 data.holding = [];
-                return
-            };
+                return;
+            }
 
             const holding = data.holding;
             let holdingAmount = 0;

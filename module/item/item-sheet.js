@@ -75,7 +75,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                 } else if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(parentItem.item.type)) {
                     // Check if container is inside a container
                     if (parentItem.item.data.data.container) {
-                        return
+                        return;
                     }
                     // Add items to container or animal
                     return parentItem.addRemoveItem(false, item.data);
@@ -98,7 +98,7 @@ export class RyuutamaItemSheet extends ItemSheet {
 
                 // Check if container is inside a container
                 if (parentItem.item.data.data.container) {
-                    return
+                    return;
                 }
 
                 // Check if container being dropped has any items in it
@@ -196,7 +196,7 @@ export class RyuutamaItemSheet extends ItemSheet {
             } else if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(parentItem.item.type)) {
                 // Check if container is inside a container
                 if (parentItem.item.data.data.container) {
-                    return
+                    return;
                 }
                 // Add items to container or animal
                 return parentItem.addRemoveItem(false, item.data);
@@ -482,7 +482,7 @@ export class RyuutamaItemSheet extends ItemSheet {
         // Item durability
         durability = enchantments.filter(e => e.data.setDurability === true);
         if (durability.length > 0) {
-            newDurability = Math.max.apply(Math, durability.map(function (e) {
+            newDurability = Math.max.apply(Math, durability.map(function(e) {
                 return e.data.durabilityValue;
             }));
         }
@@ -545,7 +545,7 @@ export class RyuutamaItemSheet extends ItemSheet {
             "data.price": price,
             "data.size": size,
             "data.durability": newDurability
-        }
+        };
         if (item.data.data.isArmor) {
             // Armor
             updateData["data.penalty"] = penalty;

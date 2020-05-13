@@ -27,7 +27,7 @@ RYUU.TERRAIN = {
     "desert": 12,
     "jungle": 12,
     "alpine": 14
-}
+};
 
 RYUU.WEATHER = {
     "": 0,

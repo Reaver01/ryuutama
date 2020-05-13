@@ -14,8 +14,6 @@ export class RyuutamaActor extends Actor {
         super.prepareData();
 
         const actorData = this.data;
-        const data = actorData.data;
-        const flags = actorData.flags;
 
         // Make separate methods for each Actor type (character, npc, etc.) to keep
         // things organized.
@@ -73,39 +71,39 @@ export class RyuutamaActor extends Actor {
         let immunities = [];
         let mastered = [];
         for (const key in data.levels) {
-            if (data.levels.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(data.levels, key)) {
                 if (data.attributes.level >= data.levels[key].level) {
-                    if (data.levels[key].hasOwnProperty("points")) {
+                    if (Object.prototype.hasOwnProperty.call(data.levels[key], "points")) {
                         data.levels[key].points.hp = Math.clamped(data.levels[key].points.hp, 0, RYUU.POINT_MAX);
                         data.levels[key].points.mp = Math.clamped(data.levels[key].points.mp, 0, RYUU.POINT_MAX - data.levels[key].points.hp);
                         addHp += data.levels[key].points.hp;
                         addMp += data.levels[key].points.mp;
                     }
-                    if (data.levels[key].hasOwnProperty("stat") && data.levels[key].stat === "str") {
+                    if (Object.prototype.hasOwnProperty.call(data.levels[key], "stat") && data.levels[key].stat === "str") {
                         str += RYUU.DICE_STEP;
                     }
-                    if (data.levels[key].hasOwnProperty("stat") && data.levels[key].stat === "dex") {
+                    if (Object.prototype.hasOwnProperty.call(data.levels[key], "stat") && data.levels[key].stat === "dex") {
                         dex += RYUU.DICE_STEP;
                     }
-                    if (data.levels[key].hasOwnProperty("stat") && data.levels[key].stat === "int") {
+                    if (Object.prototype.hasOwnProperty.call(data.levels[key], "stat") && data.levels[key].stat === "int") {
                         int += RYUU.DICE_STEP;
                     }
-                    if (data.levels[key].hasOwnProperty("stat") && data.levels[key].stat === "spi") {
+                    if (Object.prototype.hasOwnProperty.call(data.levels[key], "stat") && data.levels[key].stat === "spi") {
                         spi += RYUU.DICE_STEP;
                     }
-                    if (data.levels[key].hasOwnProperty("specialty") && data.levels[key].specialty !== "none") {
+                    if (Object.prototype.hasOwnProperty.call(data.levels[key], "specialty") && data.levels[key].specialty !== "none") {
                         specialties.push(data.levels[key].specialty);
                     }
-                    if (data.levels[key].hasOwnProperty("immunity") && data.levels[key].immunity !== "none") {
+                    if (Object.prototype.hasOwnProperty.call(data.levels[key], "immunity") && data.levels[key].immunity !== "none") {
                         immunities.push(data.levels[key].immunity);
                     }
-                    if (data.levels[key].hasOwnProperty("mastered") && data.levels[key].mastered !== "none") {
+                    if (Object.prototype.hasOwnProperty.call(data.levels[key], "mastered") && data.levels[key].mastered !== "none") {
                         let master = classes.find(i => i.data.features.find(f => f.data.mastered === data.levels[key].mastered));
                         if (master !== undefined) {
                             mastered.push(data.levels[key].mastered);
                         }
                     }
-                    if (data.levels[key].hasOwnProperty("attackMastered") && data.levels[key].attackMastered !== "none") {
+                    if (Object.prototype.hasOwnProperty.call(data.levels[key], "attackMastered") && data.levels[key].attackMastered !== "none") {
                         let master = classes.find(i => i.data.features.find(f => f.data.mastered === data.levels[key].attackMastered));
                         if (master !== undefined) {
                             mastered.push(data.levels[key].mastered);
@@ -133,7 +131,7 @@ export class RyuutamaActor extends Actor {
         this.updateEmbeddedEntity("OwnedItem", updates);
 
         for (const key in data.specialty) {
-            if (data.specialty.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(data.specialty, key)) {
                 data.specialty[key] = false;
             }
         }
@@ -141,7 +139,7 @@ export class RyuutamaActor extends Actor {
             data.specialty[specialty] = true;
         });
         for (const key in data.immunity) {
-            if (data.immunity.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(data.immunity, key)) {
                 data.immunity[key] = false;
             }
         }
@@ -151,7 +149,7 @@ export class RyuutamaActor extends Actor {
 
         // Effects
         for (const name in data.effects) {
-            if (data.effects.hasOwnProperty(name) && data.immunity[name]) {
+            if (Object.prototype.hasOwnProperty.call(data.effects, name) && data.immunity[name]) {
                 data.effects[name] = 0;
             }
         }
@@ -219,7 +217,7 @@ export class RyuutamaActor extends Actor {
         // Don't allow values under min or over max
         data.hp.value = Math.clamped(data.hp.value, 0, data.hp.max);
         data.mp.value = Math.clamped(data.mp.value, 0, data.mp.max);
-        data.attributes.experience = Math.clamped(Number(data.attributes.experience), RYUU.EXP_MIN, RYUU.EXP_MAX)
+        data.attributes.experience = Math.clamped(Number(data.attributes.experience), RYUU.EXP_MIN, RYUU.EXP_MAX);
         data.attributes.condition.value = Math.clamped(data.attributes.condition.value, 0, data.attributes.condition.max);
         data.attributes.str.value = Math.clamped(str, RYUU.DICE_MIN, RYUU.DICE_MAX);
         data.attributes.dex.value = Math.clamped(dex, RYUU.DICE_MIN, RYUU.DICE_MAX);
@@ -235,7 +233,7 @@ export class RyuutamaActor extends Actor {
 
         let carriedWeight = 0;
         carried.forEach(item => {
-            let weightless = item.data.enchantments.find(e => e.data.weightless)
+            let weightless = item.data.enchantments.find(e => e.data.weightless);
             if (weightless === undefined) {
                 let inContainer = false;
 
@@ -261,7 +259,7 @@ export class RyuutamaActor extends Actor {
 
         // Terrain
         for (const name in data.traveling) {
-            if (data.traveling.hasOwnProperty(name)) {
+            if (Object.prototype.hasOwnProperty.call(data.traveling, name)) {
                 data.traveling[name] = 0;
                 let mod = items.filter(i => i.data[name] && i.data.equipped);
                 mod.forEach(item => {
@@ -279,7 +277,7 @@ export class RyuutamaActor extends Actor {
         const shorthand = game.settings.get("ryuutama", "macroShorthand");
 
         // Re-map all attributes onto the base roll data
-        if (!!shorthand) {
+        if (shorthand) {
             for (let [k, v] of Object.entries(data.attributes)) {
                 if (!(k in data)) data[k] = v.value;
             }
@@ -292,7 +290,7 @@ export class RyuutamaActor extends Actor {
                 strict: true
             });
             let itemData = duplicate(i.data);
-            if (!!shorthand) {
+            if (shorthand) {
                 for (let [k, v] of Object.entries(itemData.attributes)) {
                     if (!(k in itemData)) itemData[k] = v.value;
                 }
