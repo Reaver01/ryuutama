@@ -472,15 +472,19 @@ export class RyuutamaActorSheet extends ActorSheet {
     _onRollItem(event) {
         const actor = this.actor;
         const attr = actor.data.data.attributes;
-        let str = Number(attr.str.value);
-        let dex = Number(attr.dex.value);
-        let int = Number(attr.int.value);
-        let spi = Number(attr.spi.value);
+        const str = Number(attr.str.value);
+        const dex = Number(attr.dex.value);
+        const int = Number(attr.int.value);
+        const spi = Number(attr.spi.value);
+
+        // To hold all the modifiers a character has + and -
         let modifiers = [];
 
         const li = $(event.currentTarget).parents(".item");
         const items = this.actor.items
         const item = items.find(i => i.id === li.data("itemId"));
+
+        // Get all items with the cursed enchantment. Any equipped cursed items give a condition penalty
         const cursedItems = items.filter(i => i.data.data.enchantments.find(e => e.data.conditionPenalty !== 0) !== undefined && i.data.data.equipped);
         let conditionPenalty = 0;
         cursedItems.forEach(cursed => {
@@ -488,14 +492,23 @@ export class RyuutamaActorSheet extends ActorSheet {
                 conditionPenalty += enchantment.data.conditionPenalty;
             });
         });
+
+        // Get all armors the actor is wearing and calculate armor penalty
         const armors = items.filter(i => i.data.data.isArmor === true && i.data.data.equipped === true && i.data.data.hasOwnProperty("penalty") && i.data.data.penalty !== 0);
         let armorPenalty = 0;
         armors.forEach(armor => {
             armorPenalty -= armor.data.data.penalty;
         });
+
+        // Calculate capacity overrage if any and calculate weight penalty
         const maxCapacity = attr.capacity.max;
         const currentCarried = attr.capacity.value;
         let weightPenalty = currentCarried > maxCapacity ? maxCapacity - currentCarried : 0;
+        if (weightPenalty !== 0) {
+            modifiers.push(weightPenalty);
+        }
+
+        // Calculate the current Journey DC and any bonuses to the current terrain/weather
         const journeyDC = RYUU.TERRAIN[actor.data.data.current.terrain] + RYUU.WEATHER[actor.data.data.current.weather];
         const terrainBonus = actor.data.data.traveling[actor.data.data.current.terrain];
         const weatherBonus = actor.data.data.traveling[actor.data.data.current.weather];
@@ -506,43 +519,28 @@ export class RyuutamaActorSheet extends ActorSheet {
         if (actor.data.data.specialty[actor.data.data.current.weather]) {
             journeyBonus += 2;
         }
-        if (weightPenalty !== 0) {
-            modifiers.push(weightPenalty);
-        }
-        if (item) {
-            switch (item.data.type) {
-                case "weapon":
-                    let accuracy = item.data.data.accuracy.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
-                    let damage = item.data.data.damage.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
-                    let accuracyRoll;
-                    if (event.currentTarget.classList.contains("accuracy")) {
-                        if ((!event.altKey && !event.shiftKey) || (!event.altKey && event.shiftKey)) {
-                            accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.accuracyBonus}`, `${actor.name} attacks with their ${item.name}`, modifiers)
-                        }
-                    }
-                    if (event.currentTarget.classList.contains("damage")) {
-                        if ((event.altKey && event.shiftKey) || (!event.altKey && !event.shiftKey && accuracyRoll !== undefined && accuracyRoll.crit)) {
-                            damage = damage += ` + ${damage}`;
-                            rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} CRITICAL damage:`);
-                        } else if ((event.altKey && !event.shiftKey) || (!event.altKey && !event.shiftKey && !(accuracyRoll !== undefined && accuracyRoll.fumble))) {
-                            rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} damage:`);
-                        }
-                    }
-                    break;
 
-                default:
-                    break;
-            }
-        }
+        // Search for any bonuses to condition and journey checks from class features
+        const classes = items.filter(i => i.type === "class");
+        classes.forEach(c => {
+            c.data.data.features.forEach(feature => {
+                conditionPenalty += feature.data.condition;
+                journeyBonus += feature.data.journey;
+            });
+        });
+
+        // create a message that outputs all the modifiers on the actors rolls
         let currentModifiers = "";
         if (modifiers.length > 0) {
-            currentModifiers = `<br />${actor.name} ${game.i18n.localize("RYUU.check.modifiers")}:`;
+            currentModifiers = `<br />${actor.name} ${game.i18n.localize("RYUU.checkmodifiers")}:`;
             modifiers.forEach(element => {
                 currentModifiers += ` ${element},`;
             });
-            currentModifiers.slice(0, -1);
+            currentModifiers = currentModifiers.replace(/,\s*$/, "");
         }
         switch (event.target.id) {
+
+            // Journey checks
             case "roll-travel":
                 if (journeyBonus > 0) {
                     modifiers.push(journeyBonus);
@@ -556,7 +554,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                 if (armorPenalty !== 0) {
                     modifiers.push(armorPenalty);
                 }
-                rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.travel")} [STR] + [DEX]`, modifiers, journeyDC);
+                rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checktravel")} [STR] + [DEX]`, modifiers, journeyDC);
                 break;
             case "roll-direction":
                 if (journeyBonus > 0) {
@@ -571,7 +569,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                 if (armorPenalty !== 0) {
                     modifiers.push(armorPenalty);
                 }
-                rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.direction")} [INT] + [INT]`, modifiers, journeyDC);
+                rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkdirection")} [INT] + [INT]`, modifiers, journeyDC);
                 break;
             case "roll-camp":
                 if (journeyBonus > 0) {
@@ -586,8 +584,10 @@ export class RyuutamaActorSheet extends ActorSheet {
                 if (armorPenalty !== 0) {
                     modifiers.push(armorPenalty);
                 }
-                rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.camp")} [DEX] + [INT]`, modifiers, journeyDC);
+                rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkcamp")} [DEX] + [INT]`, modifiers, journeyDC);
                 break;
+
+                // Condition Check
             case "roll-condition":
                 if (conditionPenalty !== 0) {
                     modifiers.push(conditionPenalty);
@@ -595,7 +595,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                 if (armorPenalty !== 0) {
                     modifiers.push(armorPenalty);
                 }
-                const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.condition")} [STR] + [SPI]`, modifiers);
+                const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkcondition")} [STR] + [SPI]`, modifiers);
                 const effects = actor.data.data.effects;
                 for (const name in effects) {
                     if (effects.hasOwnProperty(name) && condition.roll >= effects[name]) {
@@ -609,27 +609,33 @@ export class RyuutamaActorSheet extends ActorSheet {
                     "data.attributes.condition.value": condition.roll
                 })
                 break;
+
+                // Initative roll
             case "roll-initiative":
                 if (armorPenalty !== 0) {
                     modifiers.push(armorPenalty);
                 }
-                const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.initiative")} [DEX] + [INT]`, modifiers);
+                const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkinitiative")} [DEX] + [INT]`, modifiers);
                 actor.update({
                     "data.attributes.initiative": initiative.roll
                 })
                 break;
+
+                // Single Stat rolls
             case "roll-strength":
-                rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.check.str")} [STR]${currentModifiers}`);
+                rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR]${currentModifiers}`);
                 break;
             case "roll-dexterity":
-                rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.check.dex")} [DEX]${currentModifiers}`);
+                rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checkdex")} [DEX]${currentModifiers}`);
                 break;
             case "roll-intelligence":
-                rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.check.int")} [INT]${currentModifiers}`);
+                rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT]${currentModifiers}`);
                 break;
             case "roll-spirit":
-                rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.check.spi")} [SPI]${currentModifiers}`);
+                rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI]${currentModifiers}`);
                 break;
+
+                // Set HP/MP to full
             case "set-max-hp":
                 actor.update({
                     "data.hp.value": actor.data.data.hp.max
@@ -641,7 +647,40 @@ export class RyuutamaActorSheet extends ActorSheet {
                     "data.mp.value": actor.data.data.mp.max
                 });
                 break;
+
+                // Handle all other roll types
             default:
+                if (item) {
+                    switch (item.data.type) {
+                        case "weapon":
+                            let accuracy = item.data.data.accuracy.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
+                            let damage = item.data.data.damage.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
+                            let accuracyRoll;
+                            if (event.currentTarget.classList.contains("accuracy")) {
+                                if ((!event.altKey && !event.shiftKey) || (!event.altKey && event.shiftKey)) {
+                                    accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.masteredBonus}`, `${actor.name} attacks with their ${item.name}${currentModifiers}`, modifiers)
+                                }
+                            }
+                            if (event.currentTarget.classList.contains("damage")) {
+                                if ((event.altKey && event.shiftKey) || (!event.altKey && !event.shiftKey && accuracyRoll !== undefined && accuracyRoll.crit)) {
+                                    damage = damage += ` + ${damage}`;
+                                    rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} CRITICAL damage:`);
+                                } else if ((event.altKey && !event.shiftKey) || (!event.altKey && !event.shiftKey && !(accuracyRoll !== undefined && accuracyRoll.fumble))) {
+                                    rollCheck(`${damage} + ${item.data.data.damageBonus}`, `${item.name} damage:`);
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                } else {
+                    let text = "";
+                    if (event.target.previousSibling.previousSibling.innerText) {
+                        text = `${actor.name} ${game.i18n.localize("RYUU.check")} ${event.target.previousSibling.previousSibling.innerText} ${event.target.innerText}`
+                    }
+                    rollCheck(event.target.innerText.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi"), text + currentModifiers, modifiers)
+                }
                 break;
         }
 

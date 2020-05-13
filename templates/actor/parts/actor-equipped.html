@@ -99,6 +99,14 @@
             <div class="item-image"></div>
             <div class="item-image"></div>
             <h4 class="item-name">{{feature.name}}</h4>
+            {{#if feature.data.stat}}
+            <div class="item-damage rollable">{{feature.data.stat}}{{#if feature.data.farmer}} -1{{/if}}</div>
+            {{/if}}
+            {{#if feature.data.mastered}}
+            <div class="item-info">{{ localize (concat "RYUU." feature.data.mastered) }}</div>
+            {{/if}}
+            <div class="item-name"></div>
+            <div class="item-controls"></div>
         </li>
         {{/each}}
         {{/each}}
