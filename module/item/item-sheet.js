@@ -208,7 +208,6 @@ export class RyuutamaItemSheet extends ItemSheet {
 
     addRemoveFeature(remove, feature) {
         const item = this.object;
-        const actor = item.options.actor;
         let features = item.data.data.features || [];
         features = features.slice();
         console.log(item);

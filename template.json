@@ -50,7 +50,7 @@
                     "value": 0,
                     "equipped": 0
                 },
-                "gold": 0
+                "gold": 1000
             },
             "traveling": {
                 "grassland": 0,
@@ -124,7 +124,8 @@
                 "1": {
                     "level": 1,
                     "stats": true,
-                    "class": true
+                    "class": true,
+                    "mastered": "none"
                 },
                 "2": {
                     "level": 2,
@@ -227,7 +228,8 @@
                 "accuracyBonus": 0,
                 "damage": "",
                 "damageBonus": 0,
-                "class": "blade"
+                "class": "lightblade",
+                "masteredBonus": 0
             },
             "armor": {
                 "isArmor": true,

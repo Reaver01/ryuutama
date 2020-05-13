@@ -28,6 +28,7 @@ export class RyuutamaActor extends Actor {
     _prepareCharacterData(actorData) {
         const data = actorData.data;
         const items = actorData.items.filter(i => i.type !== "enchantment" && i.type !== "class" && i.type !== "feature");
+        const weapons = actorData.items.filter(i => i.type === "weapon");
         const toDelete = actorData.items.filter(i => i.type === "enchantment" || i.type === "feature");
         const deletions = toDelete.map(i => i._id);
         const classes = actorData.items.filter(i => i.type === "class");
@@ -68,13 +69,16 @@ export class RyuutamaActor extends Actor {
         // Level choices
         let specialties = [];
         let immunities = [];
+        let mastered = [];
         for (const key in data.levels) {
-            if (data.levels.hasOwnProperty(key) && data.levels[key].hasOwnProperty("points")) {
-                data.levels[key].points.hp = Math.clamped(data.levels[key].points.hp, 0, RYUU.POINT_MAX);
-                data.levels[key].points.mp = Math.clamped(data.levels[key].points.mp, 0, RYUU.POINT_MAX - data.levels[key].points.hp);
+            if (data.levels.hasOwnProperty(key)) {
                 if (data.attributes.level >= data.levels[key].level) {
-                    addHp += data.levels[key].points.hp;
-                    addMp += data.levels[key].points.mp;
+                    if (data.levels[key].hasOwnProperty("points")) {
+                        data.levels[key].points.hp = Math.clamped(data.levels[key].points.hp, 0, RYUU.POINT_MAX);
+                        data.levels[key].points.mp = Math.clamped(data.levels[key].points.mp, 0, RYUU.POINT_MAX - data.levels[key].points.hp);
+                        addHp += data.levels[key].points.hp;
+                        addMp += data.levels[key].points.mp;
+                    }
                     if (data.levels[key].hasOwnProperty("stat") && data.levels[key].stat === "str") {
                         str += RYUU.DICE_STEP;
                     }
@@ -93,9 +97,32 @@ export class RyuutamaActor extends Actor {
                     if (data.levels[key].hasOwnProperty("immunity") && data.levels[key].immunity !== "none") {
                         immunities.push(data.levels[key].immunity);
                     }
+                    if (data.levels[key].hasOwnProperty("mastered") && data.levels[key].mastered !== "none") {
+                        let master = classes.find(i => i.data.features.find(f => f.data.mastered === data.levels[key].mastered));
+                        if (master !== undefined) {
+                            mastered.push(data.levels[key].mastered);
+                        }
+                    }
                 }
             }
         }
+
+        let updates = [];
+        weapons.forEach(weapon => {
+            if (mastered.includes(weapon.data.class)) {
+                updates.push({
+                    _id: weapon._id,
+                    "data.masteredBonus": weapon.data.accuracyBonus + 1
+                });
+            } else {
+                updates.push({
+                    _id: weapon._id,
+                    "data.masteredBonus": weapon.data.accuracyBonus
+                });
+            }
+        });
+
+        this.updateEmbeddedEntity("OwnedItem", updates);
 
         for (const key in data.specialty) {
             if (data.specialty.hasOwnProperty(key)) {

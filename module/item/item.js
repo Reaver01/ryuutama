@@ -1,3 +1,7 @@
+import {
+    RYUU
+} from "../config.js";
+
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
@@ -12,9 +16,8 @@ export class RyuutamaItem extends Item {
         // Get the Item's data
         const itemData = this.data;
         const actorData = this.actor ? this.actor.data : {};
-        const data = itemData.data;
 
-        if (itemData.type === "container" || itemData.type === "animal") this._prepareItemData(itemData, actorData);
+        this._prepareItemData(itemData, actorData);
     }
 
     /**
@@ -22,21 +25,22 @@ export class RyuutamaItem extends Item {
      */
     _prepareItemData(itemData, actorData) {
         const data = itemData.data;
+        if (RYUU.STORAGE.includes(itemData.type)) {
+            if (actorData._id === undefined) {
+                data.holding = [];
+                return
+            };
 
-        if (actorData._id === undefined) {
-            data.holding = [];
-            return
-        };
+            const holding = data.holding;
+            let holdingAmount = 0;
 
-        const holding = itemData.data.holding;
-        let holdingAmount = 0;
-
-        holding.forEach(item => {
-            const heldItem = actorData.items.find(i => i._id === item.id);
-            if (heldItem) {
-                holdingAmount += Number(heldItem.data.size);
-            }
-        });
-        itemData.data.holdingSize = holdingAmount;
+            holding.forEach(item => {
+                const heldItem = actorData.items.find(i => i._id === item.id);
+                if (heldItem) {
+                    holdingAmount += Number(heldItem.data.size);
+                }
+            });
+            itemData.data.holdingSize = holdingAmount;
+        }
     }
 }
