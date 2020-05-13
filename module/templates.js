@@ -22,7 +22,8 @@ export const preloadHandlebarsTemplates = async function() {
         "systems/ryuutama/templates/item/parts/item-container-navigation.html",
         "systems/ryuutama/templates/item/parts/item-header.html",
         "systems/ryuutama/templates/item/parts/item-navigation.html",
-        "systems/ryuutama/templates/item/parts/item-traveling.html"
+        "systems/ryuutama/templates/item/parts/item-traveling.html",
+        "systems/ryuutama/templates/item/parts/spell-header.html"
     ];
 
     // Load the template parts

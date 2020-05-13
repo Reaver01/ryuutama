@@ -111,6 +111,11 @@
   grid-column-end: 5;
 }
 
+.col1-4 {
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
 .col2-5 {
   grid-column-start: 2;
   grid-column-end: 5;

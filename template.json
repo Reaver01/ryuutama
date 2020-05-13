@@ -213,6 +213,7 @@
         "templates": {
             "item": {
                 "givenName": "",
+                "description": "",
                 "price": 0,
                 "size": 1,
                 "durability": 1,
@@ -281,6 +282,15 @@
                 "stat": "",
                 "mastered": "none",
                 "farmer": false
+            },
+            "spell": {
+                "level": "low",
+                "cost": 2,
+                "season": "none",
+                "ritual": false,
+                "duration": "",
+                "target": "",
+                "range": ""
             }
         },
         "item": {
@@ -322,18 +332,18 @@
             "weightless": false,
             "plusOne": false
         },
-        "feature": {
-            "templates": ["item", "feature"],
-            "size": 0
-        },
         "spell": {
-            "templates": ["item"],
-            "spellLevel": 1
+            "templates": ["item", "spell"],
+            "size": 0
         },
         "class": {
             "templates": ["item"],
             "type": "none",
             "features": [],
+            "size": 0
+        },
+        "feature": {
+            "templates": ["item", "feature"],
             "size": 0
         }
     }

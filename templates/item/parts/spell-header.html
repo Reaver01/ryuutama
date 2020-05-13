@@ -1,0 +1,55 @@
+<header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+    <div class="header-fields">
+        <div class="grid grid-5col">
+            <div class="col1-5">
+                <h1 class="charname"><input name="data.givenName" type="text" value="{{data.givenName}}" placeholder="Name" /></h1>
+            </div>
+            <div class="resource price">
+                <label for="data.level" class="resource-label">{{ localize "RYUU.level" }}</label>
+                <select class="attribute-select" name="data.level">
+                    {{#select data.level}}
+                        <option value="low">{{ localize "RYUU.low" }}</option>
+                        <option value="mid">{{ localize "RYUU.mid" }}</option>
+                        <option value="high">{{ localize "RYUU.high" }}</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+        <div class="grid grid-3col">
+            <div class="resource">
+                <label for="data.cost" class="resource-label">{{ localize "RYUU.cost" }}</label>
+                <input name="data.cost" type="text" value="{{data.cost}}" data-dtype="Number" />
+            </div>
+            <div class="resource">
+                <label for="data.duration" class="resource-label">{{ localize "RYUU.duration" }}</label>
+                <input name="data.duration" type="text" value="{{data.duration}}" data-dtype="String" />
+            </div>
+            <div class="resource">
+                <label for="data.target" class="resource-label">{{ localize "RYUU.target" }}</label>
+                <input name="data.target" type="text" value="{{data.target}}" data-dtype="String" />
+            </div>
+        </div>
+        <div class="grid grid-3col">
+            <div class="resource">
+                <label for="data.range" class="resource-label">{{ localize "RYUU.range" }}</label>
+                <input name="data.range" type="text" value="{{data.range}}" data-dtype="String" />
+            </div>
+            <div class="resource">
+                <label for="data.season" class="resource-label">{{ localize "RYUU.season" }}</label>
+                <select class="attribute-select" name="data.season">
+                    {{#select data.season}}
+                        <option value="none"></option>
+                        <option value="spring">{{ localize "RYUU.spring" }}</option>
+                        <option value="summer">{{ localize "RYUU.summer" }}</option>
+                        <option value="fall">{{ localize "RYUU.fall" }}</option>
+                        <option value="winter">{{ localize "RYUU.winter" }}</option>
+                    {{/select}}
+                </select>
+            </div>
+            <div class="resource">
+                <label for="data.ritual" class="resource-label">{{ localize "RYUU.ritual" }}</label>
+                <input type="checkbox" name="data.ritual" {{checked data.ritual}} />
+            </div>
+        </div>
+</header>

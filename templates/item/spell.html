@@ -1,11 +1,10 @@
 <form class="{{cssClass}}" autocomplete="off">
-    {{> "systems/ryuutama/templates/item/parts/item-header.html"}}
+    {{> "systems/ryuutama/templates/item/parts/spell-header.html"}}
 
-    <section>
-        <div>
-
+    <section class="sheet-body">
+        <h3 class="resource-label">{{ localize "RYUU.description" }}</h3>
+        <div class="tab description">
+            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
         </div>
     </section>
-
-    {{> "systems/ryuutama/templates/item/parts/item-navigation.html"}}
 </form>
