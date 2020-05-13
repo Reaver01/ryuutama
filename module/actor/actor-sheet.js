@@ -512,8 +512,8 @@ export class RyuutamaActorSheet extends ActorSheet {
         if (item) {
             switch (item.data.type) {
                 case "weapon":
-                    let accuracy = item.data.data.accuracy.replace("[STR]", "1d@str").replace("[DEX]", "1d@dex").replace("[INT]", "1d@int").replace("[SPI]", "1d@spi");
-                    let damage = item.data.data.damage.replace("[STR]", "1d@str").replace("[DEX]", "1d@dex").replace("[INT]", "1d@int").replace("[SPI]", "1d@spi");
+                    let accuracy = item.data.data.accuracy.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
+                    let damage = item.data.data.damage.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
                     let accuracyRoll;
                     if (event.currentTarget.classList.contains("accuracy")) {
                         if ((!event.altKey && !event.shiftKey) || (!event.altKey && event.shiftKey)) {
