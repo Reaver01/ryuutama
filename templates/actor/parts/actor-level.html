@@ -87,6 +87,22 @@
                 </select>
             </div>
             {{/if}}
+            {{#if level.attackMastered}}
+            <div>
+                {{ localize "RYUU.mastered" }}:
+                <select class="attribute-select" name="data.levels.{{key}}.attackMastered">
+                    {{#select level.attackMastered}}
+                    <option value="none"></option>
+                    <option value="lightblade">{{ localize "RYUU.lightblade" }}</option>
+                    <option value="blade">{{ localize "RYUU.blade" }}</option>
+                    <option value="polearm">{{ localize "RYUU.polearm" }}</option>
+                    <option value="axe">{{ localize "RYUU.axe" }}</option>
+                    <option value="bow">{{ localize "RYUU.bow" }}</option>
+                    <option value="unarmed">{{ localize "RYUU.unarmed" }}</option>
+                    {{/select}}
+                </select>
+            </div>
+            {{/if}}
             {{#if level.actions}}
             <div>
                 {{ localize "RYUU.actions" }}
@@ -94,7 +110,7 @@
             {{/if}}
             {{#if level.specialty}}
             <div>
-                {{ localize "RYUU.terrain" }}/{{ localize "RYUU.weather" }}:
+                {{ localize "RYUU.favored" }}:
                 <select class="attribute-select" name="data.levels.{{key}}.specialty">
                     {{#select level.specialty}}
                     <option value="none"></option>
@@ -146,23 +162,10 @@
                 {{ localize "RYUU.extraclass" }}
             </div>
             {{/if}}
-            {{#if (eq level.level 1)}}
-            <div>
-                {{ localize "RYUU.class" }}
-            </div>
-            {{/if}}
             {{/if}}
             {{#if level.type}}
             <div>
-                {{ localize "RYUU.extratype" }}:
-                <select class="attribute-select" name="data.levels.{{key}}.type">
-                    {{#select level.type}}
-                    <option value="none"></option>
-                    <option value="attack">{{ localize "RYUU.attack" }}</option>
-                    <option value="technical">{{ localize "RYUU.technical" }}</option>
-                    <option value="magic">{{ localize "RYUU.magic" }}</option>
-                    {{/select}}
-                </select>
+                {{ localize "RYUU.extratype" }}
             </div>
             {{/if}}
             {{#if level.season}}

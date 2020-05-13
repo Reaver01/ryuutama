@@ -401,6 +401,11 @@
   display: block;
 }
 
+.ryuutama .items-list .item .disabled,
+.ryuutama .items-list .level .disabled {
+  display: none;
+}
+
 .ryuutama .items-list .item-name {
   margin: 0;
 }

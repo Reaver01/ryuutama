@@ -125,7 +125,8 @@
                     "level": 1,
                     "stats": true,
                     "class": true,
-                    "mastered": "none"
+                    "mastered": "none",
+                    "attackMastered": "none"
                 },
                 "2": {
                     "level": 2,
@@ -176,7 +177,8 @@
                         "mp": 0,
                         "hp": 0
                     },
-                    "specialty": "none"
+                    "specialty": "none",
+                    "attackMastered": "none"
                 },
                 "8": {
                     "level": 8,

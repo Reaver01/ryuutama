@@ -48,7 +48,6 @@ export class RyuutamaActor extends Actor {
                     addHp += 4;
                     break;
 
-
                 case "technical":
                     addCarry += 3;
                     break;
@@ -61,6 +60,9 @@ export class RyuutamaActor extends Actor {
                 default:
                     break;
             }
+            c.data.features.forEach(feature => {
+                addCarry += feature.data.capacity;
+            });
         });
 
         // Level
@@ -99,6 +101,12 @@ export class RyuutamaActor extends Actor {
                     }
                     if (data.levels[key].hasOwnProperty("mastered") && data.levels[key].mastered !== "none") {
                         let master = classes.find(i => i.data.features.find(f => f.data.mastered === data.levels[key].mastered));
+                        if (master !== undefined) {
+                            mastered.push(data.levels[key].mastered);
+                        }
+                    }
+                    if (data.levels[key].hasOwnProperty("attackMastered") && data.levels[key].attackMastered !== "none") {
+                        let master = classes.find(i => i.data.features.find(f => f.data.mastered === data.levels[key].attackMastered));
                         if (master !== undefined) {
                             mastered.push(data.levels[key].mastered);
                         }
