@@ -79,6 +79,9 @@ export class RyuutamaItemSheet extends ItemSheet {
                     }
                     // Add items to container or animal
                     return parentItem.addRemoveItem(false, item.data);
+                } else if (item.type === "feature" && parentItem.item.type === "class") {
+                    // Add feature to class
+                    parentItem.addRemoveFeature(false, item.data);
                 }
 
             });
