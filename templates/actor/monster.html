@@ -202,8 +202,14 @@
         {{!-- Biography Tab --}}
         <div class="tab eqquiped" data-group="primary" data-tab="eqquiped">
             <div class="flexrow">
-                <div class="resource">
-                    <textarea rows="5" cols="60" name="data.biography">{{data.biography}}</textarea>
+                <div class="text-container">
+                    <div>
+                        <br />
+                        <div class="textarea-mimic">
+                            <span>{{data.biography}}</span>
+                            <textarea class="description-area" cols="60" name="data.biography">{{data.biography}}</textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br />
@@ -224,7 +230,14 @@
             <div class="flexrow">
                 <div class="resource">
                     <label for="data.ability.description" class="resource-label">{{ localize "RYUU.abilitydescription" }}</label>
-                    <textarea rows="5" cols="60" name="data.ability.description">{{data.ability.description}}</textarea>
+                    <div class="text-container">
+                        <div>
+                            <div class="textarea-mimic">
+                                <span>{{data.ability.description}}</span>
+                                <textarea class="description-area" cols="60" name="data.ability.description">{{data.ability.description}}</textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="flexrow">

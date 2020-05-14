@@ -216,7 +216,7 @@
 }
 
 .ryuutama .sheet-header .status-checkbox {
-  flex: 0 0 7px;
+  flex: 0 0 15px;
   margin-top: 5px;
   padding-top: 5px;
   border: none;
@@ -256,7 +256,7 @@
 
 .ryuutama .sheet-header .attribute-bonus {
   vertical-align: middle;
-  height: 10px;
+  height: 15px;
   cursor: pointer;
 }
 
@@ -337,6 +337,45 @@
   vertical-align: middle;
 }
 
+.ryuutama .text-container {
+  border: none;
+  display: flex;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.ryuutama .text-container div {
+  flex: 1;
+  border: none;
+  padding: 8px;
+}
+
+.ryuutama .text-container div .textarea-mimic {
+  position: relative;
+}
+
+.ryuutama .text-container div .textarea-mimic span {
+  visibility: hidden;
+}
+
+.ryuutama .text-container div .textarea-mimic textarea {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  font: inherit;
+  overflow: hidden;
+  resize: none;
+  background: none;
+  border: none;
+}
+
 .ryuutama .sheet-body,
 .ryuutama .sheet-body .tab,
 .ryuutama .sheet-body .tab .editor {
@@ -412,7 +451,7 @@
 
 .ryuutama .items-list .item .terrain-checkbox,
 .ryuutama .items-list .level .terrain-checkbox {
-  flex: 0 0 7px;
+  flex: 0 0 15px;
   margin-right: 5px;
 }
 
