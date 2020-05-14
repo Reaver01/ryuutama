@@ -665,6 +665,20 @@ export class RyuutamaActorSheet extends ActorSheet {
                 break;
             }
 
+            case "use-fumble": {
+                // Remvoe a fumble point
+                const pcfumble = actor.data.data.attributes.fumble || 0;
+                if (pcfumble > 0) {
+                    actor.update({
+                        "data.attributes.fumble": pcfumble - 1
+                    });
+                    ChatMessage.create({
+                        content: `${actor.name} uses a <strong>fumble point</strong>`
+                    }, {});
+                }
+                break;
+            }
+
             case "roll-accuracy": {
                 rollCheck(actor.data.data.accuracy, `${actor.name} attacks!`);
                 break;
