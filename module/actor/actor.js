@@ -224,6 +224,7 @@ export class RyuutamaActor extends Actor {
         data.attributes.dex.value = Math.clamped(dex, RYUU.DICE_MIN, RYUU.DICE_MAX);
         data.attributes.int.value = Math.clamped(int, RYUU.DICE_MIN, RYUU.DICE_MAX);
         data.attributes.spi.value = Math.clamped(spi, RYUU.DICE_MIN, RYUU.DICE_MAX);
+        data.attributes.fumble = Math.clamped(data.attributes.fumble, 0, 999);
 
         // Carrying capacity
 

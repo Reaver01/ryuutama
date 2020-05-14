@@ -771,10 +771,17 @@ export class RyuutamaActorSheet extends ActorSheet {
             if (dice.length > 1 && fumbleRolls.length === dice.length) {
                 fumble = true;
                 flavor += game.i18n.localize("RYUU.rollfumble");
+                const players = game.actors.filter(a => a.isPC);
+                players.forEach(player => {
+                    const pcfumble = player.data.data.attributes.fumble || 0;
+                    player.update({
+                        "data.attributes.fumble": pcfumble + 1
+                    });
+                });
             }
-            if (journeyDC !== undefined && roll._total >= journeyDC) {
+            if (journeyDC !== undefined && roll._total >= journeyDC && !fumble) {
                 flavor += game.i18n.localize("RYUU.journeypass") + journeyDC;
-            } else if (journeyDC !== undefined && roll._total < journeyDC) {
+            } else if ((journeyDC !== undefined && roll._total < journeyDC) || fumble) {
                 flavor += game.i18n.localize("RYUU.journeyfail") + journeyDC;
             }
             roll.toMessage({
