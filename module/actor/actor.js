@@ -18,6 +18,7 @@ export class RyuutamaActor extends Actor {
         // Make separate methods for each Actor type (character, npc, etc.) to keep
         // things organized.
         if (actorData.type === "character") this._prepareCharacterData(actorData);
+        if (actorData.type === "monster") this._prepareMonsterData(actorData);
     }
 
     /**
@@ -267,6 +268,36 @@ export class RyuutamaActor extends Actor {
                 });
             }
         }
+    }
+
+    /**
+     * Prepare Character type specific data
+     */
+    _prepareMonsterData(actorData) {
+        const data = actorData.data;
+        const toDelete = actorData.items.filter(i => i.type === "enchantment" || i.type === "class" || i.type === "feature");
+        const deletions = toDelete.map(i => i._id);
+        this.deleteEmbeddedEntity("OwnedItem", deletions);
+        let str = Number(data.attributes.str.base);
+        let dex = Number(data.attributes.dex.base);
+        let int = Number(data.attributes.int.base);
+        let spi = Number(data.attributes.spi.base);
+
+        // Health Points
+        data.hp.max = (data.attributes.str.base * 2);
+
+        // Mental Points
+        data.mp.max = (data.attributes.spi.base * 2);
+
+        // Don't allow values under min or over max
+        data.hp.value = Math.clamped(data.hp.value, 0, data.hp.max);
+        data.mp.value = Math.clamped(data.mp.value, 0, data.mp.max);
+        data.attributes.experience = Math.clamped(Number(data.attributes.experience), RYUU.EXP_MIN, RYUU.EXP_MAX);
+        data.attributes.condition.value = Math.clamped(data.attributes.condition.value, 0, data.attributes.condition.max);
+        data.attributes.str.value = str;
+        data.attributes.dex.value = dex;
+        data.attributes.int.value = int;
+        data.attributes.spi.value = spi;
     }
 
 

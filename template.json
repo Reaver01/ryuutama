@@ -1,47 +1,53 @@
 {
     "Actor": {
-        "types": ["character"],
+        "types": ["character", "monster"],
+        "templates": {
+            "base": {
+                "biography": "",
+                "hp": {
+                    "value": 8,
+                    "min": 0,
+                    "max": 8
+                },
+                "mp": {
+                    "value": 8,
+                    "min": 0,
+                    "max": 8
+                },
+                "attributes": {
+                    "str": {
+                        "base": 4,
+                        "value": 4,
+                        "bonus": false
+                    },
+                    "dex": {
+                        "base": 4,
+                        "value": 4,
+                        "bonus": false
+                    },
+                    "int": {
+                        "base": 4,
+                        "value": 4,
+                        "bonus": false
+                    },
+                    "spi": {
+                        "base": 4,
+                        "value": 4,
+                        "bonus": false
+                    },
+                    "condition": {
+                        "value": 2,
+                        "min": 2,
+                        "max": 20
+                    },
+                    "initiative": 0,
+                    "level": 1
+                }
+            }
+        },
         "character": {
-            "biography": "",
-            "hp": {
-                "value": 8,
-                "min": 0,
-                "max": 8
-            },
-            "mp": {
-                "value": 8,
-                "min": 0,
-                "max": 8
-            },
+            "templates": ["base"],
             "attributes": {
-                "str": {
-                    "base": 4,
-                    "value": 4,
-                    "bonus": false
-                },
-                "dex": {
-                    "base": 4,
-                    "value": 4,
-                    "bonus": false
-                },
-                "int": {
-                    "base": 4,
-                    "value": 4,
-                    "bonus": false
-                },
-                "spi": {
-                    "base": 4,
-                    "value": 4,
-                    "bonus": false
-                },
-                "condition": {
-                    "value": 2,
-                    "min": 2,
-                    "max": 20
-                },
-                "fumble": 0,
-                "initiative": 0,
-                "level": 1,
                 "experience": 0,
                 "gender": "",
                 "age": 20,
@@ -205,6 +211,20 @@
                     "stat": "none",
                     "legendary": true
                 }
+            }
+        },
+        "monster": {
+            "templates": ["base"],
+            "habitat": "",
+            "season": "",
+            "ref": 0,
+            "accuracy": "",
+            "damage": "",
+            "armor": 0,
+            "ability": {
+                "description": "",
+                "accuracy": "",
+                "damage": ""
             }
         }
     },

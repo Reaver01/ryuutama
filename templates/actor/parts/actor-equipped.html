@@ -39,7 +39,7 @@
             {{#if item.data.equipped}}
                 {{#if item.data.isArmor}}
                     <li class="item flexrow" data-item-id="{{item._id}}">
-                        <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
+                        <div class="item-image"><img class="{{item.type}}" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
                         <h4 class="item-name">{{item.name}}</h4>
                         <div class="item-info">{{item.data.defense}}</div>
                         <div class="item-info">{{item.data.penalty}}</div>
@@ -63,7 +63,7 @@
             {{#if item.data.equipped}}
                 {{#if item.data.isTraveling}}
                     <li class="item flexrow" data-item-id="{{item._id}}">
-                        <div class="item-image"><img class="rollable {{item.type}} accuracy damage" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
+                        <div class="item-image"><img class="{{item.type}}" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
                         <h4 class="item-name">{{item.name}}</h4>
                         <div class="item-size">{{item.data.size}}</div>
                         <div class="item-controls">

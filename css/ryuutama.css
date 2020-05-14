@@ -315,6 +315,10 @@
   border-bottom: 0;
 }
 
+.ryuutama .monster-header {
+  flex: 0 0 220px;
+}
+
 .ryuutama input {
   border: none;
 }
@@ -335,6 +339,16 @@
 .ryuutama .sheet-body .tab,
 .ryuutama .sheet-body .tab .editor {
   height: 200px;
+}
+
+.ryuutama .sheet-body .resource-image,
+.ryuutama .sheet-body .tab .resource-image,
+.ryuutama .sheet-body .tab .editor .resource-image {
+  vertical-align: middle;
+  flex: 0 0 40px;
+  height: 40px;
+  margin-right: 10px;
+  border: none;
 }
 
 .ryuutama .tox .tox-editor-container {

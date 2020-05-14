@@ -161,6 +161,10 @@
   }
 }
 
+.monster-header {
+  flex: 0 0 220px;
+}
+
 input {
   border: none;
 }
@@ -177,10 +181,20 @@ input {
   }
 }
 
+
+
 .sheet-body,
 .sheet-body .tab,
 .sheet-body .tab .editor {
   height: 200px;
+
+  .resource-image {
+    vertical-align: middle;
+    flex: 0 0 40px;
+    height: 40px;
+    margin-right: 10px;
+    border: none;
+  }
 }
 
 .tox {

@@ -469,6 +469,11 @@ export class RyuutamaActorSheet extends ActorSheet {
         const dex = Number(attr.dex.value);
         const int = Number(attr.int.value);
         const spi = Number(attr.spi.value);
+        let journeyDC = 0;
+        let terrainBonus = 0;
+        let weatherBonus = 0;
+        let journeyBonus = 0;
+        let currentModifiers = "";
 
         // To hold all the modifiers a character has + and -
         let modifiers = [];
@@ -494,47 +499,49 @@ export class RyuutamaActorSheet extends ActorSheet {
         });
 
         // Calculate capacity overrage if any and calculate weight penalty
-        const maxCapacity = attr.capacity.max;
-        const currentCarried = attr.capacity.value;
-        let weightPenalty = currentCarried > maxCapacity ? maxCapacity - currentCarried : 0;
-        if (weightPenalty !== 0) {
-            modifiers.push(weightPenalty);
-        }
+        if (this.actor.data.type === "character") {
+            const maxCapacity = attr.capacity.max;
+            const currentCarried = attr.capacity.value;
+            let weightPenalty = currentCarried > maxCapacity ? maxCapacity - currentCarried : 0;
+            if (weightPenalty !== 0) {
+                modifiers.push(weightPenalty);
+            }
 
-        // Calculate the current Journey DC and any bonuses to the current terrain/weather
-        const journeyDC = RYUU.TERRAIN[actor.data.data.current.terrain] + RYUU.WEATHER[actor.data.data.current.weather];
-        const terrainBonus = actor.data.data.traveling[actor.data.data.current.terrain];
-        const weatherBonus = actor.data.data.traveling[actor.data.data.current.weather];
-        let journeyBonus = 0;
-        if (actor.data.data.specialty[actor.data.data.current.terrain]) {
-            journeyBonus += 2;
-        }
-        if (actor.data.data.specialty[actor.data.data.current.weather]) {
-            journeyBonus += 2;
-        }
+            // Calculate the current Journey DC and any bonuses to the current terrain/weather
+            journeyDC = RYUU.TERRAIN[actor.data.data.current.terrain] + RYUU.WEATHER[actor.data.data.current.weather];
+            terrainBonus = actor.data.data.traveling[actor.data.data.current.terrain];
+            weatherBonus = actor.data.data.traveling[actor.data.data.current.weather];
 
-        // Search for any bonuses to condition and journey checks from class features
-        const classes = items.filter(i => i.type === "class");
-        classes.forEach(c => {
-            c.data.data.features.forEach(feature => {
-                conditionPenalty += feature.data.condition;
-                journeyBonus += feature.data.journey;
+            if (actor.data.data.specialty[actor.data.data.current.terrain]) {
+                journeyBonus += 2;
+            }
+            if (actor.data.data.specialty[actor.data.data.current.weather]) {
+                journeyBonus += 2;
+            }
+
+            // Search for any bonuses to condition and journey checks from class features
+            const classes = items.filter(i => i.type === "class");
+            classes.forEach(c => {
+                c.data.data.features.forEach(feature => {
+                    conditionPenalty += feature.data.condition;
+                    journeyBonus += feature.data.journey;
+                });
             });
-        });
 
-        // create a message that outputs all the modifiers on the actors rolls
-        let currentModifiers = "";
-        if (modifiers.length > 0) {
-            currentModifiers = `<br />${actor.name} ${game.i18n.localize("RYUU.checkmodifiers")}:`;
-            modifiers.forEach(element => {
-                currentModifiers += ` ${element},`;
-            });
-            currentModifiers = currentModifiers.replace(/,\s*$/, "");
+            // create a message that outputs all the modifiers on the actors rolls
+
+            if (modifiers.length > 0) {
+                currentModifiers = `<br />${actor.name} ${game.i18n.localize("RYUU.checkmodifiers")}:`;
+                modifiers.forEach(element => {
+                    currentModifiers += ` ${element},`;
+                });
+                currentModifiers = currentModifiers.replace(/,\s*$/, "");
+            }
         }
         switch (event.target.id) {
 
             // Journey checks
-            case "roll-travel":
+            case "roll-travel": {
                 if (journeyBonus > 0) {
                     modifiers.push(journeyBonus);
                 }
@@ -549,7 +556,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                 }
                 rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checktravel")} [STR + DEX]`, modifiers, journeyDC);
                 break;
-            case "roll-direction":
+            }
+
+            case "roll-direction": {
                 if (journeyBonus > 0) {
                     modifiers.push(journeyBonus);
                 }
@@ -564,7 +573,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                 }
                 rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkdirection")} [INT + INT]`, modifiers, journeyDC);
                 break;
-            case "roll-camp":
+            }
+
+            case "roll-camp": {
                 if (journeyBonus > 0) {
                     modifiers.push(journeyBonus);
                 }
@@ -579,8 +590,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                 }
                 rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkcamp")} [DEX + INT]`, modifiers, journeyDC);
                 break;
+            }
 
-                // Condition Check
+            // Condition Check
             case "roll-condition": {
                 if (conditionPenalty !== 0) {
                     modifiers.push(conditionPenalty);
@@ -617,31 +629,68 @@ export class RyuutamaActorSheet extends ActorSheet {
             }
 
             // Single Stat rolls
-            case "roll-strength":
+            case "roll-strength": {
                 rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR]${currentModifiers}`);
                 break;
-            case "roll-dexterity":
+            }
+
+            case "roll-dexterity": {
                 rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checkdex")} [DEX]${currentModifiers}`);
                 break;
-            case "roll-intelligence":
+            }
+
+            case "roll-intelligence": {
                 rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT]${currentModifiers}`);
                 break;
-            case "roll-spirit":
+            }
+
+            case "roll-spirit": {
                 rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI]${currentModifiers}`);
                 break;
+            }
 
-            case "set-max-hp":
+            case "set-max-hp": {
                 // Set HP to full
                 actor.update({
                     "data.hp.value": actor.data.data.hp.max
                 });
                 break;
-            case "set-max-mp":
+            }
+
+            case "set-max-mp": {
                 // Set MP to full
                 actor.update({
                     "data.mp.value": actor.data.data.mp.max
                 });
                 break;
+            }
+
+            case "roll-accuracy": {
+                rollCheck(actor.data.data.accuracy, `${actor.name} attacks!`);
+                break;
+            }
+
+            case "roll-damage": {
+                rollCheck(actor.data.data.damage, `${actor.name} damage:`);
+                break;
+            }
+
+            case "roll-ability-accuracy": {
+                let abilityText = `${actor.name} uses their <strong>Special Ability</strong>:<p>${actor.data.data.ability.description}</p>`;
+                if (actor.data.data.ability.accuracy) {
+                    rollCheck(actor.data.data.ability.accuracy, abilityText);
+                } else {
+                    ChatMessage.create({
+                        content: abilityText
+                    }, {});
+                }
+                break;
+            }
+
+            case "roll-ability-damage": {
+                rollCheck(actor.data.data.ability.damage, `${actor.name}'s <strong>Special Ability</strong> damage:`);
+                break;
+            }
 
             default:
                 // Handle all other roll types
@@ -688,7 +737,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                 } else {
                     let text = "";
                     if (event.target.previousSibling.previousSibling.innerText) {
-                        text = `${actor.name} ${game.i18n.localize("RYUU.check")} ${event.target.previousSibling.previousSibling.innerText} ${event.target.innerText}`;
+                        text = `${actor.name} ${game.i18n.localize("RYUU.check")} <strong>${event.target.previousSibling.previousSibling.innerText}</strong> ${event.target.innerText}`;
                     }
                     rollCheck(event.target.innerText.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi"), text + currentModifiers, modifiers);
                 }
