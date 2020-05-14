@@ -9,19 +9,22 @@
             {{#each spells as |item id|}}
                 <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
                     <div class="item-image rollable"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
-                    <h4 class="item-name">{{item.name}}</h4>
+                    <h4 class="item-name item-details-toggle description-hidden">{{item.name}}</h4>
                     <div class="item-info">{{ localize (concat "RYUU." item.data.season) }}</div>
                     <div class="item-controls">
                         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
                     </div>
-                </li>
-                <li class="item flexrow" data-item-id="{{item._id}}">
-                    <div class="item-image"></div>
-                    <div class="item-name"><strong>Cost</strong>: {{item.data.cost}} MP</div>
-                    <div class="item-name"><strong>Duration</strong>: {{item.data.duration}}</div>
-                    <div class="item-name"><strong>Target</strong>: {{item.data.target}}</div>
-                    <div class="item-name"><strong>Range</strong>: {{item.data.range}}</div>
+                    <div class="item-description">
+                        <div class="item flexrow" data-item-id="{{item._id}}">
+                            <div class="item-image"></div>
+                            <div class="item-name"><strong>Cost</strong>: {{item.data.cost}} MP</div>
+                            <div class="item-name"><strong>Duration</strong>: {{item.data.duration}}</div>
+                            <div class="item-name"><strong>Target</strong>: {{item.data.target}}</div>
+                            <div class="item-name"><strong>Range</strong>: {{item.data.range}}</div>
+                        </div>
+                        {{{item.data.description}}}
+                    </div>
                 </li>
             {{/each}}
         {{/each}}

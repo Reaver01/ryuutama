@@ -9,7 +9,7 @@
         {{#each actor.equipment as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
                 <div class="item-image"><img class="{{#if item.data.isWeapon}}rollable {{item.type}} accuracy damage{{/if}}" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
-                <h4 class="item-name">{{item.name}}</h4>
+                <h4 class="item-name item-details-toggle description-hidden">{{item.name}}</h4>
                 <div class="item-equip">{{#if item.data.equip}}{{ localize (concat "RYUU." item.data.equip) }}{{/if}}</div>
                 <div class="item-size">{{item.data.size}}</div>
                 <div class="item-controls">
@@ -17,6 +17,7 @@
                     <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                     <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
                 </div>
+                <div class="item-description">{{{item.data.description}}}</div>
             </li>
         {{/each}}
     </ol>
@@ -30,11 +31,12 @@
         {{#each actor.gear as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
                 <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
-                <h4 class="item-name">{{item.name}}</h4>
+                <h4 class="item-name item-details-toggle description-hidden">{{item.name}}</h4>
                 <div class="item-controls">
                     <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                     <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
                 </div>
+                <div class="item-description">{{{item.data.description}}}</div>
             </li>
         {{/each}}
     </ol>
@@ -48,13 +50,14 @@
         {{#each actor.containers as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
                 <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
-                <h4 class="item-name">{{item.name}}</h4>
+                <h4 class="item-name item-details-toggle description-hidden">{{item.name}}</h4>
                 <div class="item-equip">{{item.data.holdingSize}}/{{item.data.canHold}}</div>
                 <div class="item-size">{{item.data.size}}</div>
                 <div class="item-controls">
                     <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                     <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
                 </div>
+                <div class="item-description">{{{item.data.description}}}</div>
             </li>
             {{#each item.data.holding as |held id|}}
                 <li class="item flexrow" data-item-id="{{held.id}}" data-parent-id="{{item._id}}">
@@ -87,11 +90,12 @@
         {{#each actor.animals as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
                 <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
-                <h4 class="item-name">{{item.name}}</h4>
+                <h4 class="item-name item-details-toggle description-hidden">{{item.name}}</h4>
                 <div class="item-controls">
                     <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                     <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
                 </div>
+                <div class="item-description">{{{item.data.description}}}</div>
             </li>
         {{/each}}
     </ol>

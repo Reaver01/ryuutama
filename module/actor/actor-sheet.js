@@ -17,7 +17,7 @@ export class RyuutamaActorSheet extends ActorSheet {
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
-                initial: "spells"
+                initial: "equipped"
             }]
         });
     }
@@ -386,6 +386,9 @@ export class RyuutamaActorSheet extends ActorSheet {
         // Item State Toggling
         html.find(".item-toggle").click(this._onToggleItem.bind(this));
 
+        // Toggle Item Details
+        html.find(".item-details-toggle").click(this._showItemDetails.bind(this));
+
         if (this.actor.owner) {
             let handler = ev => this._onDragItemStart(ev);
             html.find("li.item").each((i, li) => {
@@ -394,7 +397,21 @@ export class RyuutamaActorSheet extends ActorSheet {
                 li.addEventListener("dragstart", handler, false);
             });
         }
+    }
 
+    _showItemDetails(event) {
+        event.preventDefault();
+        const toggler = $(event.currentTarget);
+        const item = toggler.parents('.item');
+        const description = item.find('.item-description');
+
+        if (toggler.hasClass('description-hidden')) {
+            toggler.removeClass('description-hidden').addClass('description-shown');
+            description.slideDown();
+        } else {
+            toggler.removeClass('description-shown').addClass('description-hidden');
+            description.slideUp();
+        }
     }
 
     /* -------------------------------------------- */
