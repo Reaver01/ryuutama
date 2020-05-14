@@ -107,6 +107,7 @@
 
     "RYUU.abilitydescription": "Special Ability",
     "RYUU.number": "D-No",
+    "RYUU.habitat": "Habitat",
 
     "RYUU.terrain": "Terrain",
     "RYUU.grassland": "Grassland",
@@ -164,6 +165,7 @@
     "RYUU.fall": "Fall",
     "RYUU.winter": "Winter",
     "RYUU.legendary": "Legendary Journey",
+    "RYUU.armor": "Armor",
 
     "RYUU.cost": "MP Cost",
     "RYUU.duration": "Duration",

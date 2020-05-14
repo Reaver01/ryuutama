@@ -315,10 +315,6 @@
   border-bottom: 0;
 }
 
-.ryuutama .monster-header {
-  flex: 0 0 220px;
-}
-
 .ryuutama input {
   border: none;
 }

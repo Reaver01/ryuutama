@@ -1,7 +1,7 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
 
     {{!-- Sheet Header --}}
-    <header class="sheet-header monster-header">
+    <header class="sheet-header">
         <div class="header-fields">
             <div class="grid grid-6col">
                 <div class="row1-6">
@@ -11,14 +11,20 @@
                     <div class="left-panel">
                         <label for="data.attributes.condition.value" class="resource-label">{{ localize "RYUU.condition" }}</label>
                         <br />
-                        <img class="resource-image" src="/systems/ryuutama/img/sheet/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
+                        <img class="resource-image" src="/systems/ryuutama/img/sheet/condition.svg" title="{{ localize 'RYUU.condition' }}" />
                         <input class="resource-input" type="text" name="data.attributes.condition.value" value="{{data.attributes.condition.value}}" data-dtype="Number" />
                     </div>
                     <div class="left-panel">
                         <label for="data.attributes.initiative" class="resource-label">{{ localize "RYUU.initiative" }}</label>
                         <br />
-                        <img class="resource-image" src="/systems/ryuutama/img/sheet/dice.svg" id="roll-initiative" title="{{ localize 'RYUU.initiative' }}" />
+                        <img class="resource-image" src="/systems/ryuutama/img/sheet/dice.svg" title="{{ localize 'RYUU.initiative' }}" />
                         <input class="resource-input" type="text" name="data.attributes.initiative" value="{{data.attributes.initiative}}" data-dtype="Number" />
+                    </div>
+                    <div class="left-panel">
+                        <label for="data.armor" class="resource-label">{{ localize "RYUU.armor" }}</label>
+                        <br />
+                        <img class="resource-image" src="/systems/ryuutama/img/armor/shoulder-armor.svg" title="{{ localize 'RYUU.armor' }}" />
+                        <input class="resource-input" type="text" name="data.armor" value="{{data.armor}}" data-dtype="Number" />
                     </div>
                 </div>
                 <div class="col2-5">
@@ -94,7 +100,7 @@
                                 <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/hp.svg" id="set-max-hp" title="{{ localize 'RYUU.hp.long' }}" height="30" width="30" />
                                 <input class="resource-input" type="text" name="data.hp.value" value="{{data.hp.value}}" data-dtype="Number" />
                                 <span> / </span>
-                                <input readonly class="resource-input" type="text" name="data.hp.max" value="{{data.hp.max}}" data-dtype="Number" />
+                                <input class="resource-input" type="text" name="data.hp.max" value="{{data.hp.max}}" data-dtype="Number" />
                             </div>
                         </div>
                         <div class="resource flex-group-center">
@@ -103,7 +109,7 @@
                                 <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/mp.svg" id="set-max-mp" title="{{ localize 'RYUU.mp.long' }}" height="30" width="30" />
                                 <input class="resource-input" type="text" name="data.mp.value" value="{{data.mp.value}}" data-dtype="Number" />
                                 <span> / </span>
-                                <input readonly class="resource-input" type="text" name="data.mp.max" value="{{data.mp.max}}" data-dtype="Number" />
+                                <input class="resource-input" type="text" name="data.mp.max" value="{{data.mp.max}}" data-dtype="Number" />
                             </div>
                         </div>
                     </div>
@@ -120,6 +126,7 @@
                                     <option value="8">d8</option>
                                     <option value="10">d10</option>
                                     <option value="12">d12</option>
+                                    <option value="20">d20</option>
                                 {{/select}}
                             </select>
                         </div>
@@ -133,6 +140,7 @@
                                     <option value="8">d8</option>
                                     <option value="10">d10</option>
                                     <option value="12">d12</option>
+                                    <option value="20">d20</option>
                                 {{/select}}
                             </select>
                         </div>
@@ -146,6 +154,7 @@
                                     <option value="8">d8</option>
                                     <option value="10">d10</option>
                                     <option value="12">d12</option>
+                                    <option value="20">d20</option>
                                 {{/select}}
                             </select>
                         </div>
@@ -159,8 +168,21 @@
                                     <option value="8">d8</option>
                                     <option value="10">d10</option>
                                     <option value="12">d12</option>
+                                    <option value="20">d20</option>
                                 {{/select}}
                             </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col2-6">
+                    <div class="resources grid grid-2col">
+                        <div class="resource flex-group-center">
+                            <label for="data.season" class="resource-label">{{ localize "RYUU.season" }}</label>
+                            <input class="resource" type="text" name="data.season" value="{{data.season}}" data-dtype="String" />
+                        </div>
+                        <div class="resource flex-group-center">
+                            <label for="data.habitat" class="resource-label">{{ localize "RYUU.habitat" }}</label>
+                            <input class="resource" type="text" name="data.habitat" value="{{data.habitat}}" data-dtype="String" />
                         </div>
                     </div>
                 </div>
@@ -186,13 +208,13 @@
             </div>
             <br />
             <div class="flexrow">
-                <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/dice.svg" id="roll-accuracy" title="{{ localize 'RYUU.accuracy' }}" width="50" height="50" />
+                <img class="resource-image {{#if data.accuracy}}rollable{{/if}}" src="/systems/ryuutama/img/sheet/dice.svg" id="roll-accuracy" title="{{ localize 'RYUU.accuracy' }}" width="50" height="50" />
                 <div class="resource">
                     <label for="data.accuracy" class="resource-label">{{ localize "RYUU.accuracy" }}</label>
                     <input class="resource-input" type="text" name="data.accuracy" value="{{data.accuracy}}" data-dtype="String" />
                 </div>
                 <div></div>
-                <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/dice.svg" id="roll-damage" title="{{ localize 'RYUU.damage' }}" width="50" height="50" />
+                <img class="resource-image {{#if data.damage}}rollable{{/if}}" src="/systems/ryuutama/img/sheet/dice.svg" id="roll-damage" title="{{ localize 'RYUU.damage' }}" width="50" height="50" />
                 <div class="resource">
                     <label for="data.damage" class="resource-label">{{ localize "RYUU.damage" }}</label>
                     <input class="resource-input" type="text" name="data.damage" value="{{data.damage}}" data-dtype="String" />
