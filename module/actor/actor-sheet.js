@@ -554,7 +554,18 @@ export class RyuutamaActorSheet extends ActorSheet {
                 if (armorPenalty !== 0) {
                     modifiers.push(armorPenalty);
                 }
-                rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checktravel")} [STR + DEX]`, modifiers, journeyDC);
+                const travelCheck = rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checktravel")} [STR + DEX]`, modifiers, journeyDC);
+                if (travelCheck.crit) {
+                    const pcCondition = actor.data.data.attributes.condition.value || 0;
+                    actor.update({
+                        "data.attributes.condition.value": pcCondition + 1
+                    });
+                } else if (travelCheck.fumble) {
+                    const pcHP = actor.data.data.hp.value || 0;
+                    actor.update({
+                        "data.hp.value": Math.floor(pcHP / 4)
+                    });
+                }
                 break;
             }
 
@@ -667,10 +678,10 @@ export class RyuutamaActorSheet extends ActorSheet {
 
             case "use-fumble": {
                 // Remvoe a fumble point
-                const pcfumble = actor.data.data.attributes.fumble || 0;
-                if (pcfumble > 0) {
+                const pcFumble = actor.data.data.attributes.fumble || 0;
+                if (pcFumble > 0) {
                     actor.update({
-                        "data.attributes.fumble": pcfumble - 1
+                        "data.attributes.fumble": pcFumble - 1
                     });
                     ChatMessage.create({
                         content: `${actor.name} uses a <strong>fumble point</strong>`
@@ -787,9 +798,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                 flavor += game.i18n.localize("RYUU.rollfumble");
                 const players = game.actors.filter(a => a.isPC);
                 players.forEach(player => {
-                    const pcfumble = player.data.data.attributes.fumble || 0;
+                    const pcFumble = player.data.data.attributes.fumble || 0;
                     player.update({
-                        "data.attributes.fumble": pcfumble + 1
+                        "data.attributes.fumble": pcFumble + 1
                     });
                 });
             }
