@@ -194,6 +194,7 @@
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="eqquiped">{{ localize "RYUU.description" }}</a>
         <a class="item" data-tab="items">{{ localize "RYUU.items" }}</a>
+        <a class="item" data-tab="spells">{{ localize "RYUU.spells" }}</a>
     </nav>
 
     {{!-- Sheet Body --}}
@@ -257,6 +258,9 @@
 
         {{!-- Owned Items Tab --}}
         {{> "systems/ryuutama/templates/actor/parts/monster-items.html"}}
+
+        {{!-- Owned Spells Tab --}}
+        {{> "systems/ryuutama/templates/actor/parts/actor-spells.html"}}
 
     </section>
 </form>

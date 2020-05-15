@@ -13,7 +13,7 @@ export class RyuutamaActorSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["ryuutama", "sheet", "actor", "character"],
             width: 600,
-            height: 650,
+            height: 700,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
@@ -45,6 +45,9 @@ export class RyuutamaActorSheet extends ActorSheet {
         // Prepare items.
         if (this.actor.data.type === "character") {
             this._prepareCharacterItems(data);
+        }
+        if (this.actor.data.type === "monster") {
+            this._prepareMonsterItems(data);
         }
 
         return data;
@@ -288,6 +291,48 @@ export class RyuutamaActorSheet extends ActorSheet {
         actorData.animals = animals;
         actorData.classes = classes;
         actorData.features = features;
+        actorData.spells = spells;
+    }
+
+    /* -------------------------------------------- */
+
+    /**
+     * Organize and classify Items for Monster sheets.
+     *
+     * @param {Object} actorData The actor to prepare.
+     *
+     * @return {undefined}
+     */
+    _prepareMonsterItems(sheetData) {
+        const actorData = sheetData.actor;
+
+        // Initialize containers.
+        const gear = [];
+        const spells = {
+            "low": [],
+            "mid": [],
+            "high": []
+        };
+
+        // Iterate through items, allocating to containers
+        // let totalWeight = 0;
+        for (let i of sheetData.items) {
+            let item = i.data;
+            i.img = i.img || DEFAULT_TOKEN;
+            // Append to gear.
+            if (i.type !== "spell" && (item.container === undefined || item.container === "")) {
+                gear.push(i);
+            }
+            // Append to spells.
+            else if (i.type === "spell") {
+                if (item.level != undefined) {
+                    spells[item.level].push(i);
+                }
+            }
+        }
+
+        // Assign and return
+        actorData.gear = gear;
         actorData.spells = spells;
     }
 

@@ -6,7 +6,7 @@
             <div class="item-size">{{ localize "RYUU.size" }}</div>
             <div class="item-controls"></div>
         </li>
-        {{#each actor.items as |item id|}}
+        {{#each actor.gear as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
                 <div class="item-image"><img class="{{#if item.data.isWeapon}}rollable {{item.type}} accuracy damage{{/if}}" src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
                 <h4 class="item-name">{{item.name}}</h4>

@@ -2,7 +2,7 @@
     "name": "ryuutama",
     "title": "Ryuutama",
     "description": "The Ryuutama system, developed from the Simple World-Building by Atropos.",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "minimumCoreVersion": "0.5.5",
     "compatibleCoreVersion": "0.5.6",
     "templateVersion": 2,
