@@ -14,7 +14,6 @@
 
   .item,
   .level {
-    line-height: 24px;
     padding: 3px 0;
     border-bottom: 1px solid #BBB;
 
@@ -25,8 +24,9 @@
     }
 
     .terrain-checkbox {
-      flex: 0 0 15px;
+      flex: 0 0 10px;
       margin-right: 5px;
+      margin-left: 10px;
     }
 
     img {

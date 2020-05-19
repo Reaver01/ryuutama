@@ -120,11 +120,11 @@
                     <label class="journey resource-label">{{ localize "RYUU.travel" }}</label>
                     <img class="check-image rollable" src="/systems/ryuutama/img/sheet/map.svg" id="roll-travel" title="{{ localize 'RYUU.travel' }}" height="30" width="30" />
                     <div class="spacer"></div>
-                    <input class="status-checkbox" onclick="return false;" type="checkbox" name="data.immunity.injury" {{checked data.immunity.injury}} />
+                    <div class="status-checkbox"><i class="fas {{#if data.immunity.injury}}fa-check-circle{{/if}}"></i></div>
                     <img class="status-image" src="/systems/ryuutama/img/sheet/injury.svg" title="{{ localize 'RYUU.injury' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.injury" value="{{data.effects.injury}}" data-dtype="Number" />
                     <div class="spacer-half"></div>
-                    <input class="status-checkbox" onclick="return false;" type="checkbox" name="data.immunity.exhaustion" {{checked data.immunity.exhaustion}} />
+                    <div class="status-checkbox"><i class="fas {{#if data.immunity.exhaustion}}fa-check-circle{{/if}}"></i></div>
                     <img class="status-image" src="/systems/ryuutama/img/sheet/exhaustion.svg" title="{{ localize 'RYUU.exhaustion' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.exhaustion" value="{{data.effects.exhaustion}}" data-dtype="Number" />
                     <div class="spacer"></div>
@@ -134,11 +134,11 @@
                     <label class="journey resource-label">{{ localize "RYUU.direction" }}</label>
                     <img class="check-image rollable" src="/systems/ryuutama/img/sheet/compass.svg" id="roll-direction" title="{{ localize 'RYUU.direction' }}" height="30" width="30" />
                     <div class="spacer"></div>
-                    <input class="status-checkbox" onclick="return false;" type="checkbox" name="data.immunity.poison" {{checked data.immunity.poison}} />
+                    <div class="status-checkbox"><i class="fas {{#if data.immunity.poison}}fa-check-circle{{/if}}"></i></div>
                     <img class="status-image" src="/systems/ryuutama/img/sheet/poison.svg" title="{{ localize 'RYUU.poison' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.poison" value="{{data.effects.poison}}" data-dtype="Number" />
                     <div class="spacer-half"></div>
-                    <input class="status-checkbox" onclick="return false;" type="checkbox" name="data.immunity.muddled" {{checked data.immunity.muddled}} />
+                    <div class="status-checkbox"><i class="fas {{#if data.immunity.muddled}}fa-check-circle{{/if}}"></i></div>
                     <img class="status-image" src="/systems/ryuutama/img/sheet/muddled.svg" title="{{ localize 'RYUU.muddled' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.muddled" value="{{data.effects.muddled}}" data-dtype="Number" />
                     <div class="spacer"></div>
@@ -148,11 +148,11 @@
                     <label class="journey resource-label">{{ localize "RYUU.camp" }}</label>
                     <img class="check-image rollable" src="/systems/ryuutama/img/sheet/camp.svg" id="roll-camp" title="{{ localize 'RYUU.camp' }}" height="30" width="30" />
                     <div class="spacer"></div>
-                    <input class="status-checkbox" onclick="return false;" type="checkbox" name="data.immunity.sickness" {{checked data.immunity.sickness}} />
+                    <div class="status-checkbox"><i class="fas {{#if data.immunity.sickness}}fa-check-circle{{/if}}"></i></div>
                     <img class="status-image" src="/systems/ryuutama/img/sheet/sickness.svg" title="{{ localize 'RYUU.sickness' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.sickness" value="{{data.effects.sickness}}" data-dtype="Number" />
                     <div class="spacer-half"></div>
-                    <input class="status-checkbox" onclick="return false;" type="checkbox" name="data.immunity.shock" {{checked data.immunity.shock}} />
+                    <div class="status-checkbox"><i class="fas {{#if data.immunity.shock}}fa-check-circle{{/if}}"></i></div>
                     <img class="status-image" src="/systems/ryuutama/img/sheet/shock.svg" title="{{ localize 'RYUU.shock' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.shock" value="{{data.effects.shock}}" data-dtype="Number" />
                     <div class="spacer"></div>

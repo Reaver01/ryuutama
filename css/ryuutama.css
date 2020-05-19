@@ -218,7 +218,7 @@
 .ryuutama .sheet-header .status-checkbox {
   flex: 0 0 15px;
   margin-top: 5px;
-  padding-top: 5px;
+  padding-top: 2px;
   border: none;
 }
 
@@ -437,7 +437,6 @@
 
 .ryuutama .items-list .item,
 .ryuutama .items-list .level {
-  line-height: 24px;
   padding: 3px 0;
   border-bottom: 1px solid #BBB;
 }
@@ -451,8 +450,9 @@
 
 .ryuutama .items-list .item .terrain-checkbox,
 .ryuutama .items-list .level .terrain-checkbox {
-  flex: 0 0 15px;
+  flex: 0 0 10px;
   margin-right: 5px;
+  margin-left: 10px;
 }
 
 .ryuutama .items-list .item img,
