@@ -14,37 +14,6 @@ RYUU.CHARACTER_EXP_LEVELS = [0, 100, 600, 1200, 2000, 3000, 4200, 5800, 7500, 10
 
 RYUU.POINT_MAX = 3;
 
-RYUU.TERRAIN = {
-    "": 0,
-    "grassland": 6,
-    "wasteland": 6,
-    "woods": 8,
-    "highlands": 8,
-    "rocky": 8,
-    "forest": 10,
-    "swamp": 10,
-    "mountain": 10,
-    "desert": 12,
-    "jungle": 12,
-    "alpine": 14
-};
-
-RYUU.WEATHER = {
-    "": 0,
-    "rain": 1,
-    "wind": 1,
-    "fog": 1,
-    "hot": 1,
-    "cold": 1,
-    "rain2": 3,
-    "snow": 3,
-    "fog2": 3,
-    "dark": 3,
-    "hurricane": 5,
-    "blizzard": 5
-};
-
-
 RYUU.MAX_HAND = 2;
 RYUU.MAX_CHEST = 1;
 RYUU.MAX_HEAD = 1;
