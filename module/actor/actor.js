@@ -40,6 +40,83 @@ export class RyuutamaActor extends Actor {
         let addMp = 0;
         let addCarry = 0;
 
+        // Build traveling object
+        let traveling = {
+            terrain: {},
+            weather: {}
+        };
+        let terrainDC = [0];
+        let weatherDC = [0];
+        let terrain = [];
+        let weather = [];
+        let typeMap = [];
+
+        for (let index = 1; index < 17; index++) {
+            let tName = game.settings.get("ryuutama", "terrainName" + index);
+            let tDC = game.settings.get("ryuutama", "terrain" + index);
+            if (tName !== "") {
+                terrainDC.push(tDC);
+                terrain.push({
+                    name: tName,
+                    dc: tDC
+                });
+            }
+            let wName = game.settings.get("ryuutama", "weatherName" + index);
+            let wDC = game.settings.get("ryuutama", "weather" + index);
+            if (wName !== "") {
+                weatherDC.push(wDC);
+                weather.push({
+                    name: wName,
+                    dc: wDC
+                });
+            }
+        }
+
+        terrainDC = terrainDC.filter((value, index) => terrainDC.indexOf(value) === index);
+        weatherDC = weatherDC.filter((value, index) => weatherDC.indexOf(value) === index);
+
+        for (let index = 1; index < terrainDC.length; index++) {
+            traveling.terrain[index] = {
+                dc: terrainDC[index],
+                types: {}
+            };
+            terrain.forEach((element, index1) => {
+                if (element.dc === terrainDC[index]) {
+                    traveling.terrain[index].types["terrain" + (index1 + 1)] = {
+                        name: element.name,
+                        specialty: false,
+                        bonus: 0
+                    };
+                    typeMap.push({
+                        type: "terrain",
+                        number: index1 + 1,
+                        index: index
+                    });
+                }
+            });
+        }
+
+        for (let index = 1; index < weatherDC.length; index++) {
+            traveling.weather[index] = {
+                dc: weatherDC[index],
+                types: {}
+            };
+            weather.forEach((element, index1) => {
+                if (element.dc === weatherDC[index]) {
+                    traveling.weather[index].types["weather" + (index1 + 1)] = {
+                        name: element.name,
+                        specialty: false,
+                        bonus: 0
+                    };
+                    typeMap.push({
+                        type: "weather",
+                        number: index1 + 1,
+                        index: index
+                    });
+                }
+            });
+        }
+
         // Class
         classes.forEach(c => {
             switch (c.data.type) {
@@ -50,7 +127,6 @@ export class RyuutamaActor extends Actor {
                 case "technical":
                     addCarry += 3;
                     break;
-
 
                 case "magic":
                     addMp += 4;
@@ -137,7 +213,10 @@ export class RyuutamaActor extends Actor {
             }
         }
         specialties.forEach(specialty => {
-            data.specialty[specialty] = true;
+            let type = typeMap.find(t => t.type + t.number === specialty);
+            if (type) {
+                traveling[type.type][type.index].types[type.type + type.number].specialty = true;
+            }
         });
         for (const key in data.immunity) {
             if (Object.prototype.hasOwnProperty.call(data.immunity, key)) {
@@ -260,15 +339,16 @@ export class RyuutamaActor extends Actor {
         data.attributes.capacity.equipped = equippedWeight;
 
         // Terrain
-        for (const name in data.traveling) {
-            if (Object.prototype.hasOwnProperty.call(data.traveling, name)) {
-                data.traveling[name] = 0;
-                let mod = items.filter(i => i.data[name] && i.data.equipped);
-                mod.forEach(item => {
-                    data.traveling[name] += item.data.itemBonus;
-                });
-            }
-        }
+        typeMap.forEach(type => {
+            traveling[type.type][type.index].types[type.type + type.number].bonus = 0;
+            let mod = items.filter(i => i.data[type.type + type.number] && i.data.equipped);
+            mod.forEach(item => {
+                traveling[type.type][type.index].types[type.type + type.number].bonus += item.data.itemBonus;
+            });
+        });
+
+       data.traveling = traveling;
+       data.typeMap = typeMap;
     }
 
     /**

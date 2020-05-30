@@ -531,11 +531,15 @@ export class RyuutamaActorSheet extends ActorSheet {
         const dex = Number(attr.dex.value);
         const int = Number(attr.int.value);
         const spi = Number(attr.spi.value);
+        let currentTerrain = game.settings.get("ryuutama", "terrain");
+        let currentWeather = game.settings.get("ryuutama", "weather");
+        let night = game.settings.get("ryuutama", "night");
         let journeyDC = 0;
         let terrainBonus = 0;
         let weatherBonus = 0;
         let journeyBonus = 0;
         let currentModifiers = "";
+        const typeMap = actor.data.data.typeMap;
 
         // To hold all the modifiers a character has + and -
         let modifiers = [];
@@ -570,15 +574,24 @@ export class RyuutamaActorSheet extends ActorSheet {
             }
 
             // Calculate the current Journey DC and any bonuses to the current terrain/weather
-            journeyDC = RYUU.TERRAIN[actor.data.data.current.terrain] + RYUU.WEATHER[actor.data.data.current.weather];
-            terrainBonus = actor.data.data.traveling[actor.data.data.current.terrain];
-            weatherBonus = actor.data.data.traveling[actor.data.data.current.weather];
-
-            if (actor.data.data.specialty[actor.data.data.current.terrain]) {
-                journeyBonus += 2;
+            if (currentTerrain) {
+                journeyDC += game.settings.get("ryuutama", currentTerrain);
+                let type = typeMap.find(t => t.type + t.number === currentTerrain);
+                terrainBonus = actor.data.data.traveling[type.type][type.index].types[type.type + type.number].bonus;
+                if (actor.data.data.traveling[type.type][type.index].types[type.type + type.number].specialty) {
+                    journeyBonus += 2;
+                }
             }
-            if (actor.data.data.specialty[actor.data.data.current.weather]) {
-                journeyBonus += 2;
+            if (currentWeather) {
+                journeyDC += game.settings.get("ryuutama", currentWeather);
+                let type = typeMap.find(t => t.type + t.number === currentWeather);
+                weatherBonus = actor.data.data.traveling[type.type][type.index].types[type.type + type.number].bonus;
+                if (actor.data.data.traveling[type.type][type.index].types[type.type + type.number].specialty) {
+                    journeyBonus += 2;
+                }
+            }
+            if (night) {
+                journeyDC++;
             }
 
             // Search for any bonuses to condition and journey checks from class features

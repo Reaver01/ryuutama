@@ -8,153 +8,281 @@
 <div class="terrain grid grid-3col">
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.grassland" {{checked data.grassland}} />
-            <label for="data.grassland" class="resource-label">{{ localize "RYUU.grassland" }}</label>
+            {{#if (settings "terrainName1")}}
+                <input class="terrain" type="checkbox" name="data.terrain1" {{checked data.terrain1}} />
+                <label for="data.terrain1" class="resource-label">{{ settings "terrainName1" }}</label>
+            {{/if}}
         </div>
     </div>
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.wasteland" {{checked data.wasteland}} />
-            <label for="data.wasteland" class="resource-label">{{ localize "RYUU.wasteland" }}</label>
-        </div>
-    </div>
-</div>
-<div class="terrain grid grid-3col">
-    <div>
-        <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.woods" {{checked data.woods}} />
-            <label for="data.woods" class="resource-label">{{ localize "RYUU.woods" }}</label>
+            {{#if (settings "terrainName2")}}
+                <input class="terrain" type="checkbox" name="data.terrain2" {{checked data.terrain2}} />
+                <label for="data.terrain2" class="resource-label">{{ settings "terrainName2" }}</label>
+            {{/if}}
         </div>
     </div>
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.highlands" {{checked data.highlands}} />
-            <label for="data.highlands" class="resource-label">{{ localize "RYUU.highlands" }}</label>
-        </div>
-    </div>
-    <div>
-        <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.rocky" {{checked data.rocky}} />
-            <label for="data.rocky" class="resource-label">{{ localize "RYUU.rocky" }}</label>
+            {{#if (settings "terrainName3")}}
+                <input class="terrain" type="checkbox" name="data.terrain3" {{checked data.terrain3}} />
+                <label for="data.terrain3" class="resource-label">{{ settings "terrainName3" }}</label>
+            {{/if}}
         </div>
     </div>
 </div>
 <div class="terrain grid grid-3col">
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.forest" {{checked data.forest}} />
-            <label for="data.forest" class="resource-label">{{ localize "RYUU.forest" }}</label>
+            {{#if (settings "terrainName4")}}
+                <input class="terrain" type="checkbox" name="data.terrain4" {{checked data.terrain4}} />
+                <label for="data.terrain4" class="resource-label">{{ settings "terrainName4" }}</label>
+            {{/if}}
         </div>
     </div>
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.swamp" {{checked data.swamp}} />
-            <label for="data.swamp" class="resource-label">{{ localize "RYUU.swamp" }}</label>
+            {{#if (settings "terrainName5")}}
+                <input class="terrain" type="checkbox" name="data.terrain5" {{checked data.terrain5}} />
+                <label for="data.terrain5" class="resource-label">{{ settings "terrainName5" }}</label>
+            {{/if}}
         </div>
     </div>
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.mountain" {{checked data.mountain}} />
-            <label for="data.mountain" class="resource-label">{{ localize "RYUU.mountain" }}</label>
-        </div>
-    </div>
-</div>
-<div class="terrain grid grid-3col">
-    <div>
-        <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.desert" {{checked data.desert}} />
-            <label for="data.desert" class="resource-label">{{ localize "RYUU.desert" }}</label>
-        </div>
-    </div>
-    <div>
-        <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.jungle" {{checked data.jungle}} />
-            <label for="data.jungle" class="resource-label">{{ localize "RYUU.jungle" }}</label>
+            {{#if (settings "terrainName6")}}
+                <input class="terrain" type="checkbox" name="data.terrain6" {{checked data.terrain6}} />
+                <label for="data.terrain6" class="resource-label">{{ settings "terrainName6" }}</label>
+            {{/if}}
         </div>
     </div>
 </div>
 <div class="terrain grid grid-3col">
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.alpine" {{checked data.alpine}} />
-            <label for="data.alpine" class="resource-label">{{ localize "RYUU.alpine" }}</label>
+            {{#if (settings "terrainName7")}}
+                <input class="terrain" type="checkbox" name="data.terrain7" {{checked data.terrain7}} />
+                <label for="data.terrain7" class="resource-label">{{ settings "terrainName7" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "terrainName8")}}
+                <input class="terrain" type="checkbox" name="data.terrain8" {{checked data.terrain8}} />
+                <label for="data.terrain8" class="resource-label">{{ settings "terrainName8" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "terrainName9")}}
+                <input class="terrain" type="checkbox" name="data.terrain9" {{checked data.terrain9}} />
+                <label for="data.terrain9" class="resource-label">{{ settings "terrainName9" }}</label>
+            {{/if}}
+        </div>
+    </div>
+</div>
+<div class="terrain grid grid-3col">
+    <div>
+        <div class="terrain">
+            {{#if (settings "terrainName10")}}
+                <input class="terrain" type="checkbox" name="data.terrain10" {{checked data.terrain10}} />
+                <label for="data.terrain10" class="resource-label">{{ settings "terrainName10" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "terrainName11")}}
+                <input class="terrain" type="checkbox" name="data.terrain11" {{checked data.terrain11}} />
+                <label for="data.terrain11" class="resource-label">{{ settings "terrainName11" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "terrainName12")}}
+                <input class="terrain" type="checkbox" name="data.terrain12" {{checked data.terrain12}} />
+                <label for="data.terrain12" class="resource-label">{{ settings "terrainName12" }}</label>
+            {{/if}}
+        </div>
+    </div>
+</div>
+<div class="terrain grid grid-3col">
+    <div>
+        <div class="terrain">
+            {{#if (settings "terrainName13")}}
+                <input class="terrain" type="checkbox" name="data.terrain13" {{checked data.terrain13}} />
+                <label for="data.terrain13" class="resource-label">{{ settings "terrainName13" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "terrainName14")}}
+                <input class="terrain" type="checkbox" name="data.terrain14" {{checked data.terrain14}} />
+                <label for="data.terrain14" class="resource-label">{{ settings "terrainName14" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "terrainName15")}}
+                <input class="terrain" type="checkbox" name="data.terrain15" {{checked data.terrain15}} />
+                <label for="data.terrain15" class="resource-label">{{ settings "terrainName15" }}</label>
+            {{/if}}
+        </div>
+    </div>
+</div>
+<div class="terrain grid grid-3col">
+    <div>
+        <div class="terrain">
+            {{#if (settings "terrainName16")}}
+                <input class="terrain" type="checkbox" name="data.terrain16" {{checked data.terrain16}} />
+                <label for="data.terrain16" class="resource-label">{{ settings "terrainName16" }}</label>
+            {{/if}}
         </div>
     </div>
 </div>
 <h3>Weather</h3>
-<div class="terrain grid grid-3col">
+<div class="weather grid grid-3col">
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.rain" {{checked data.rain}} />
-            <label for="data.rain" class="resource-label">{{ localize "RYUU.rain" }}</label>
+            {{#if (settings "weatherName1")}}
+                <input class="terrain" type="checkbox" name="data.weather1" {{checked data.weather1}} />
+                <label for="data.weather1" class="resource-label">{{ settings "weatherName1" }}</label>
+            {{/if}}
         </div>
     </div>
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.wind" {{checked data.wind}} />
-            <label for="data.wind" class="resource-label">{{ localize "RYUU.wind" }}</label>
+            {{#if (settings "weatherName2")}}
+                <input class="terrain" type="checkbox" name="data.weather2" {{checked data.weather2}} />
+                <label for="data.weather2" class="resource-label">{{ settings "weatherName2" }}</label>
+            {{/if}}
         </div>
     </div>
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.fog" {{checked data.fog}} />
-            <label for="data.fog" class="resource-label">{{ localize "RYUU.fog" }}</label>
-        </div>
-    </div>
-</div>
-<div class="terrain grid grid-3col">
-    <div>
-        <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.hot" {{checked data.hot}} />
-            <label for="data.hot" class="resource-label">{{ localize "RYUU.hot" }}</label>
-        </div>
-    </div>
-    <div>
-        <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.cold" {{checked data.cold}} />
-            <label for="data.cold" class="resource-label">{{ localize "RYUU.cold" }}</label>
+            {{#if (settings "weatherName3")}}
+                <input class="terrain" type="checkbox" name="data.weather3" {{checked data.weather3}} />
+                <label for="data.weather3" class="resource-label">{{ settings "weatherName3" }}</label>
+            {{/if}}
         </div>
     </div>
 </div>
-<div class="terrain grid grid-3col">
+<div class="weather grid grid-3col">
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.rain2" {{checked data.rain2}} />
-            <label for="data.rain2" class="resource-label">{{ localize "RYUU.rain2" }}</label>
+            {{#if (settings "weatherName4")}}
+                <input class="terrain" type="checkbox" name="data.weather4" {{checked data.weather4}} />
+                <label for="data.weather4" class="resource-label">{{ settings "weatherName4" }}</label>
+            {{/if}}
         </div>
     </div>
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.snow" {{checked data.snow}} />
-            <label for="data.snow" class="resource-label">{{ localize "RYUU.snow" }}</label>
+            {{#if (settings "weatherName5")}}
+                <input class="terrain" type="checkbox" name="data.weather5" {{checked data.weather5}} />
+                <label for="data.weather5" class="resource-label">{{ settings "weatherName5" }}</label>
+            {{/if}}
         </div>
     </div>
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.fog2" {{checked data.fog2}} />
-            <label for="data.fog2" class="resource-label">{{ localize "RYUU.fog2" }}</label>
+            {{#if (settings "weatherName6")}}
+                <input class="terrain" type="checkbox" name="data.weather6" {{checked data.weather6}} />
+                <label for="data.weather6" class="resource-label">{{ settings "weatherName6" }}</label>
+            {{/if}}
         </div>
     </div>
 </div>
-<div class="terrain grid grid-3col">
+<div class="weather grid grid-3col">
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.dark" {{checked data.dark}} />
-            <label for="data.dark" class="resource-label">{{ localize "RYUU.dark" }}</label>
+            {{#if (settings "weatherName7")}}
+                <input class="terrain" type="checkbox" name="data.weather7" {{checked data.weather7}} />
+                <label for="data.weather7" class="resource-label">{{ settings "weatherName7" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "weatherName8")}}
+                <input class="terrain" type="checkbox" name="data.weather8" {{checked data.weather8}} />
+                <label for="data.weather8" class="resource-label">{{ settings "weatherName8" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "weatherName9")}}
+                <input class="terrain" type="checkbox" name="data.weather9" {{checked data.weather9}} />
+                <label for="data.weather9" class="resource-label">{{ settings "weatherName9" }}</label>
+            {{/if}}
         </div>
     </div>
 </div>
-<div class="terrain grid grid-3col">
+<div class="weather grid grid-3col">
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.hurricane" {{checked data.hurricane}} />
-            <label for="data.hurricane" class="resource-label">{{ localize "RYUU.hurricane" }}</label>
+            {{#if (settings "weatherName10")}}
+                <input class="terrain" type="checkbox" name="data.weather10" {{checked data.weather10}} />
+                <label for="data.weather10" class="resource-label">{{ settings "weatherName10" }}</label>
+            {{/if}}
         </div>
     </div>
     <div>
         <div class="terrain">
-            <input class="terrain" type="checkbox" name="data.blizzard" {{checked data.blizzard}} />
-            <label for="data.blizzard" class="resource-label">{{ localize "RYUU.blizzard" }}</label>
+            {{#if (settings "weatherName11")}}
+                <input class="terrain" type="checkbox" name="data.weather11" {{checked data.weather11}} />
+                <label for="data.weather11" class="resource-label">{{ settings "weatherName11" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "weatherName12")}}
+                <input class="terrain" type="checkbox" name="data.weather12" {{checked data.weather12}} />
+                <label for="data.weather12" class="resource-label">{{ settings "weatherName12" }}</label>
+            {{/if}}
+        </div>
+    </div>
+</div>
+<div class="weather grid grid-3col">
+    <div>
+        <div class="terrain">
+            {{#if (settings "weatherName13")}}
+                <input class="terrain" type="checkbox" name="data.weather13" {{checked data.weather13}} />
+                <label for="data.weather13" class="resource-label">{{ settings "weatherName13" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "weatherName14")}}
+                <input class="terrain" type="checkbox" name="data.weather14" {{checked data.weather14}} />
+                <label for="data.weather14" class="resource-label">{{ settings "weatherName14" }}</label>
+            {{/if}}
+        </div>
+    </div>
+    <div>
+        <div class="terrain">
+            {{#if (settings "weatherName15")}}
+                <input class="terrain" type="checkbox" name="data.weather15" {{checked data.weather15}} />
+                <label for="data.weather15" class="resource-label">{{ settings "weatherName15" }}</label>
+            {{/if}}
+        </div>
+    </div>
+</div>
+<div class="weather grid grid-3col">
+    <div>
+        <div class="terrain">
+            {{#if (settings "weatherName16")}}
+                <input class="terrain" type="checkbox" name="data.weather16" {{checked data.weather16}} />
+                <label for="data.weather16" class="resource-label">{{ settings "weatherName16" }}</label>
+            {{/if}}
         </div>
     </div>
 </div>

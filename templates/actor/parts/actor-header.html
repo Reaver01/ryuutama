@@ -9,7 +9,7 @@
                     <label for="data.attributes.condition.value" class="resource-label">{{ localize "RYUU.condition" }}</label>
                     <br />
                     <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
-                    <input class="resource-input" readonly type="text" name="data.attributes.condition.value" value="{{data.attributes.condition.value}}" data-dtype="Number" />
+                    {{data.attributes.condition.value}}
                 </div>
                 <div class="left-panel">
                     <label for="data.attributes.fumble" class="resource-label">{{ localize "RYUU.fumble" }}</label>
@@ -33,7 +33,7 @@
                         <label class="resource-label">{{ localize "RYUU.level" }}</label>
                     </div>
                     <div>
-                        <input readonly type="text" name="data.attributes.level" value="{{data.attributes.level}}" data-dtype="Number" />
+                        {{data.attributes.level}}
                     </div>
                 </div>
                 <div class="grid grid-2col level">
@@ -101,7 +101,7 @@
                             <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/hp.svg" id="set-max-hp" title="{{ localize 'RYUU.hp.long' }}" height="30" width="30" />
                             <input class="resource-input" type="text" name="data.hp.value" value="{{data.hp.value}}" data-dtype="Number" />
                             <span> / </span>
-                            <input readonly class="resource-input" type="text" name="data.hp.max" value="{{data.hp.max}}" data-dtype="Number" />
+                            {{data.hp.max}}
                         </div>
                     </div>
                     <div class="resource flex-group-center">
@@ -110,7 +110,7 @@
                             <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/mp.svg" id="set-max-mp" title="{{ localize 'RYUU.mp.long' }}" height="30" width="30" />
                             <input class="resource-input" type="text" name="data.mp.value" value="{{data.mp.value}}" data-dtype="Number" />
                             <span> / </span>
-                            <input readonly class="resource-input" type="text" name="data.mp.max" value="{{data.mp.max}}" data-dtype="Number" />
+                            {{data.mp.max}}
                         </div>
                     </div>
                 </div>
