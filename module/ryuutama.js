@@ -9,6 +9,9 @@ import {
     RYUU
 } from './config.js';
 import {
+    registerSettings
+} from "./settings.js";
+import {
     preloadHandlebarsTemplates
 } from "./templates.js";
 import {
@@ -57,16 +60,8 @@ Hooks.once("init", async function() {
     // Preload Handlebars Templates
     preloadHandlebarsTemplates();
 
-    // Register system settings
-    game.settings.register("ryuutama", "macroShorthand", {
-        name: "Shortened Macro Syntax",
-        hint: "Enable a shortened macro syntax which allows referencing attributes directly, for example @str instead of @attributes.str.value. Disable this setting if you need the ability to reference the full attribute model, for example @attributes.str.label.",
-        scope: "world",
-        type: Boolean,
-        default: true,
-        config: true
-    });
-
+    // Register Settings
+    registerSettings();
 
     Handlebars.registerHelper({
         eq: (v1, v2) => v1 === v2,
@@ -83,14 +78,18 @@ Hooks.once("init", async function() {
         }
     });
 
-    Handlebars.registerHelper('concat', function() {
-        var outStr = '';
+    Handlebars.registerHelper("concat", function() {
+        var outStr = "";
         for (var arg in arguments) {
-            if (typeof arguments[arg] != 'object') {
+            if (typeof arguments[arg] != "object") {
                 outStr += arguments[arg];
             }
         }
         return outStr;
+    });
+
+    Handlebars.registerHelper("settings", function(setting) {
+        return game.settings.get("ryuutama", setting);
     });
 
 });
