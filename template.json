@@ -59,52 +59,8 @@
                 "gold": 1000
             },
             "traveling": {
-                "grassland": 0,
-                "wasteland": 0,
-                "woods": 0,
-                "highlands": 0,
-                "rocky": 0,
-                "forest": 0,
-                "swamp": 0,
-                "mountain": 0,
-                "desert": 0,
-                "jungle": 0,
-                "alpine": 0,
-                "rain": 0,
-                "wind": 0,
-                "fog": 0,
-                "hot": 0,
-                "cold": 0,
-                "rain2": 0,
-                "snow": 0,
-                "fog2": 0,
-                "dark": 0,
-                "hurricane": 0,
-                "blizzard": 0
-            },
-            "specialty": {
-                "grassland": false,
-                "wasteland": false,
-                "woods": false,
-                "highlands": false,
-                "rocky": false,
-                "forest": false,
-                "swamp": false,
-                "mountain": false,
-                "desert": false,
-                "jungle": false,
-                "alpine": false,
-                "rain": false,
-                "wind": false,
-                "fog": false,
-                "hot": false,
-                "cold": false,
-                "rain2": false,
-                "snow": false,
-                "fog2": false,
-                "dark": false,
-                "hurricane": false,
-                "blizzard": false
+                "terrain": {},
+                "weather": {}
             },
             "effects": {
                 "injury": 0,
@@ -128,14 +84,12 @@
             },
             "levels": {
                 "1": {
-                    "level": 1,
                     "stats": true,
                     "class": true,
                     "mastered": "none",
                     "attackMastered": "none"
                 },
                 "2": {
-                    "level": 2,
                     "points": {
                         "mp": 0,
                         "hp": 0
@@ -144,7 +98,6 @@
                     "actions": true
                 },
                 "3": {
-                    "level": 3,
                     "points": {
                         "mp": 0,
                         "hp": 0
@@ -152,7 +105,6 @@
                     "specialty": "none"
                 },
                 "4": {
-                    "level": 4,
                     "points": {
                         "mp": 0,
                         "hp": 0
@@ -161,7 +113,6 @@
                     "immunity": "none"
                 },
                 "5": {
-                    "level": 5,
                     "points": {
                         "mp": 0,
                         "hp": 0
@@ -169,7 +120,6 @@
                     "class": true
                 },
                 "6": {
-                    "level": 6,
                     "points": {
                         "mp": 0,
                         "hp": 0
@@ -178,7 +128,6 @@
                     "type": "none"
                 },
                 "7": {
-                    "level": 7,
                     "points": {
                         "mp": 0,
                         "hp": 0
@@ -187,7 +136,6 @@
                     "attackMastered": "none"
                 },
                 "8": {
-                    "level": 8,
                     "points": {
                         "mp": 0,
                         "hp": 0
@@ -195,7 +143,6 @@
                     "stat": "none"
                 },
                 "9": {
-                    "level": 9,
                     "points": {
                         "mp": 0,
                         "hp": 0
@@ -203,7 +150,6 @@
                     "season": "none"
                 },
                 "10": {
-                    "level": 10,
                     "points": {
                         "mp": 0,
                         "hp": 0
@@ -266,28 +212,38 @@
             "traveling": {
                 "isTraveling": true,
                 "itemBonus": 1,
-                "grassland": false,
-                "wasteland": false,
-                "woods": false,
-                "highlands": false,
-                "rocky": false,
-                "forest": false,
-                "swamp": false,
-                "mountain": false,
-                "desert": false,
-                "jungle": false,
-                "alpine": false,
-                "rain": false,
-                "wind": false,
-                "fog": false,
-                "hot": false,
-                "cold": false,
-                "rain2": false,
-                "snow": false,
-                "fog2": false,
-                "dark": false,
-                "hurricane": false,
-                "blizzard": false
+                "terrain1": false,
+                "terrain2": false,
+                "terrain3": false,
+                "terrain4": false,
+                "terrain5": false,
+                "terrain6": false,
+                "terrain7": false,
+                "terrain8": false,
+                "terrain9": false,
+                "terrain10": false,
+                "terrain11": false,
+                "terrain12": false,
+                "terrain13": false,
+                "terrain14": false,
+                "terrain15": false,
+                "terrain16": false,
+                "weather1": false,
+                "weather2": false,
+                "weather3": false,
+                "weather4": false,
+                "weather5": false,
+                "weather6": false,
+                "weather7": false,
+                "weather8": false,
+                "weather9": false,
+                "weather10": false,
+                "weather11": false,
+                "weather12": false,
+                "weather13": false,
+                "weather14": false,
+                "weather15": false,
+                "weather16": false
             },
             "container": {
                 "canHold": 0,
