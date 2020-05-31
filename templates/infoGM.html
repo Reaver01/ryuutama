@@ -1,0 +1,124 @@
+<section id="information">
+    <div class="information-terrain flexrow">
+        <h4 class="name">Terrain:</h4>
+        <select class="change-terrain info-selection" name="terrain">
+            {{#select (settings 'terrain')}}
+                <option value=""></option>
+                {{#if (settings "terrainName1")}}
+                    <option value="terrain1">{{ settings "terrainName1" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName2")}}
+                    <option value="terrain2">{{ settings "terrainName2" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName3")}}
+                    <option value="terrain3">{{ settings "terrainName3" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName4")}}
+                    <option value="terrain4">{{ settings "terrainName4" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName5")}}
+                    <option value="terrain5">{{ settings "terrainName5" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName6")}}
+                    <option value="terrain6">{{ settings "terrainName6" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName7")}}
+                    <option value="terrain7">{{ settings "terrainName7" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName8")}}
+                    <option value="terrain8">{{ settings "terrainName8" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName9")}}
+                    <option value="terrain9">{{ settings "terrainName9" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName10")}}
+                    <option value="terrain10">{{ settings "terrainName10" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName11")}}
+                    <option value="terrain11">{{ settings "terrainName11" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName12")}}
+                    <option value="terrain12">{{ settings "terrainName12" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName13")}}
+                    <option value="terrain13">{{ settings "terrainName13" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName14")}}
+                    <option value="terrain14">{{ settings "terrainName14" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName15")}}
+                    <option value="terrain15">{{ settings "terrainName15" }}</option>
+                {{/if}}
+                {{#if (settings "terrainName16")}}
+                    <option value="terrain16">{{ settings "terrainName16" }}</option>
+                {{/if}}
+            {{/select}}
+        </select>
+    </div>
+    <div class="information-weather flexrow">
+        <h4 class="name">Weather:</h4>
+        <select class="change-weather info-selection" name="weather">
+            {{#select (settings 'weather')}}
+                <option value=""></option>
+                {{#if (settings "weatherName1")}}
+                    <option value="weather1">{{ settings "weatherName1" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName2")}}
+                    <option value="weather2">{{ settings "weatherName2" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName3")}}
+                    <option value="weather3">{{ settings "weatherName3" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName4")}}
+                    <option value="weather4">{{ settings "weatherName4" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName5")}}
+                    <option value="weather5">{{ settings "weatherName5" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName6")}}
+                    <option value="weather6">{{ settings "weatherName6" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName7")}}
+                    <option value="weather7">{{ settings "weatherName7" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName8")}}
+                    <option value="weather8">{{ settings "weatherName8" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName9")}}
+                    <option value="weather9">{{ settings "weatherName9" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName10")}}
+                    <option value="weather10">{{ settings "weatherName10" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName11")}}
+                    <option value="weather11">{{ settings "weatherName11" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName12")}}
+                    <option value="weather12">{{ settings "weatherName12" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName13")}}
+                    <option value="weather13">{{ settings "weatherName13" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName14")}}
+                    <option value="weather14">{{ settings "weatherName14" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName15")}}
+                    <option value="weather15">{{ settings "weatherName15" }}</option>
+                {{/if}}
+                {{#if (settings "weatherName16")}}
+                    <option value="weather16">{{ settings "weatherName16" }}</option>
+                {{/if}}
+            {{/select}}
+        </select>
+    </div>
+    <div class="information-time flexrow">
+        <h4 class="name">Time:</h4>
+
+        <select class="change-time info-selection" name="night">
+            {{#select (settings 'night')}}
+                <option value="false">Day</option>
+                <option value="true">Night</option>
+            {{/select}}
+        </select>
+    </div>
+</section>

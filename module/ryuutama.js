@@ -92,6 +92,50 @@ Hooks.once("init", async function() {
         return game.settings.get("ryuutama", setting);
     });
 
+    Handlebars.registerHelper("settingsName", function(setting) {
+        const s = game.settings.get("ryuutama", setting).replace("terrain", "terrainName").replace("weather", "weatherName");
+        if (s) {
+            return game.settings.get("ryuutama", s);
+        } else {
+            return "";
+        }
+    });
+
+    Handlebars.registerHelper("settingsDC", function(setting) {
+        const s = game.settings.get("ryuutama", setting);
+        if (s) {
+            return game.settings.get("ryuutama", s);
+        } else {
+            return 0;
+        }
+    });
+
+});
+
+Hooks.on("renderSidebarTab", (app, html) => {
+    let chatForm = html.find("#chat-form");
+    let template = "systems/ryuutama/templates/info.html";
+    if (game.user.isGM) {
+        template = "systems/ryuutama/templates/infoGM.html";
+    }
+    const options = {};
+
+    renderTemplate(template, options).then(c => {
+        if (c.length > 0) {
+            let content = $(c);
+            chatForm.after(content);
+            content.find('.change-terrain').on('change', event => {
+                game.settings.set("ryuutama", "terrain", event.target.value);
+                console.log(c);
+            });
+            content.find('.change-weather').on('change', event => {
+                game.settings.set("ryuutama", "weather", event.target.value);
+            });
+            content.find('.change-time').on('change', event => {
+                game.settings.set("ryuutama", "night", (event.target.value === "true"));
+            });
+        }
+    });
 });
 
 Hooks.on("renderChatMessage", (message, html) => {

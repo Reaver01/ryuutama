@@ -539,4 +539,40 @@
 .ryuutama .items-list .item-controls .item-toggle.fixed:hover {
   text-shadow: none;
 }
+
+#information {
+  flex: 0;
+  margin-left: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#information .flexrow {
+  text-align: left;
+}
+
+#information .flexrow .name {
+  flex: 25% 0 0;
+  padding-top: 4px;
+}
+
+#information .flexrow .info-selection {
+  margin-right: 20px;
+}
+
+#information .flexrow .dc {
+  text-align: right;
+  flex: 30px 0 0;
+  margin-right: 20px;
+}
+
+#information .flexrow select {
+  color: #f0f0e0;
+}
+
+#information .flexrow select option {
+  background: #4d4d4d;
+  color: #f0f0e0;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
 /*# sourceMappingURL=ryuutama.css.map */
