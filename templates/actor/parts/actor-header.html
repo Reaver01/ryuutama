@@ -9,7 +9,7 @@
                     <label for="data.attributes.condition.value" class="resource-label">{{ localize "RYUU.condition" }}</label>
                     <br />
                     <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
-                    {{data.attributes.condition.value}}
+                    <input class="resource-input" type="text" name="data.attributes.condition.value" value="{{data.attributes.condition.value}}" data-dtype="Number" />
                 </div>
                 <div class="left-panel">
                     <label for="data.attributes.fumble" class="resource-label">{{ localize "RYUU.fumble" }}</label>
