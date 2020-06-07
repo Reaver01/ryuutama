@@ -716,22 +716,38 @@ export class RyuutamaActorSheet extends ActorSheet {
 
             // Single Stat rolls
             case "roll-strength": {
-                rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR]${currentModifiers}`);
+                if (event.altKey) {
+                    rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR]${currentModifiers}`);
+                } else {
+                    rollCheck(`2d${str}`, `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR + STR]${currentModifiers}`);
+                }
                 break;
             }
 
             case "roll-dexterity": {
-                rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checkdex")} [DEX]${currentModifiers}`);
+                if (event.altKey) {
+                    rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checkdex")} [DEX]${currentModifiers}`);
+                } else {
+                    rollCheck(`2d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checkdex")} [DEX + DEX]${currentModifiers}`);
+                }
                 break;
             }
 
             case "roll-intelligence": {
-                rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT]${currentModifiers}`);
+                if (event.altKey) {
+                    rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT]${currentModifiers}`);
+                } else {
+                    rollCheck(`2d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT + INT]${currentModifiers}`);
+                }
                 break;
             }
 
             case "roll-spirit": {
-                rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI]${currentModifiers}`);
+                if (event.altKey) {
+                    rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI]${currentModifiers}`);
+                } else {
+                    rollCheck(`2d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI + SPI]${currentModifiers}`);
+                }
                 break;
             }
 
