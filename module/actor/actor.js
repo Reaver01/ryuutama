@@ -149,7 +149,7 @@ export class RyuutamaActor extends Actor {
         let mastered = [];
         for (const key in data.levels) {
             if (Object.prototype.hasOwnProperty.call(data.levels, key)) {
-                if (data.attributes.level >= data.levels[key].level) {
+                if (data.attributes.level >= key) {
                     if (Object.prototype.hasOwnProperty.call(data.levels[key], "points")) {
                         data.levels[key].points.hp = Math.clamped(data.levels[key].points.hp, 0, RYUU.POINT_MAX);
                         data.levels[key].points.mp = Math.clamped(data.levels[key].points.mp, 0, RYUU.POINT_MAX - data.levels[key].points.hp);
