@@ -531,333 +531,474 @@ export class RyuutamaActorSheet extends ActorSheet {
         const dex = Number(attr.dex.value);
         const int = Number(attr.int.value);
         const spi = Number(attr.spi.value);
-        let currentTerrain = game.settings.get("ryuutama", "terrain");
-        let currentWeather = game.settings.get("ryuutama", "weather");
-        let night = game.settings.get("ryuutama", "night");
-        let journeyDC = 0;
-        let terrainBonus = 0;
-        let weatherBonus = 0;
-        let journeyBonus = 0;
-        let currentModifiers = "";
-        const typeMap = actor.data.data.typeMap;
 
-        // To hold all the modifiers a character has + and -
-        let modifiers = [];
-
-        const li = $(event.currentTarget).parents(".item");
-        const items = this.actor.items;
-        const item = items.find(i => i.id === li.data("itemId"));
-
-        // Get all items with the cursed enchantment. Any equipped cursed items give a condition penalty
-        const cursedItems = items.filter(i => i.data.data.enchantments.find(e => e.data.conditionPenalty !== 0) !== undefined && i.data.data.equipped);
-        let conditionPenalty = 0;
-        cursedItems.forEach(cursed => {
-            cursed.data.data.enchantments.forEach(enchantment => {
-                conditionPenalty += enchantment.data.conditionPenalty;
-            });
-        });
-
-        // Get all armors the actor is wearing and calculate armor penalty
-        const armors = items.filter(i => i.data.data.isArmor === true && i.data.data.equipped === true && Object.prototype.hasOwnProperty.call(i.data.data, "penalty") && i.data.data.penalty !== 0);
-        let armorPenalty = 0;
-        armors.forEach(armor => {
-            armorPenalty -= armor.data.data.penalty;
-        });
-
-        // Calculate capacity overrage if any and calculate weight penalty
-        if (this.actor.data.type === "character") {
-            const maxCapacity = attr.capacity.max;
-            const currentCarried = attr.capacity.value;
-            let weightPenalty = currentCarried > maxCapacity ? maxCapacity - currentCarried : 0;
-            if (weightPenalty !== 0) {
-                modifiers.push(weightPenalty);
-            }
-
-            // Calculate the current Journey DC and any bonuses to the current terrain/weather
-            if (currentTerrain) {
-                journeyDC += game.settings.get("ryuutama", currentTerrain);
-                let type = typeMap.find(t => t.type + t.number === currentTerrain);
-                terrainBonus = actor.data.data.traveling[type.type][type.index].types[type.type + type.number].bonus;
-                if (actor.data.data.traveling[type.type][type.index].types[type.type + type.number].specialty) {
-                    journeyBonus += 2;
-                }
-            }
-            if (currentWeather) {
-                journeyDC += game.settings.get("ryuutama", currentWeather);
-                let type = typeMap.find(t => t.type + t.number === currentWeather);
-                weatherBonus = actor.data.data.traveling[type.type][type.index].types[type.type + type.number].bonus;
-                if (actor.data.data.traveling[type.type][type.index].types[type.type + type.number].specialty) {
-                    journeyBonus += 2;
-                }
-            }
-            if (night) {
-                journeyDC++;
-            }
-
-            // Search for any bonuses to condition and journey checks from class features
-            const classes = items.filter(i => i.type === "class");
-            classes.forEach(c => {
-                c.data.data.features.forEach(feature => {
-                    conditionPenalty += feature.data.condition;
-                    journeyBonus += feature.data.journey;
-                });
-            });
-
-            // create a message that outputs all the modifiers on the actors rolls
-
-            if (modifiers.length > 0) {
-                currentModifiers = `<br />${actor.name} ${game.i18n.localize("RYUU.checkmodifiers")}:`;
-                modifiers.forEach(element => {
-                    currentModifiers += ` ${element},`;
-                });
-                currentModifiers = currentModifiers.replace(/,\s*$/, "");
-            }
+        if (event.ctrlKey) {
+            concentration();
+        } else {
+            doRoll(event, false);
         }
-        switch (event.target.id) {
 
-            // Journey checks
-            case "roll-travel": {
-                if (journeyBonus > 0) {
-                    modifiers.push(journeyBonus);
-                }
-                if (terrainBonus > 0) {
-                    modifiers.push(terrainBonus);
-                }
-                if (weatherBonus > 0) {
-                    modifiers.push(weatherBonus);
-                }
-                if (armorPenalty !== 0) {
-                    modifiers.push(armorPenalty);
-                }
-                const travelCheck = rollCheck(`1d${str} + 1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checktravel")} [STR + DEX]`, modifiers, journeyDC);
-                if (travelCheck.crit) {
-                    const pcCondition = actor.data.data.attributes.condition.value || 0;
-                    actor.update({
-                        "data.attributes.condition.value": pcCondition + 1
-                    });
-                } else if (travelCheck.fumble) {
-                    const pcHP = actor.data.data.hp.value || 0;
-                    actor.update({
-                        "data.hp.value": Math.floor(pcHP / 4)
-                    });
-                }
-                break;
-            }
+        function doRoll(event, isConcentrating, concentrationBonus) {
+            let currentTerrain = game.settings.get("ryuutama", "terrain");
+            let currentWeather = game.settings.get("ryuutama", "weather");
+            let night = game.settings.get("ryuutama", "night");
+            let journeyDC = 0;
+            let terrainBonus = 0;
+            let weatherBonus = 0;
+            let journeyBonus = 0;
+            let currentModifiers = "";
+            let checkText = "";
+            const typeMap = actor.data.data.typeMap;
 
-            case "roll-direction": {
-                if (journeyBonus > 0) {
-                    modifiers.push(journeyBonus);
-                }
-                if (terrainBonus > 0) {
-                    modifiers.push(terrainBonus);
-                }
-                if (weatherBonus > 0) {
-                    modifiers.push(weatherBonus);
-                }
-                if (armorPenalty !== 0) {
-                    modifiers.push(armorPenalty);
-                }
-                rollCheck(`1d${int} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkdirection")} [INT + INT]`, modifiers, journeyDC);
-                break;
-            }
+            // To hold all the modifiers a character has + and -
+            let modifiers = [];
 
-            case "roll-camp": {
-                if (journeyBonus > 0) {
-                    modifiers.push(journeyBonus);
-                }
-                if (terrainBonus > 0) {
-                    modifiers.push(terrainBonus);
-                }
-                if (weatherBonus > 0) {
-                    modifiers.push(weatherBonus);
-                }
-                if (armorPenalty !== 0) {
-                    modifiers.push(armorPenalty);
-                }
-                rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkcamp")} [DEX + INT]`, modifiers, journeyDC);
-                break;
-            }
+            const li = $(event.currentTarget).parents(".item");
+            const items = actor.items;
+            const item = items.find(i => i.id === li.data("itemId"));
 
-            // Condition Check
-            case "roll-condition": {
-                if (conditionPenalty !== 0) {
-                    modifiers.push(conditionPenalty);
+            // Get all items with the cursed enchantment. Any equipped cursed items give a condition penalty
+            const cursedItems = items.filter(i => i.data.data.enchantments.find(e => e.data.conditionPenalty !== 0) !== undefined && i.data.data.equipped);
+            let conditionPenalty = 0;
+            cursedItems.forEach(cursed => {
+                cursed.data.data.enchantments.forEach(enchantment => {
+                    conditionPenalty += enchantment.data.conditionPenalty;
+                });
+            });
+
+            // Get all armors the actor is wearing and calculate armor penalty
+            const armors = items.filter(i => i.data.data.isArmor === true && i.data.data.equipped === true && Object.prototype.hasOwnProperty.call(i.data.data, "penalty") && i.data.data.penalty !== 0);
+            let armorPenalty = 0;
+            armors.forEach(armor => {
+                armorPenalty -= armor.data.data.penalty;
+            });
+
+            // Calculate capacity overrage if any and calculate weight penalty
+            if (actor.data.type === "character") {
+                const maxCapacity = attr.capacity.max;
+                const currentCarried = attr.capacity.value;
+                let weightPenalty = currentCarried > maxCapacity ? maxCapacity - currentCarried : 0;
+                if (weightPenalty !== 0) {
+                    modifiers.push(weightPenalty);
                 }
-                if (armorPenalty !== 0) {
-                    modifiers.push(armorPenalty);
-                }
-                const condition = rollCheck(`1d${str} + 1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkcondition")} [STR + SPI]`, modifiers);
-                const effects = actor.data.data.effects;
-                for (const name in effects) {
-                    if (Object.prototype.hasOwnProperty.call(effects, name) && condition.roll >= effects[name]) {
-                        let attr = `data.data.effects.${name}`;
-                        actor.update({
-                            [attr]: 0
-                        });
+
+                // Calculate the current Journey DC and any bonuses to the current terrain/weather
+                if (currentTerrain) {
+                    journeyDC += game.settings.get("ryuutama", currentTerrain);
+                    let type = typeMap.find(t => t.type + t.number === currentTerrain);
+                    terrainBonus = actor.data.data.traveling[type.type][type.index].types[type.type + type.number].bonus;
+                    if (actor.data.data.traveling[type.type][type.index].types[type.type + type.number].specialty) {
+                        journeyBonus += 2;
                     }
                 }
-                actor.update({
-                    "data.attributes.condition.value": condition.roll
-                });
-                break;
-            }
-
-            // Initative roll
-            case "roll-initiative": {
-                if (armorPenalty !== 0) {
-                    modifiers.push(armorPenalty);
+                if (currentWeather) {
+                    journeyDC += game.settings.get("ryuutama", currentWeather);
+                    let type = typeMap.find(t => t.type + t.number === currentWeather);
+                    weatherBonus = actor.data.data.traveling[type.type][type.index].types[type.type + type.number].bonus;
+                    if (actor.data.data.traveling[type.type][type.index].types[type.type + type.number].specialty) {
+                        journeyBonus += 2;
+                    }
                 }
-                const initiative = rollCheck(`1d${dex} + 1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkinitiative")} [DEX + INT]`, modifiers);
-                actor.update({
-                    "data.attributes.initiative": initiative.roll
-                });
-                break;
-            }
-
-            // Single Stat rolls
-            case "roll-strength": {
-                if (event.altKey) {
-                    rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR]${currentModifiers}`);
-                } else {
-                    rollCheck(`2d${str}`, `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR + STR]${currentModifiers}`);
+                if (night) {
+                    journeyDC++;
                 }
-                break;
-            }
 
-            case "roll-dexterity": {
-                if (event.altKey) {
-                    rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checkdex")} [DEX]${currentModifiers}`);
-                } else {
-                    rollCheck(`2d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checkdex")} [DEX + DEX]${currentModifiers}`);
-                }
-                break;
-            }
-
-            case "roll-intelligence": {
-                if (event.altKey) {
-                    rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT]${currentModifiers}`);
-                } else {
-                    rollCheck(`2d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT + INT]${currentModifiers}`);
-                }
-                break;
-            }
-
-            case "roll-spirit": {
-                if (event.altKey) {
-                    rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI]${currentModifiers}`);
-                } else {
-                    rollCheck(`2d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI + SPI]${currentModifiers}`);
-                }
-                break;
-            }
-
-            case "set-max-hp": {
-                // Set HP to full
-                actor.update({
-                    "data.hp.value": actor.data.data.hp.max
-                });
-                break;
-            }
-
-            case "set-max-mp": {
-                // Set MP to full
-                actor.update({
-                    "data.mp.value": actor.data.data.mp.max
-                });
-                break;
-            }
-
-            case "use-fumble": {
-                // Remvoe a fumble point
-                const pcFumble = actor.data.data.attributes.fumble || 0;
-                if (pcFumble > 0) {
-                    actor.update({
-                        "data.attributes.fumble": pcFumble - 1
+                // Search for any bonuses to condition and journey checks from class features
+                const classes = items.filter(i => i.type === "class");
+                classes.forEach(c => {
+                    c.data.data.features.forEach(feature => {
+                        conditionPenalty += feature.data.condition;
+                        journeyBonus += feature.data.journey;
                     });
-                    ChatMessage.create({
-                        content: `${actor.name} uses a <strong>fumble point</strong>`
-                    }, {});
+                });
+
+                // create a message that outputs all the modifiers on the actors rolls
+
+                if (modifiers.length > 0) {
+                    currentModifiers = `<br />${actor.name} ${game.i18n.localize("RYUU.checkmodifiers")}:`;
+                    modifiers.forEach(element => {
+                        currentModifiers += ` ${element},`;
+                    });
+                    currentModifiers = currentModifiers.replace(/,\s*$/, "");
                 }
-                break;
             }
+            switch (event.target.id) {
 
-            case "roll-accuracy": {
-                rollCheck(actor.data.data.accuracy, `${actor.name} attacks!`);
-                break;
-            }
-
-            case "roll-damage": {
-                rollCheck(actor.data.data.damage, `${actor.name} damage:`);
-                break;
-            }
-
-            case "roll-ability-accuracy": {
-                let abilityText = `${actor.name} uses their <strong>Special Ability</strong>:<p>${actor.data.data.ability.description}</p>`;
-                if (actor.data.data.ability.accuracy) {
-                    rollCheck(actor.data.data.ability.accuracy, abilityText);
-                } else {
-                    ChatMessage.create({
-                        content: abilityText
-                    }, {});
+                // Journey checks
+                case "roll-travel": {
+                    if (journeyBonus > 0) {
+                        modifiers.push(journeyBonus);
+                    }
+                    if (terrainBonus > 0) {
+                        modifiers.push(terrainBonus);
+                    }
+                    if (weatherBonus > 0) {
+                        modifiers.push(weatherBonus);
+                    }
+                    if (armorPenalty !== 0) {
+                        modifiers.push(armorPenalty);
+                    }
+                    checkText = `${actor.name} ${game.i18n.localize("RYUU.checktravel")} [STR + DEX]`;
+                    if (isConcentrating) {
+                        modifiers.push(concentrationBonus);
+                        checkText = `${actor.name} ${game.i18n.localize("RYUU.checktravel")} [STR + DEX]<br /><strong>CONCENTRATING</strong>`;
+                    }
+                    const travelCheck = rollCheck(`1d${str} + 1d${dex}`, checkText, modifiers, journeyDC);
+                    if (travelCheck.crit) {
+                        const pcCondition = actor.data.data.attributes.condition.value || 0;
+                        actor.update({
+                            "data.attributes.condition.value": pcCondition + 1
+                        });
+                    } else if (travelCheck.fumble) {
+                        const pcHP = actor.data.data.hp.value || 0;
+                        actor.update({
+                            "data.hp.value": Math.floor(pcHP / 4)
+                        });
+                    }
+                    break;
                 }
-                break;
-            }
 
-            case "roll-ability-damage": {
-                rollCheck(actor.data.data.ability.damage, `${actor.name}'s <strong>Special Ability</strong> damage:`);
-                break;
-            }
+                case "roll-direction": {
+                    if (journeyBonus > 0) {
+                        modifiers.push(journeyBonus);
+                    }
+                    if (terrainBonus > 0) {
+                        modifiers.push(terrainBonus);
+                    }
+                    if (weatherBonus > 0) {
+                        modifiers.push(weatherBonus);
+                    }
+                    if (armorPenalty !== 0) {
+                        modifiers.push(armorPenalty);
+                    }
+                    checkText = `${actor.name} ${game.i18n.localize("RYUU.checkdirection")} [INT + INT]`;
+                    if (isConcentrating) {
+                        modifiers.push(concentrationBonus);
+                        checkText = `${actor.name} ${game.i18n.localize("RYUU.checkdirection")} [INT + INT]<br /><strong>CONCENTRATING</strong>`;
+                    }
+                    rollCheck(`1d${int} + 1d${int}`, checkText, modifiers, journeyDC);
+                    break;
+                }
 
-            default:
-                // Handle all other roll types
-                if (item) {
-                    switch (item.data.type) {
-                        case "weapon": {
-                            let accuracy = item.data.data.accuracy.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
-                            let damage = item.data.data.damage.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
-                            let accuracyRoll;
-                            if (event.currentTarget.classList.contains("accuracy")) {
-                                if ((!event.altKey && !event.shiftKey) || (!event.altKey && event.shiftKey)) {
-                                    accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.masteredBonus}`, `${actor.name} attacks with their <strong>${item.name}</strong>${currentModifiers}`, modifiers);
+                case "roll-camp": {
+                    if (journeyBonus > 0) {
+                        modifiers.push(journeyBonus);
+                    }
+                    if (terrainBonus > 0) {
+                        modifiers.push(terrainBonus);
+                    }
+                    if (weatherBonus > 0) {
+                        modifiers.push(weatherBonus);
+                    }
+                    if (armorPenalty !== 0) {
+                        modifiers.push(armorPenalty);
+                    }
+                    checkText = `${actor.name} ${game.i18n.localize("RYUU.checkcamp")} [DEX + INT]`;
+                    if (isConcentrating) {
+                        modifiers.push(concentrationBonus);
+                        checkText = `${actor.name} ${game.i18n.localize("RYUU.checkcamp")} [DEX + INT]<br /><strong>CONCENTRATING</strong>`;
+                    }
+                    rollCheck(`1d${dex} + 1d${int}`, checkText, modifiers, journeyDC);
+                    break;
+                }
+
+                // Condition Check
+                case "roll-condition": {
+                    if (conditionPenalty !== 0) {
+                        modifiers.push(conditionPenalty);
+                    }
+                    if (armorPenalty !== 0) {
+                        modifiers.push(armorPenalty);
+                    }
+                    checkText = `${actor.name} ${game.i18n.localize("RYUU.checkcondition")} [STR + SPI]`;
+                    if (isConcentrating) {
+                        modifiers.push(concentrationBonus);
+                        checkText = `${actor.name} ${game.i18n.localize("RYUU.checkcondition")} [STR + SPI]<br /><strong>CONCENTRATING</strong>`;
+                    }
+                    const condition = rollCheck(`1d${str} + 1d${spi}`, checkText, modifiers);
+                    const effects = actor.data.data.effects;
+                    for (const name in effects) {
+                        if (Object.prototype.hasOwnProperty.call(effects, name) && condition.roll >= effects[name]) {
+                            let attr = `data.data.effects.${name}`;
+                            actor.update({
+                                [attr]: 0
+                            });
+                        }
+                    }
+                    actor.update({
+                        "data.attributes.condition.value": condition.roll
+                    });
+                    break;
+                }
+
+                // Initative roll
+                case "roll-initiative": {
+                    if (armorPenalty !== 0) {
+                        modifiers.push(armorPenalty);
+                    }
+                    checkText = `${actor.name} ${game.i18n.localize("RYUU.checkinitiative")} [DEX + INT]`;
+                    if (isConcentrating) {
+                        modifiers.push(concentrationBonus);
+                        checkText = `${actor.name} ${game.i18n.localize("RYUU.checkinitiative")} [DEX + INT]<br /><strong>CONCENTRATING</strong>`;
+                    }
+                    const initiative = rollCheck(`1d${dex} + 1d${int}`, checkText, modifiers);
+                    actor.update({
+                        "data.attributes.initiative": initiative.roll
+                    });
+                    break;
+                }
+
+                // Single Stat rolls
+                case "roll-strength": {
+                    if (event.altKey) {
+                        rollCheck(`1d${str}`, `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR]${currentModifiers}`);
+                    } else {
+                        checkText = `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR + STR]`;
+                        if (isConcentrating) {
+                            modifiers.push(concentrationBonus);
+                            checkText = `${actor.name} ${game.i18n.localize("RYUU.checkstr")} [STR + STR]<br /><strong>CONCENTRATING</strong>`;
+                        }
+                        rollCheck(`2d${str}`, `${checkText}${currentModifiers}`, modifiers);
+                    }
+                    break;
+                }
+
+                case "roll-dexterity": {
+                    if (event.altKey) {
+                        rollCheck(`1d${dex}`, `${actor.name} ${game.i18n.localize("RYUU.checkdex")} [DEX]${currentModifiers}`);
+                    } else {
+                        checkText = `${actor.name} ${game.i18n.localize("RYUU.checkdex")} [DEX + DEX]`;
+                        if (isConcentrating) {
+                            modifiers.push(concentrationBonus);
+                            checkText = `${actor.name} ${game.i18n.localize("RYUU.checkdex")} [DEX + DEX]<br /><strong>CONCENTRATING</strong>`;
+                        }
+                        rollCheck(`2d${dex}`, `${checkText}${currentModifiers}`, modifiers);
+                    }
+                    break;
+                }
+
+                case "roll-intelligence": {
+                    if (event.altKey) {
+                        rollCheck(`1d${int}`, `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT]${currentModifiers}`);
+                    } else {
+                        checkText = `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT + INT]`;
+                        if (isConcentrating) {
+                            modifiers.push(concentrationBonus);
+                            checkText = `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT + INT]<br /><strong>CONCENTRATING</strong>`;
+                        }
+                        rollCheck(`2d${dex}`, `${checkText}${currentModifiers}`, modifiers);
+                    }
+                    break;
+                }
+
+                case "roll-spirit": {
+                    if (event.altKey) {
+                        rollCheck(`1d${spi}`, `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI]${currentModifiers}`);
+                    } else {
+                        checkText = `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI + SPI]`;
+                        if (isConcentrating) {
+                            modifiers.push(concentrationBonus);
+                            checkText = `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI + SPI]<br /><strong>CONCENTRATING</strong>`;
+                        }
+                        rollCheck(`2d${dex}`, `${checkText}${currentModifiers}`, modifiers);
+                    }
+                    break;
+                }
+
+                case "set-max-hp": {
+                    // Set HP to full
+                    actor.update({
+                        "data.hp.value": actor.data.data.hp.max
+                    });
+                    break;
+                }
+
+                case "set-max-mp": {
+                    // Set MP to full
+                    actor.update({
+                        "data.mp.value": actor.data.data.mp.max
+                    });
+                    break;
+                }
+
+                case "use-fumble": {
+                    // Remvoe a fumble point
+                    const pcFumble = actor.data.data.attributes.fumble || 0;
+                    if (pcFumble > 0) {
+                        actor.update({
+                            "data.attributes.fumble": pcFumble - 1
+                        });
+                        ChatMessage.create({
+                            content: `${actor.name} uses a <strong>fumble point</strong>`
+                        }, {});
+                    }
+                    break;
+                }
+
+                case "roll-accuracy": {
+                    checkText = `${actor.name} attacks!`;
+                    if (isConcentrating) {
+                        modifiers.push(concentrationBonus);
+                        checkText = `${actor.name} attacks!<br /><strong>CONCENTRATING</strong>`;
+                    }
+                    rollCheck(actor.data.data.accuracy, checkText, modifiers);
+                    break;
+                }
+
+                case "roll-damage": {
+                    rollCheck(actor.data.data.damage, `${actor.name} damage:`, modifiers);
+                    break;
+                }
+
+                case "roll-ability-accuracy": {
+                    let abilityText = `${actor.name} uses their <strong>Special Ability</strong>:<p>${actor.data.data.ability.description}</p>`;
+                    if (actor.data.data.ability.accuracy) {
+                        checkText = abilityText;
+                        if (isConcentrating) {
+                            modifiers.push(concentrationBonus);
+                            checkText = `${abilityText}<br /><strong>CONCENTRATING</strong>`;
+                        }
+                        rollCheck(actor.data.data.ability.accuracy, checkText, modifiers);
+                    } else {
+                        ChatMessage.create({
+                            content: abilityText
+                        }, {});
+                    }
+                    break;
+                }
+
+                case "roll-ability-damage": {
+                    rollCheck(actor.data.data.ability.damage, `${actor.name}'s <strong>Special Ability</strong> damage:`);
+                    break;
+                }
+
+                default: {
+                    // Handle all other roll types
+                    if (item) {
+                        switch (item.data.type) {
+                            case "weapon": {
+                                let accuracy = item.data.data.accuracy.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
+                                let damage = item.data.data.damage.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi");
+                                let accuracyRoll;
+                                if (event.currentTarget.classList.contains("accuracy")) {
+                                    if ((!event.altKey && !event.shiftKey) || (!event.altKey && event.shiftKey)) {
+                                        checkText = `${actor.name} attacks with their <strong>${item.name}</strong>`;
+                                        if (isConcentrating) {
+                                            modifiers.push(concentrationBonus);
+                                            checkText = `${actor.name} attacks with their <strong>${item.name}</strong><br /><strong>CONCENTRATING</strong>`;
+                                        }
+                                        accuracyRoll = rollCheck(`${accuracy} + ${item.data.data.masteredBonus}`, `${checkText}${currentModifiers}`, modifiers);
+                                    }
                                 }
-                            }
-                            if (event.currentTarget.classList.contains("damage")) {
-                                if ((event.altKey && event.shiftKey) || (!event.altKey && !event.shiftKey && accuracyRoll !== undefined && accuracyRoll.crit)) {
-                                    damage = damage += ` + ${damage}`;
-                                    rollCheck(`${damage} + ${item.data.data.damageBonus}`, `<strong>${item.name}</strong> CRITICAL damage:`);
-                                } else if ((event.altKey && !event.shiftKey) || (!event.altKey && !event.shiftKey && !(accuracyRoll !== undefined && accuracyRoll.fumble))) {
-                                    rollCheck(`${damage} + ${item.data.data.damageBonus}`, `<strong>${item.name}</strong> damage:`);
+                                if (event.currentTarget.classList.contains("damage")) {
+                                    if ((event.altKey && event.shiftKey) || (!event.altKey && !event.shiftKey && accuracyRoll !== undefined && accuracyRoll.crit)) {
+                                        damage = damage += ` + ${damage}`;
+                                        rollCheck(`${damage} + ${item.data.data.damageBonus}`, `<strong>${item.name}</strong> CRITICAL damage:`);
+                                    } else if ((event.altKey && !event.shiftKey) || (!event.altKey && !event.shiftKey && !(accuracyRoll !== undefined && accuracyRoll.fumble))) {
+                                        rollCheck(`${damage} + ${item.data.data.damageBonus}`, `<strong>${item.name}</strong> damage:`);
+                                    }
                                 }
+                                break;
                             }
+
+                            case "spell": {
+                                const mpRemaining = actor.data.data.mp.value;
+                                const cost = item.data.data.cost;
+                                if (cost > mpRemaining) {
+                                    ui.notifications.error(`${this.name} does not have enough MP remaining!`);
+                                } else {
+                                    actor.update({
+                                        "data.mp.value": mpRemaining - cost
+                                    });
+                                    checkText = `${actor.name} casts <strong>${item.name}</strong> [INT + SPI]`;
+                                    if (isConcentrating) {
+                                        modifiers.push(concentrationBonus);
+                                        checkText = `${actor.name} casts <strong>${item.name}</strong> [INT + SPI]<br /><strong>CONCENTRATING</strong>`;
+                                    }
+                                    rollCheck("1d@int + 1d@spi", `${checkText}<br />${item.data.data.description || ""}<strong>Duration</strong>: ${item.data.data.duration}<br /><strong>Target</strong>: ${item.data.data.target}<br /><strong>Range</strong>: ${item.data.data.range}${currentModifiers}`, modifiers);
+                                }
+                                console.log(item);
+                                break;
+                            }
+
+                            default:
+                                break;
+                        }
+                    } else {
+                        let text = "";
+                        if (event.target.previousSibling.previousSibling.innerText) {
+                            text = `${actor.name} ${game.i18n.localize("RYUU.check")} <strong>${event.target.previousSibling.previousSibling.innerText}</strong> ${event.target.innerText}`;
+                        }
+                        rollCheck(event.target.innerText.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi"), text + currentModifiers, modifiers);
+                    }
+                    break;
+                }
+            }
+        }
+
+        function concentration() {
+            let isConcentrating = false;
+            let concentrationBonus = 0;
+            let choice = "cancel";
+            let buttons = {
+                mp: {
+                    label: "Use MP",
+                    callback: () => choice = "mp"
+                }
+            };
+            if (actor.data.data.attributes.fumble > 0) {
+                buttons.fumble = {
+                    label: "Use Fumble",
+                    callback: () => choice = "fumble"
+                };
+                buttons.both = {
+                    label: "Use Both",
+                    callback: () => choice = "both"
+                };
+            }
+            buttons.cancel = {
+                label: "Normal Roll"
+            };
+
+            new Dialog({
+                title: "Concentration",
+                content: "Make this check while concentrating?<br />",
+                buttons: buttons,
+                default: "cancel",
+                close: () => {
+                    switch (choice) {
+                        case "mp": {
+                            isConcentrating = true;
+                            concentrationBonus = 1;
+                            actor.update({
+                                "data.mp.value": actor.data.data.mp.value - Math.ceil(actor.data.data.mp.value / 2)
+                            });
                             break;
                         }
-
-                        case "spell": {
-                            const mpRemaining = this.actor.data.data.mp.value;
-                            const cost = item.data.data.cost;
-                            if (cost > mpRemaining) {
-                                ui.notifications.error(`${this.name} does not have enough MP remaining!`);
-                            } else {
-                                this.actor.update({
-                                    "data.mp.value": mpRemaining - cost
-                                });
-                                rollCheck("1d@int + 1d@spi", `${actor.name} casts <strong>${item.name}</strong> [INT + SPI]<br />${item.data.data.description || ""}<strong>Duration</strong>: ${item.data.data.duration}<br /><strong>Target</strong>: ${item.data.data.target}<br /><strong>Range</strong>: ${item.data.data.range}${currentModifiers}`, modifiers);
-                            }
-                            console.log(item);
+                        case "fumble": {
+                            isConcentrating = true;
+                            concentrationBonus = 1;
+                            actor.update({
+                                "data.attributes.fumble": actor.data.data.attributes.fumble - 1
+                            });
+                            break;
+                        }
+                        case "both": {
+                            isConcentrating = true;
+                            concentrationBonus = 2;
+                            actor.update({
+                                "data.mp.value": actor.data.data.mp.value - Math.ceil(actor.data.data.mp.value / 2),
+                                "data.attributes.fumble": actor.data.data.attributes.fumble - 1
+                            });
                             break;
                         }
 
                         default:
                             break;
                     }
-                } else {
-                    let text = "";
-                    if (event.target.previousSibling.previousSibling.innerText) {
-                        text = `${actor.name} ${game.i18n.localize("RYUU.check")} <strong>${event.target.previousSibling.previousSibling.innerText}</strong> ${event.target.innerText}`;
-                    }
-                    rollCheck(event.target.innerText.replace(/(\[|)STR(\]|)/g, "1d@str").replace(/(\[|)DEX(\]|)/g, "1d@dex").replace(/(\[|)INT(\]|)/g, "1d@int").replace(/(\[|)SPI(\]|)/g, "1d@spi"), text + currentModifiers, modifiers);
+                    doRoll(event, isConcentrating, concentrationBonus);
                 }
-                break;
+            }).render(true);
         }
 
         function rollCheck(formula, flavor, modifiers, journeyDC) {
