@@ -249,25 +249,25 @@ export class RyuutamaActor extends Actor {
         }
 
         // Status effect decreases
-        if (data.effects.injury > 0) {
+        if (data.effects.injury > data.attributes.condition.value) {
             dex -= RYUU.DICE_STEP;
         }
-        if (data.effects.poison > 0) {
+        if (data.effects.poison > data.attributes.condition.value) {
             str -= RYUU.DICE_STEP;
         }
-        if (data.effects.sickness > 0) {
+        if (data.effects.sickness > data.attributes.condition.value) {
             dex -= RYUU.DICE_STEP;
             str -= RYUU.DICE_STEP;
             spi -= RYUU.DICE_STEP;
             int -= RYUU.DICE_STEP;
         }
-        if (data.effects.exhaustion > 0) {
+        if (data.effects.exhaustion > data.attributes.condition.value) {
             spi -= RYUU.DICE_STEP;
         }
-        if (data.effects.muddled > 0) {
+        if (data.effects.muddled > data.attributes.condition.value) {
             int -= RYUU.DICE_STEP;
         }
-        if (data.effects.shock > 0) {
+        if (data.effects.shock > data.attributes.condition.value) {
             dex -= RYUU.DICE_STEP;
             str -= RYUU.DICE_STEP;
             spi -= RYUU.DICE_STEP;
