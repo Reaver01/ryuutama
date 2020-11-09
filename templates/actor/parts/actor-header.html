@@ -8,19 +8,19 @@
                 <div class="left-panel">
                     <label for="data.attributes.condition.value" class="resource-label">{{ localize "RYUU.condition" }}</label>
                     <br />
-                    <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
+                    <img class="resource-image rollable" src="systems/ryuutama/img/sheet/condition.svg" id="roll-condition" title="{{ localize 'RYUU.condition' }}" />
                     <input class="resource-input" type="text" name="data.attributes.condition.value" value="{{data.attributes.condition.value}}" data-dtype="Number" />
                 </div>
                 <div class="left-panel">
                     <label for="data.attributes.fumble" class="resource-label">{{ localize "RYUU.fumble" }}</label>
                     <br />
-                    <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/fumble.svg" id="use-fumble" title="{{ localize 'RYUU.fumble' }}" />
+                    <img class="resource-image rollable" src="systems/ryuutama/img/sheet/fumble.svg" id="use-fumble" title="{{ localize 'RYUU.fumble' }}" />
                     <input class="resource-input" type="text" name="data.attributes.fumble" value="{{data.attributes.fumble}}" data-dtype="Number" />
                 </div>
                 <div class="left-panel">
                     <label for="data.attributes.initiative" class="resource-label">{{ localize "RYUU.initiative" }}</label>
                     <br />
-                    <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/dice.svg" id="roll-initiative" title="{{ localize 'RYUU.initiative' }}" />
+                    <img class="resource-image rollable" src="systems/ryuutama/img/sheet/dice.svg" id="roll-initiative" title="{{ localize 'RYUU.initiative' }}" />
                     <input class="resource-input" type="text" name="data.attributes.initiative" value="{{data.attributes.initiative}}" data-dtype="Number" />
                 </div>
             </div>
@@ -55,7 +55,7 @@
                                 <br />
                                 <label class="attribute-label">1d{{data.attributes.str.value}}</label>
                             </div>
-                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/str.svg" id="roll-strength" title="{{ localize 'RYUU.str.short' }}" />
+                            <img class="attribute-image rollable" src="systems/ryuutama/img/sheet/str.svg" id="roll-strength" title="{{ localize 'RYUU.str.short' }}" />
                         </div>
                     </div>
                     <div class="attribute flex-group-center">
@@ -66,7 +66,7 @@
                                 <br />
                                 <label class="attribute-label">1d{{data.attributes.dex.value}}</label>
                             </div>
-                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/dex.svg" id="roll-dexterity" title="{{ localize 'RYUU.dex.long' }}" />
+                            <img class="attribute-image rollable" src="systems/ryuutama/img/sheet/dex.svg" id="roll-dexterity" title="{{ localize 'RYUU.dex.long' }}" />
                         </div>
                     </div>
                     <div class="attribute flex-group-center">
@@ -77,7 +77,7 @@
                                 <br />
                                 <label class="attribute-label">1d{{data.attributes.int.value}}</label>
                             </div>
-                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/int.svg" id="roll-intelligence" title="{{ localize 'RYUU.int.long' }}" />
+                            <img class="attribute-image rollable" src="systems/ryuutama/img/sheet/int.svg" id="roll-intelligence" title="{{ localize 'RYUU.int.long' }}" />
                         </div>
                     </div>
                     <div class="attribute flex-group-center">
@@ -88,7 +88,7 @@
                                 <br />
                                 <label class="attribute-label">1d{{data.attributes.spi.value}}</label>
                             </div>
-                            <img class="attribute-image rollable" src="/systems/ryuutama/img/sheet/spi.svg" id="roll-spirit" title="{{ localize 'RYUU.spi.long' }}" />
+                            <img class="attribute-image rollable" src="systems/ryuutama/img/sheet/spi.svg" id="roll-spirit" title="{{ localize 'RYUU.spi.long' }}" />
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                     <div class="resource flex-group-center">
                         <div class="resource-content flexrow flex-center flex-between">
                             <label for="data.hp.value" class="resource-label">{{ localize "RYUU.hp.short" }}</label>
-                            <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/hp.svg" id="set-max-hp" title="{{ localize 'RYUU.hp.long' }}" height="30" width="30" />
+                            <img class="resource-image rollable" src="systems/ryuutama/img/sheet/hp.svg" id="set-max-hp" title="{{ localize 'RYUU.hp.long' }}" height="30" width="30" />
                             <input class="resource-input" type="text" name="data.hp.value" value="{{data.hp.value}}" data-dtype="Number" />
                             <span> / </span>
                             {{data.hp.max}}
@@ -107,7 +107,7 @@
                     <div class="resource flex-group-center">
                         <div class="resource-content flexrow flex-center flex-between">
                             <label for="data.mp.value" class="resource-label">{{ localize "RYUU.mp.short" }}</label>
-                            <img class="resource-image rollable" src="/systems/ryuutama/img/sheet/mp.svg" id="set-max-mp" title="{{ localize 'RYUU.mp.long' }}" height="30" width="30" />
+                            <img class="resource-image rollable" src="systems/ryuutama/img/sheet/mp.svg" id="set-max-mp" title="{{ localize 'RYUU.mp.long' }}" height="30" width="30" />
                             <input class="resource-input" type="text" name="data.mp.value" value="{{data.mp.value}}" data-dtype="Number" />
                             <span> / </span>
                             {{data.mp.max}}
@@ -118,42 +118,42 @@
             <div class="col2-6">
                 <div class="flexrow">
                     <label class="journey resource-label">{{ localize "RYUU.travel" }}</label>
-                    <img class="check-image rollable" src="/systems/ryuutama/img/sheet/map.svg" id="roll-travel" title="{{ localize 'RYUU.travel' }}" height="30" width="30" />
+                    <img class="check-image rollable" src="systems/ryuutama/img/sheet/map.svg" id="roll-travel" title="{{ localize 'RYUU.travel' }}" height="30" width="30" />
                     <div class="spacer"></div>
                     <div class="status-checkbox"><i class="fas {{#if data.immunity.injury}}fa-check-circle{{/if}}"></i></div>
-                    <img class="status-image" src="/systems/ryuutama/img/sheet/injury.svg" title="{{ localize 'RYUU.injury' }}" height="30" width="30" />
+                    <img class="status-image" src="systems/ryuutama/img/sheet/injury.svg" title="{{ localize 'RYUU.injury' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.injury" value="{{data.effects.injury}}" data-dtype="Number" />
                     <div class="spacer-half"></div>
                     <div class="status-checkbox"><i class="fas {{#if data.immunity.exhaustion}}fa-check-circle{{/if}}"></i></div>
-                    <img class="status-image" src="/systems/ryuutama/img/sheet/exhaustion.svg" title="{{ localize 'RYUU.exhaustion' }}" height="30" width="30" />
+                    <img class="status-image" src="systems/ryuutama/img/sheet/exhaustion.svg" title="{{ localize 'RYUU.exhaustion' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.exhaustion" value="{{data.effects.exhaustion}}" data-dtype="Number" />
                     <div class="spacer"></div>
                     <div class="gold-label">{{ localize "RYUU.gold" }}: <input class="gold-input" type="text" name="data.attributes.gold" value="{{data.attributes.gold}}" data-dtype="Number" /></div>
                 </div>
                 <div class="flexrow">
                     <label class="journey resource-label">{{ localize "RYUU.direction" }}</label>
-                    <img class="check-image rollable" src="/systems/ryuutama/img/sheet/compass.svg" id="roll-direction" title="{{ localize 'RYUU.direction' }}" height="30" width="30" />
+                    <img class="check-image rollable" src="systems/ryuutama/img/sheet/compass.svg" id="roll-direction" title="{{ localize 'RYUU.direction' }}" height="30" width="30" />
                     <div class="spacer"></div>
                     <div class="status-checkbox"><i class="fas {{#if data.immunity.poison}}fa-check-circle{{/if}}"></i></div>
-                    <img class="status-image" src="/systems/ryuutama/img/sheet/poison.svg" title="{{ localize 'RYUU.poison' }}" height="30" width="30" />
+                    <img class="status-image" src="systems/ryuutama/img/sheet/poison.svg" title="{{ localize 'RYUU.poison' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.poison" value="{{data.effects.poison}}" data-dtype="Number" />
                     <div class="spacer-half"></div>
                     <div class="status-checkbox"><i class="fas {{#if data.immunity.muddled}}fa-check-circle{{/if}}"></i></div>
-                    <img class="status-image" src="/systems/ryuutama/img/sheet/muddled.svg" title="{{ localize 'RYUU.muddled' }}" height="30" width="30" />
+                    <img class="status-image" src="systems/ryuutama/img/sheet/muddled.svg" title="{{ localize 'RYUU.muddled' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.muddled" value="{{data.effects.muddled}}" data-dtype="Number" />
                     <div class="spacer"></div>
                     <div class="equipment-label">{{ localize "RYUU.equip" }}: {{data.attributes.capacity.equipped}}/{{data.attributes.capacity.max}}</div>
                 </div>
                 <div class="flexrow">
                     <label class="journey resource-label">{{ localize "RYUU.camp" }}</label>
-                    <img class="check-image rollable" src="/systems/ryuutama/img/sheet/camp.svg" id="roll-camp" title="{{ localize 'RYUU.camp' }}" height="30" width="30" />
+                    <img class="check-image rollable" src="systems/ryuutama/img/sheet/camp.svg" id="roll-camp" title="{{ localize 'RYUU.camp' }}" height="30" width="30" />
                     <div class="spacer"></div>
                     <div class="status-checkbox"><i class="fas {{#if data.immunity.sickness}}fa-check-circle{{/if}}"></i></div>
-                    <img class="status-image" src="/systems/ryuutama/img/sheet/sickness.svg" title="{{ localize 'RYUU.sickness' }}" height="30" width="30" />
+                    <img class="status-image" src="systems/ryuutama/img/sheet/sickness.svg" title="{{ localize 'RYUU.sickness' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.sickness" value="{{data.effects.sickness}}" data-dtype="Number" />
                     <div class="spacer-half"></div>
                     <div class="status-checkbox"><i class="fas {{#if data.immunity.shock}}fa-check-circle{{/if}}"></i></div>
-                    <img class="status-image" src="/systems/ryuutama/img/sheet/shock.svg" title="{{ localize 'RYUU.shock' }}" height="30" width="30" />
+                    <img class="status-image" src="systems/ryuutama/img/sheet/shock.svg" title="{{ localize 'RYUU.shock' }}" height="30" width="30" />
                     <input class="status-input" type="text" name="data.effects.shock" value="{{data.effects.shock}}" data-dtype="Number" />
                     <div class="spacer"></div>
                     <div class="equipment-label">{{ localize "RYUU.capacity" }}: {{data.attributes.capacity.value}}/{{data.attributes.capacity.max}}</div>
