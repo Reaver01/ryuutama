@@ -189,8 +189,8 @@
     "RYUU.toomuchhead": "すでに帽子をかぶっています!",
     "RYUU.toomuchstaff": "すでに杖を持っています!",
     "RYUU.toomuchface": "すでに顔の装備があります!",
-    "RYUU.toomuchaccessory": "你已经穿着足够的饰品了!",
-    "RYUU.toomuchtravel": "那样就太重了! ",
+    "RYUU.toomuchaccessory": "アクセサリーは最大数身につけられています!",
+    "RYUU.toomuchtravel": "過積載です! ",
 
     "RYUU.1hand": "片手",
     "RYUU.2hand": "両手",
