@@ -786,7 +786,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                             modifiers.push(concentrationBonus);
                             checkText = `${actor.name} ${game.i18n.localize("RYUU.checkint")} [INT + INT]<br /><strong>CONCENTRATING</strong>`;
                         }
-                        rollCheck(`2d${dex}`, `${checkText}${currentModifiers}`, modifiers);
+                        rollCheck(`2d${int}`, `${checkText}${currentModifiers}`, modifiers);
                     }
                     break;
                 }
@@ -800,7 +800,7 @@ export class RyuutamaActorSheet extends ActorSheet {
                             modifiers.push(concentrationBonus);
                             checkText = `${actor.name} ${game.i18n.localize("RYUU.checkspi")} [SPI + SPI]<br /><strong>CONCENTRATING</strong>`;
                         }
-                        rollCheck(`2d${dex}`, `${checkText}${currentModifiers}`, modifiers);
+                        rollCheck(`2d${spi}`, `${checkText}${currentModifiers}`, modifiers);
                     }
                     break;
                 }
