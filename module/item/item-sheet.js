@@ -64,6 +64,12 @@ export class RyuutamaItemSheet extends ItemSheet {
 
         const parentItem = this;
 
+        const isStoredInAnimal = (item) => {
+            const owner = game.actors.get(item.data.data.owner);
+            const container = owner.items.get(item.data.data.container);
+            return container.type === "animal";
+        };
+
         // Case 1 - Import from a Compendium pack
         if (data.pack) {
             const pack = game.packs.find(p => p.collection === data.pack);
@@ -74,7 +80,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                     return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
                 } else if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(parentItem.item.type)) {
                     // Check if container is inside a container
-                    if (parentItem.item.data.data.container) {
+                    if (parentItem.item.data.data.container && !isStoredInAnimal(parentItem.item)) {
                         return;
                     }
                     // Add items to container or animal
@@ -97,7 +103,7 @@ export class RyuutamaItemSheet extends ItemSheet {
             if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(parentItem.item.type) && item.data._id !== parentItem.item.id) {
 
                 // Check if container is inside a container
-                if (parentItem.item.data.data.container) {
+                if (parentItem.item.data.data.container && !isStoredInAnimal(parentItem.item)) {
                     return;
                 }
 
@@ -195,7 +201,7 @@ export class RyuutamaItemSheet extends ItemSheet {
                 return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
             } else if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(parentItem.item.type)) {
                 // Check if container is inside a container
-                if (parentItem.item.data.data.container) {
+                if (parentItem.item.data.data.container && !isStoredInAnimal(parentItem.item)) {
                     return;
                 }
                 // Add items to container or animal
