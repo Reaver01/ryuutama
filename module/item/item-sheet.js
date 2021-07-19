@@ -57,7 +57,9 @@ export class RyuutamaItemSheet extends ItemSheet {
         let data;
         try {
             data = JSON.parse(event.dataTransfer.getData("text/plain"));
-            if (data.type !== "Item") return;
+            if (data.type !== "Item") {
+                return;
+            }
         } catch (err) {
             return false;
         }
@@ -74,7 +76,9 @@ export class RyuutamaItemSheet extends ItemSheet {
         if (data.pack) {
             const pack = game.packs.find(p => p.collection === data.pack);
             pack.getEntity(data.id).then(item => {
-                if (!item) return;
+                if (!item) {
+                    return;
+                }
                 if (item.type === "enchantment" && !RYUU.NO_ENCHANTS.includes(parentItem.item.type)) {
                     // Enchant items that aren't containers or animals
                     return parentItem.addRemoveEnchantment(false, item.data.name, item.data.data);
@@ -97,7 +101,9 @@ export class RyuutamaItemSheet extends ItemSheet {
         else if (data.data) {
             const actor = game.actors.get(data.actorId);
             const item = actor.items.find(i => i.data._id === data.data._id);
-            if (!item || parentItem.item.options.actor.id !== actor.id || item.data.data.container === parentItem.item.id) return;
+            if (!item || parentItem.item.options.actor.id !== actor.id || item.data.data.container === parentItem.item.id) {
+                return;
+            }
 
             // Container/Animal
             if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(parentItem.item.type) && item.data._id !== parentItem.item.id) {
@@ -168,7 +174,9 @@ export class RyuutamaItemSheet extends ItemSheet {
                 let holding = parentItem.item.data.data.holding;
                 holding = holding.slice();
                 const found = holding.find(i => i.id === item._id);
-                if (found || parentItem.item.data.data.holdingSize + item.data.data.size > parentItem.item.data.data.canHold) return;
+                if (found || parentItem.item.data.data.holdingSize + item.data.data.size > parentItem.item.data.data.canHold) {
+                    return;
+                }
 
                 // Add items to container or animal
                 await actor.updateEmbeddedEntity("OwnedItem", {
@@ -194,7 +202,9 @@ export class RyuutamaItemSheet extends ItemSheet {
         // Case 3 - Import from World entity
         else {
             let item = game.items.get(data.id);
-            if (!item) return;
+            if (!item) {
+                return;
+            }
 
             if (item.type === "enchantment" && !RYUU.NO_ENCHANTS.includes(parentItem.item.type)) {
                 // Enchant items that aren't containers or animals
@@ -228,7 +238,9 @@ export class RyuutamaItemSheet extends ItemSheet {
         } else if (feature.data) {
             // Disalow duplicate enchantments
             let existing = features.find(e => e.name === feature.name);
-            if (existing) return;
+            if (existing) {
+                return;
+            }
             // Push new enchantments to the array
             features.push({
                 name: feature.name,
@@ -301,7 +313,9 @@ export class RyuutamaItemSheet extends ItemSheet {
         super.activateListeners(html);
 
         // Everything below here is only needed if the sheet is editable
-        if (!this.options.editable) return;
+        if (!this.options.editable) {
+            return;
+        }
 
         this.form.ondragover = ev => this._onDragOver(ev);
         this.form.ondrop = ev => this._onDrop(ev);
@@ -323,7 +337,9 @@ export class RyuutamaItemSheet extends ItemSheet {
         if (this.item.owner) {
             let handler = ev => this._onDragItemStart(ev);
             html.find("li.item").each((i, li) => {
-                if (li.classList.contains("inventory-header")) return;
+                if (li.classList.contains("inventory-header")) {
+                    return;
+                }
                 li.setAttribute("draggable", true);
                 li.addEventListener("dragstart", handler, false);
             });
@@ -447,7 +463,9 @@ export class RyuutamaItemSheet extends ItemSheet {
         } else if (enchantmentData) {
             // Disalow duplicate enchantments
             let existing = enchantments.find(e => e.name === enchantmentName);
-            if (existing) return;
+            if (existing) {
+                return;
+            }
             // Push new enchantments to the array
             enchantments.push({
                 name: enchantmentName,

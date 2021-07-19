@@ -2,9 +2,9 @@
     "name": "ryuutama",
     "title": "Ryuutama",
     "description": "The Ryuutama system, developed from the Simple World-Building by Atropos.",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "minimumCoreVersion": "0.5.6",
-    "compatibleCoreVersion": "0.6.2",
+    "compatibleCoreVersion": "0.7.10",
     "templateVersion": 2,
     "author": "Reaver01",
     "esmodules": ["module/ryuutama.js"],
@@ -59,21 +59,20 @@
             "entity": "Item"
         }
     ],
-    "languages": [
-        {
-        "lang": "en",
-        "name": "English",
-        "path": "lang/en.json"
+    "languages": [{
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
         },
         {
-        "lang": "cn",
-        "name": "中文",
-        "path": "lang/zh-cn.json"
+            "lang": "cn",
+            "name": "中文",
+            "path": "lang/zh-cn.json"
         },
         {
-        "lang": "ja",
-        "name": "日本語",
-        "path": "lang/ja.json"
+            "lang": "ja",
+            "name": "日本語",
+            "path": "lang/ja.json"
         }
 
 

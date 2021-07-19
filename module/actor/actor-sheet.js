@@ -79,11 +79,15 @@ export class RyuutamaActorSheet extends ActorSheet {
                     }
                     const item = actor.items.find(i => i.data._id === data.data._id);
                     if (container !== undefined && container.data.data.canHold !== undefined && container.data.data.holdingSize !== undefined) {
-                        if (!item || item.data.data.container === container.id) return;
+                        if (!item || item.data.data.container === container.id) {
+                            return;
+                        }
                         if (!RYUU.NO_STORE.includes(item.type) && RYUU.STORAGE.includes(container.type) && item.data._id !== container.id) {
 
                             // Check if container is inside a container
-                            if (container.data.data.container !== undefined && container.data.data.container !== "") return;
+                            if (container.data.data.container !== undefined && container.data.data.container !== "") {
+                                return;
+                            }
 
                             // Check if container being dropped has any items in it
                             if (item.data.type === "container") {
@@ -148,7 +152,9 @@ export class RyuutamaActorSheet extends ActorSheet {
                             let holding = container.data.data.holding;
                             holding = holding.slice();
                             const found = holding.find(i => i.id === item._id);
-                            if (found !== undefined || container.data.data.holdingSize + item.data.data.size > container.data.data.canHold) return;
+                            if (found !== undefined || container.data.data.holdingSize + item.data.data.size > container.data.data.canHold) {
+                                return;
+                            }
 
                             // Add items to container or animal
                             updates.push({
@@ -177,9 +183,13 @@ export class RyuutamaActorSheet extends ActorSheet {
                         // Remove item from container if it's dropped somewhere else outside the container
                         const actor = game.actors.get(data.actorId);
                         const item = actor.items.find(i => i.data._id === data.data._id);
-                        if (!item) return;
+                        if (!item) {
+                            return;
+                        }
                         const container = actor.items.find(i => i.data._id === item.data.data.container);
-                        if (!container) return;
+                        if (!container) {
+                            return;
+                        }
                         let holding = container.data.data.holding || [];
                         holding = holding.filter(i => i.id !== item.data._id);
                         let updates = [{
@@ -198,9 +208,13 @@ export class RyuutamaActorSheet extends ActorSheet {
                     // Remove item from container if it's dropped somewhere else outside the container
                     const actor = game.actors.get(data.actorId);
                     const item = actor.items.find(i => i.data._id === data.data._id);
-                    if (!item) return;
+                    if (!item) {
+                        return;
+                    }
                     const container = actor.items.find(i => i.data._id === item.data.data.container);
-                    if (!container) return;
+                    if (!container) {
+                        return;
+                    }
                     let holding = container.data.data.holding || [];
                     holding = holding.filter(i => i.id !== item.data._id);
                     let updates = [{
@@ -343,7 +357,9 @@ export class RyuutamaActorSheet extends ActorSheet {
         super.activateListeners(html);
 
         // Everything below here is only needed if the sheet is editable
-        if (!this.options.editable) return;
+        if (!this.options.editable) {
+            return;
+        }
 
         // Add Inventory Item
         html.find(".item-create").click(this._onItemCreate.bind(this));
@@ -437,12 +453,35 @@ export class RyuutamaActorSheet extends ActorSheet {
         if (this.actor.owner) {
             let handler = ev => this._onDragItemStart(ev);
             html.find("li.item").each((i, li) => {
-                if (li.classList.contains("inventory-header")) return;
+                if (li.classList.contains("inventory-header")) {
+                    return;
+                }
                 li.setAttribute("draggable", true);
                 li.addEventListener("dragstart", handler, false);
             });
         }
     }
+
+    /* -------------------------------------------- */
+
+    /**
+     * Default handler for beginning a drag-drop workflow of an Owned Item on an Actor Sheet
+     * @param event
+     * @private
+     */
+    _onDragItemStart(event) {
+        const li = event.currentTarget;
+        const item = this.actor.getOwnedItem(li.dataset.itemId);
+        const dragData = {
+            type: "Item",
+            actorId: this.actor.id,
+            data: item.data
+        };
+        if (this.actor.isToken) dragData.tokenId = this.actor.token.id;
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    }
+
+    /* -------------------------------------------- */
 
     _showItemDetails(event) {
         event.preventDefault();

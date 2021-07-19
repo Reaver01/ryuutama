@@ -139,7 +139,9 @@ Hooks.on("renderSidebarTab", (app, html) => {
 });
 
 Hooks.on("renderChatMessage", (message, html) => {
-    if (!message.isRoll || !message.isRollVisible || !message.roll.parts.length) return;
+    if (!message.isRoll || !message.isRollVisible || !message.roll.parts.length) {
+        return;
+    }
 
     const roll = message.roll;
     const dice = roll.dice;
